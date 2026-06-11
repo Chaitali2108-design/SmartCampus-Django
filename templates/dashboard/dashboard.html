@@ -1,0 +1,811 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="space-y-10 text-[#F1E2D1]" id="career-dashboard">
+  <section
+    class="relative overflow-hidden rounded-[40px] border border-white/10 bg-white/[0.05] p-8 shadow-[0_0_80px_rgba(168,85,247,0.15)] backdrop-blur-3xl lg:p-10"
+  >
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(236,72,153,0.22),transparent_28%),radial-gradient(circle_at_top_right,rgba(34,211,238,0.18),transparent_32%)]"
+    ></div>
+
+    <div class="relative grid gap-8 2xl:grid-cols-[1.45fr_0.55fr]">
+      <div>
+        <div
+          class="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-200"
+        >
+          <i data-lucide="sparkles" class="h-4 w-4"></i>
+          AI powered career command center
+        </div>
+
+        <h1 class="max-w-none text-4xl font-black leading-tight lg:text-5xl 2xl:text-6xl">
+          Welcome to
+          <span
+            class="inline-block bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent md:whitespace-nowrap"
+          >
+            SmartCampus CareerHub AI
+          </span>
+        </h1>
+
+        <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
+          Your intelligent internship, placement, and career management platform
+          powered with AI-driven insights and smart analytics.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+          <button
+            class="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 px-8 py-4 font-bold shadow-2xl shadow-purple-500/30 transition-all duration-300 hover:scale-105"
+          >
+            <i data-lucide="briefcase-business" class="h-5 w-5"></i>
+            Explore Opportunities
+          </button>
+
+          <button
+            class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-8 py-4 font-bold transition-all duration-300 hover:bg-white/[0.1]"
+          >
+            <i data-lucide="bot" class="h-5 w-5 text-cyan-300"></i>
+            Ask Career AI
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+    <div
+      class="group relative overflow-hidden rounded-[30px] border border-white/5 bg-white/[0.06] p-6 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-pink-500 via-rose-500 to-orange-400 opacity-10"
+      ></div>
+      <div class="relative">
+        <div
+          class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400"
+        >
+          <i data-lucide="trending-up" class="h-7 w-7"></i>
+        </div>
+        <p class="mt-6 text-slate-300">Placements</p>
+        <h2 class="mt-2 text-5xl font-black">91%</h2>
+      </div>
+    </div>
+
+    <div
+      class="group relative overflow-hidden rounded-[30px] border border-white/5 bg-white/[0.06] p-6 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 opacity-10"
+      ></div>
+      <div class="relative">
+        <div
+          class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600"
+        >
+          <i data-lucide="briefcase" class="h-7 w-7"></i>
+        </div>
+        <p class="mt-6 text-slate-300">Internships</p>
+        <h2 class="mt-2 text-5xl font-black">1,240</h2>
+      </div>
+    </div>
+
+    <div
+      class="group relative overflow-hidden rounded-[30px] border border-white/5 bg-white/[0.06] p-6 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 opacity-10"
+      ></div>
+      <div class="relative">
+        <div
+          class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500"
+        >
+          <i data-lucide="building-2" class="h-7 w-7"></i>
+        </div>
+        <p class="mt-6 text-slate-300">Companies</p>
+        <h2 class="mt-2 text-5xl font-black">143</h2>
+      </div>
+    </div>
+
+    <div
+      class="group relative overflow-hidden rounded-[30px] border border-white/5 bg-white/[0.06] p-6 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 opacity-10"
+      ></div>
+      <div class="relative">
+        <div
+          class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500"
+        >
+          <i data-lucide="graduation-cap" class="h-7 w-7"></i>
+        </div>
+        <p class="mt-6 text-slate-300">Students</p>
+        <h2 class="mt-2 text-5xl font-black">4,320</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-8" id="internships-section">
+    <div
+      class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between"
+    >
+      <input
+        id="internship-search"
+        type="text"
+        placeholder="Search internships, companies, locations..."
+        class="w-full rounded-2xl border border-white/5 bg-white/[0.06] px-6 py-4 text-white outline-none transition-all placeholder:text-slate-500 focus:border-cyan-500/40 lg:max-w-xl"
+      />
+
+      <div class="flex flex-wrap gap-3" id="internship-filters">
+        <button
+          class="filter-btn rounded-2xl border border-transparent bg-gradient-to-r from-cyan-500 to-purple-500 px-5 py-3 transition-all"
+          data-filter="All"
+        >
+          All
+        </button>
+        <button
+          class="filter-btn rounded-2xl border border-white/5 bg-white/[0.05] px-5 py-3 transition-all hover:bg-white/[0.08]"
+          data-filter="Frontend"
+        >
+          Frontend
+        </button>
+        <button
+          class="filter-btn rounded-2xl border border-white/5 bg-white/[0.05] px-5 py-3 transition-all hover:bg-white/[0.08]"
+          data-filter="AI/ML"
+        >
+          AI/ML
+        </button>
+        <button
+          class="filter-btn rounded-2xl border border-white/5 bg-white/[0.05] px-5 py-3 transition-all hover:bg-white/[0.08]"
+          data-filter="UI/UX"
+        >
+          UI/UX
+        </button>
+        <button
+          class="filter-btn rounded-2xl border border-white/5 bg-white/[0.05] px-5 py-3 transition-all hover:bg-white/[0.08]"
+          data-filter="Backend"
+        >
+          Backend
+        </button>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div
+        class="rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 px-5 py-3 shadow-lg shadow-purple-500/20"
+      >
+        <h2 class="text-lg font-bold text-white">Trending Internships</h2>
+      </div>
+
+      <div class="relative">
+        <button
+          id="internship-menu-toggle"
+          class="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] transition-all hover:-translate-y-0.5 hover:bg-white/[0.08]"
+          title="Internship actions"
+        >
+          <i data-lucide="chevron-down" class="h-5 w-5"></i>
+        </button>
+
+        <div
+          id="internship-menu"
+          class="absolute right-0 z-50 mt-3 hidden w-36 overflow-hidden rounded-2xl border border-white/10 bg-[#0f172a] backdrop-blur-2xl"
+        >
+          <button
+            id="toggle-internships"
+            class="w-full px-5 py-4 text-left transition-all hover:bg-white/[0.06]"
+          >
+            View All
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3" id="internship-list">
+      <article
+        class="internship-card relative overflow-hidden rounded-[35px] border border-white/5 bg-white/[0.06] p-7 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-3 hover:scale-[1.02]"
+        data-company="Google"
+        data-role="Frontend Developer Intern"
+        data-location="Bangalore"
+        data-category="Frontend"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-blue-500 via-cyan-500 to-sky-500 opacity-10"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 text-2xl font-black"
+            >
+              G
+            </div>
+            <span
+              class="rounded-full bg-emerald-500/20 px-4 py-2 text-sm text-emerald-400"
+              >Trending</span
+            >
+          </div>
+          <h3 class="mt-8 text-2xl font-black">Frontend Developer Intern</h3>
+          <p class="mt-2 text-slate-400">Google</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Rs. 45,000/month</span
+            >
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Bangalore</span
+            >
+          </div>
+          <button
+            class="mt-8 w-full rounded-2xl bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 py-4 font-bold transition-all hover:scale-[1.02]"
+          >
+            Apply Now
+          </button>
+        </div>
+      </article>
+
+      <article
+        class="internship-card relative overflow-hidden rounded-[35px] border border-white/5 bg-white/[0.06] p-7 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-3 hover:scale-[1.02]"
+        data-company="Microsoft"
+        data-role="AI/ML Intern"
+        data-location="Hyderabad"
+        data-category="AI/ML"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 opacity-10"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 text-2xl font-black"
+            >
+              M
+            </div>
+            <span
+              class="rounded-full bg-emerald-500/20 px-4 py-2 text-sm text-emerald-400"
+              >Trending</span
+            >
+          </div>
+          <h3 class="mt-8 text-2xl font-black">AI/ML Intern</h3>
+          <p class="mt-2 text-slate-400">Microsoft</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Rs. 60,000/month</span
+            >
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Hyderabad</span
+            >
+          </div>
+          <button
+            class="mt-8 w-full rounded-2xl bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 py-4 font-bold transition-all hover:scale-[1.02]"
+          >
+            Apply Now
+          </button>
+        </div>
+      </article>
+
+      <article
+        class="internship-card relative overflow-hidden rounded-[35px] border border-white/5 bg-white/[0.06] p-7 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-3 hover:scale-[1.02]"
+        data-company="Adobe"
+        data-role="UI/UX Design Intern"
+        data-location="Remote"
+        data-category="UI/UX"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-pink-500 via-rose-500 to-orange-400 opacity-10"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 text-2xl font-black"
+            >
+              A
+            </div>
+            <span
+              class="rounded-full bg-emerald-500/20 px-4 py-2 text-sm text-emerald-400"
+              >Trending</span
+            >
+          </div>
+          <h3 class="mt-8 text-2xl font-black">UI/UX Design Intern</h3>
+          <p class="mt-2 text-slate-400">Adobe</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Rs. 35,000/month</span
+            >
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Remote</span
+            >
+          </div>
+          <button
+            class="mt-8 w-full rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 py-4 font-bold transition-all hover:scale-[1.02]"
+          >
+            Apply Now
+          </button>
+        </div>
+      </article>
+
+      <article
+        class="internship-card relative hidden overflow-hidden rounded-[35px] border border-white/5 bg-white/[0.06] p-7 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-3 hover:scale-[1.02]"
+        data-company="Amazon"
+        data-role="Backend Developer Intern"
+        data-location="Pune"
+        data-category="Backend"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-400 opacity-10"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 text-2xl font-black"
+            >
+              A
+            </div>
+            <span
+              class="rounded-full bg-emerald-500/20 px-4 py-2 text-sm text-emerald-400"
+              >Trending</span
+            >
+          </div>
+          <h3 class="mt-8 text-2xl font-black">Backend Developer Intern</h3>
+          <p class="mt-2 text-slate-400">Amazon</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Rs. 50,000/month</span
+            >
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Pune</span
+            >
+          </div>
+          <button
+            class="mt-8 w-full rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 py-4 font-bold transition-all hover:scale-[1.02]"
+          >
+            Apply Now
+          </button>
+        </div>
+      </article>
+
+      <article
+        class="internship-card relative hidden overflow-hidden rounded-[35px] border border-white/5 bg-white/[0.06] p-7 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-3 hover:scale-[1.02]"
+        data-company="Netflix"
+        data-role="Full Stack Intern"
+        data-location="Mumbai"
+        data-category="Frontend"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-red-500 via-rose-500 to-pink-500 opacity-10"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-r from-red-500 via-rose-500 to-pink-500 text-2xl font-black"
+            >
+              N
+            </div>
+            <span
+              class="rounded-full bg-emerald-500/20 px-4 py-2 text-sm text-emerald-400"
+              >Trending</span
+            >
+          </div>
+          <h3 class="mt-8 text-2xl font-black">Full Stack Intern</h3>
+          <p class="mt-2 text-slate-400">Netflix</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Rs. 55,000/month</span
+            >
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Mumbai</span
+            >
+          </div>
+          <button
+            class="mt-8 w-full rounded-2xl bg-gradient-to-r from-red-500 via-rose-500 to-pink-500 py-4 font-bold transition-all hover:scale-[1.02]"
+          >
+            Apply Now
+          </button>
+        </div>
+      </article>
+
+      <article
+        class="internship-card relative hidden overflow-hidden rounded-[35px] border border-white/5 bg-white/[0.06] p-7 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-3 hover:scale-[1.02]"
+        data-company="Tesla"
+        data-role="Data Science Intern"
+        data-location="Remote"
+        data-category="AI/ML"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 opacity-10"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 text-2xl font-black"
+            >
+              T
+            </div>
+            <span
+              class="rounded-full bg-emerald-500/20 px-4 py-2 text-sm text-emerald-400"
+              >Trending</span
+            >
+          </div>
+          <h3 class="mt-8 text-2xl font-black">Data Science Intern</h3>
+          <p class="mt-2 text-slate-400">Tesla</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Rs. 70,000/month</span
+            >
+            <span
+              class="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm"
+              >Remote</span
+            >
+          </div>
+          <button
+            class="mt-8 w-full rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 py-4 font-bold transition-all hover:scale-[1.02]"
+          >
+            Apply Now
+          </button>
+        </div>
+      </article>
+    </div>
+
+    <p
+      id="no-internships"
+      class="hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8 text-center text-slate-300"
+    >
+      No internships match your search.
+    </p>
+  </section>
+
+  <section class="space-y-8">
+    <div class="ml-1">
+      <h2 class="text-4xl font-black">Placement Analytics</h2>
+      <p class="mt-2 text-slate-400">Smart insights and hiring trends</p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+      <div
+        class="rounded-[35px] border border-white/5 bg-white/[0.06] p-8 backdrop-blur-2xl lg:col-span-2"
+      >
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h3 class="text-2xl font-black">Hiring Growth</h3>
+            <p class="mt-1 text-slate-400">Student placement trend</p>
+          </div>
+          <div
+            class="rounded-full bg-emerald-500/20 px-4 py-2 text-sm text-emerald-400"
+          >
+            +32%
+          </div>
+        </div>
+
+        <div class="h-[300px]">
+          <svg
+            viewBox="0 0 640 260"
+            class="h-full w-full"
+            role="img"
+            aria-label="Placement analytics line chart"
+          >
+            <defs>
+              <linearGradient id="chartStroke" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#22d3ee" />
+                <stop offset="50%" stop-color="#a855f7" />
+                <stop offset="100%" stop-color="#ec4899" />
+              </linearGradient>
+              <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#a855f7" stop-opacity="0.28" />
+                <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <g stroke="#334155" stroke-width="1">
+              <line x1="40" y1="30" x2="610" y2="30" />
+              <line x1="40" y1="90" x2="610" y2="90" />
+              <line x1="40" y1="150" x2="610" y2="150" />
+              <line x1="40" y1="210" x2="610" y2="210" />
+            </g>
+            <path
+              d="M50 205 C120 180, 138 145, 160 165 C215 195, 230 108, 270 120 C338 140, 345 70, 380 85 C450 110, 460 42, 500 55 C548 68, 570 35, 610 24 L610 230 L50 230 Z"
+              fill="url(#chartFill)"
+            />
+            <path
+              d="M50 205 C120 180, 138 145, 160 165 C215 195, 230 108, 270 120 C338 140, 345 70, 380 85 C450 110, 460 42, 500 55 C548 68, 570 35, 610 24"
+              fill="none"
+              stroke="url(#chartStroke)"
+              stroke-linecap="round"
+              stroke-width="6"
+            />
+            <g fill="#f8fafc" stroke="#a855f7" stroke-width="4">
+              <circle cx="50" cy="205" r="7" />
+              <circle cx="160" cy="165" r="7" />
+              <circle cx="270" cy="120" r="7" />
+              <circle cx="380" cy="85" r="7" />
+              <circle cx="500" cy="55" r="7" />
+              <circle cx="610" cy="24" r="7" />
+            </g>
+            <g fill="#94a3b8" font-size="16">
+              <text x="40" y="252">Jan</text>
+              <text x="150" y="252">Feb</text>
+              <text x="260" y="252">Mar</text>
+              <text x="370" y="252">Apr</text>
+              <text x="490" y="252">May</text>
+              <text x="600" y="252">Jun</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div
+          class="rounded-[35px] border border-white/5 bg-white/[0.06] p-8 backdrop-blur-2xl"
+        >
+          <p class="text-slate-400">Placement Success</p>
+          <h2
+            class="mt-4 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-6xl font-black text-transparent"
+          >
+            91%
+          </h2>
+          <div class="mt-6 h-3 w-full overflow-hidden rounded-full bg-black/20">
+            <div
+              class="h-full w-[91%] rounded-full bg-gradient-to-r from-pink-500 to-purple-500"
+            ></div>
+          </div>
+        </div>
+
+        <div
+          class="rounded-[35px] border border-white/5 bg-white/[0.06] p-8 backdrop-blur-2xl"
+        >
+          <p class="text-slate-400">Internship Conversion</p>
+          <h2
+            class="mt-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-6xl font-black text-transparent"
+          >
+            74%
+          </h2>
+          <div class="mt-6 h-3 w-full overflow-hidden rounded-full bg-black/20">
+            <div
+              class="h-full w-[74%] rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.05] p-7 backdrop-blur-3xl"
+  >
+    <div
+      class="absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-cyan-500/10 blur-[120px]"
+    ></div>
+    <div
+      class="absolute bottom-0 left-0 h-[350px] w-[350px] rounded-full bg-purple-500/10 blur-[120px]"
+    ></div>
+
+    <div class="relative">
+      <div
+        class="flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-500"
+          >
+            <i data-lucide="bot" class="h-7 w-7"></i>
+          </div>
+          <div>
+            <h2 class="text-3xl font-black">AI Career Assistant</h2>
+            <p class="mt-1 text-slate-400">Smart guidance powered by AI</p>
+          </div>
+        </div>
+
+        <div
+          class="flex items-center gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-5 py-3"
+        >
+          <div class="h-3 w-3 animate-pulse rounded-full bg-emerald-400"></div>
+          <p class="font-medium text-emerald-400">AI Online</p>
+        </div>
+      </div>
+
+      <div class="mt-12 grid gap-8 lg:grid-cols-2">
+        <div class="rounded-[28px] border border-white/5 bg-black/20 p-5">
+          <div class="flex items-start gap-4">
+            <div
+              class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-500"
+            >
+              <i data-lucide="sparkles" class="h-6 w-6"></i>
+            </div>
+            <div>
+              <div class="rounded-3xl rounded-tl-md bg-white/[0.05] p-6">
+                <p class="text-lg leading-8 text-slate-200">
+                  Hello Chaitali. I can help you with internships, placements,
+                  resume improvement, interview preparation, and career
+                  guidance.
+                </p>
+              </div>
+              <div class="mt-4 flex items-center gap-2 text-sm text-slate-500">
+                <i data-lucide="message-square" class="h-4 w-4"></i>
+                <p>AI Assistant Typing...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-[35px] border border-white/5 bg-black/20 p-8">
+          <h3 class="mb-8 text-2xl font-black">AI Suggestions</h3>
+          <div class="space-y-4">
+            <button
+              class="flex w-full items-center justify-between rounded-2xl border border-white/5 bg-white/[0.05] p-4 text-left transition-all hover:translate-x-2 hover:scale-[1.02]"
+            >
+              <span>How can I improve my resume?</span>
+              <i data-lucide="send" class="h-5 w-5 text-cyan-400"></i>
+            </button>
+            <button
+              class="flex w-full items-center justify-between rounded-2xl border border-white/5 bg-white/[0.05] p-4 text-left transition-all hover:translate-x-2 hover:scale-[1.02]"
+            >
+              <span>Best internships for frontend developers</span>
+              <i data-lucide="send" class="h-5 w-5 text-cyan-400"></i>
+            </button>
+            <button
+              class="flex w-full items-center justify-between rounded-2xl border border-white/5 bg-white/[0.05] p-4 text-left transition-all hover:translate-x-2 hover:scale-[1.02]"
+            >
+              <span>Top AI/ML companies hiring now</span>
+              <i data-lucide="send" class="h-5 w-5 text-cyan-400"></i>
+            </button>
+            <button
+              class="flex w-full items-center justify-between rounded-2xl border border-white/5 bg-white/[0.05] p-4 text-left transition-all hover:translate-x-2 hover:scale-[1.02]"
+            >
+              <span>Tips to crack placement interviews</span>
+              <i data-lucide="send" class="h-5 w-5 text-cyan-400"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid gap-8 lg:grid-cols-2">
+    <div
+      class="rounded-[35px] border border-white/5 bg-white/[0.06] p-8 backdrop-blur-2xl transition-all hover:-translate-y-1"
+    >
+      <h2 class="mb-8 text-3xl font-black">AI Recommendations</h2>
+      <div class="space-y-5">
+        <div
+          class="rounded-2xl border border-white/10 bg-black/20 p-5 transition-all hover:translate-x-2 hover:bg-black/30"
+        >
+          <p class="font-medium">Frontend Developer Internship</p>
+        </div>
+        <div
+          class="rounded-2xl border border-white/10 bg-black/20 p-5 transition-all hover:translate-x-2 hover:bg-black/30"
+        >
+          <p class="font-medium">AI/ML Bootcamp Program</p>
+        </div>
+        <div
+          class="rounded-2xl border border-white/10 bg-black/20 p-5 transition-all hover:translate-x-2 hover:bg-black/30"
+        >
+          <p class="font-medium">Resume Improvement Suggestions</p>
+        </div>
+        <div
+          class="rounded-2xl border border-white/10 bg-black/20 p-5 transition-all hover:translate-x-2 hover:bg-black/30"
+        >
+          <p class="font-medium">Top Companies Hiring This Week</p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="rounded-[35px] border border-white/5 bg-white/[0.06] p-8 backdrop-blur-2xl transition-all hover:-translate-y-1"
+    >
+      <h2 class="mb-8 text-3xl font-black">Recent Activity</h2>
+      <div class="space-y-6">
+        <div
+          class="flex items-center justify-between rounded-2xl bg-black/20 p-5 transition-all hover:-translate-y-1 hover:scale-[1.02] hover:bg-black/30"
+        >
+          <p>Applied for Google Internship</p>
+          <span class="text-cyan-400">New</span>
+        </div>
+        <div
+          class="flex items-center justify-between rounded-2xl bg-black/20 p-5 transition-all hover:-translate-y-1 hover:scale-[1.02] hover:bg-black/30"
+        >
+          <p>Resume updated successfully</p>
+          <span class="text-cyan-400">New</span>
+        </div>
+        <div
+          class="flex items-center justify-between rounded-2xl bg-black/20 p-5 transition-all hover:-translate-y-1 hover:scale-[1.02] hover:bg-black/30"
+        >
+          <p>AI suggested 3 new opportunities</p>
+          <span class="text-cyan-400">New</span>
+        </div>
+        <div
+          class="flex items-center justify-between rounded-2xl bg-black/20 p-5 transition-all hover:-translate-y-1 hover:scale-[1.02] hover:bg-black/30"
+        >
+          <p>Attendance synced</p>
+          <span class="text-cyan-400">New</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("internship-search");
+    const filterButtons = Array.from(document.querySelectorAll(".filter-btn"));
+    const cards = Array.from(document.querySelectorAll(".internship-card"));
+    const menuToggle = document.getElementById("internship-menu-toggle");
+    const menu = document.getElementById("internship-menu");
+    const toggleInternships = document.getElementById("toggle-internships");
+    const noInternships = document.getElementById("no-internships");
+    let activeFilter = "All";
+    let showAll = false;
+
+    function setActiveButton() {
+      filterButtons.forEach(function (button) {
+        const isActive = button.dataset.filter === activeFilter;
+        button.className = isActive
+          ? "filter-btn rounded-2xl border border-transparent bg-gradient-to-r from-cyan-500 to-purple-500 px-5 py-3 transition-all"
+          : "filter-btn rounded-2xl border border-white/5 bg-white/[0.05] px-5 py-3 transition-all hover:bg-white/[0.08]";
+      });
+    }
+
+    function renderCards() {
+      const search = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+      let matchedCount = 0;
+
+      cards.forEach(function (card) {
+        const searchableText = [
+          card.dataset.company,
+          card.dataset.role,
+          card.dataset.location,
+        ]
+          .join(" ")
+          .toLowerCase();
+
+        const matchesSearch = searchableText.includes(search);
+        const matchesFilter =
+          activeFilter === "All" || card.dataset.category === activeFilter;
+        const matches = matchesSearch && matchesFilter;
+        matchedCount += matches ? 1 : 0;
+
+        if (matches && (showAll || visibleCount < 3)) {
+          card.classList.remove("hidden");
+          visibleCount += 1;
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+
+      noInternships.classList.toggle("hidden", matchedCount > 0);
+      toggleInternships.textContent = showAll ? "Show Less" : "View All";
+    }
+
+    filterButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        activeFilter = button.dataset.filter;
+        setActiveButton();
+        renderCards();
+      });
+    });
+
+    searchInput.addEventListener("input", renderCards);
+
+    menuToggle.addEventListener("click", function () {
+      menu.classList.toggle("hidden");
+    });
+
+    toggleInternships.addEventListener("click", function () {
+      showAll = !showAll;
+      menu.classList.add("hidden");
+      renderCards();
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+        menu.classList.add("hidden");
+      }
+    });
+
+    setActiveButton();
+    renderCards();
+  });
+</script>
+
+{% endblock %}

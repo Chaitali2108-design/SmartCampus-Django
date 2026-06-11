@@ -1,0 +1,137 @@
+<!-- Mobile Top Bar -->
+<div
+  class="fixed left-0 top-0 z-[60] flex h-16 w-full items-center justify-between border-b border-white/10 bg-[#050816]/80 px-5 backdrop-blur-xl lg:hidden"
+>
+  <h1
+    class="bg-gradient-to-r from-pink-400 via-rose-500 to-pink-600 bg-clip-text text-2xl font-black text-transparent"
+  >
+    CareerHub AI
+  </h1>
+
+  <button
+    id="sidebar-toggle"
+    class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/10"
+    type="button"
+  >
+    <i data-lucide="menu" class="sidebar-open-icon h-6 w-6"></i>
+    <i data-lucide="x" class="sidebar-close-icon hidden h-6 w-6"></i>
+  </button>
+</div>
+
+<div
+  id="sidebar-overlay"
+  class="fixed inset-0 z-40 hidden bg-black/50 backdrop-blur-sm lg:hidden"
+></div>
+
+<aside
+  id="app-sidebar"
+  class="fixed left-0 top-0 z-50 flex h-screen w-72 -translate-x-full flex-col border-r border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl transition-all duration-500 lg:translate-x-0"
+>
+  <div class="mb-10 flex items-center justify-between lg:block">
+    <h1
+      class="bg-gradient-to-r from-pink-400 via-rose-500 to-pink-600 bg-clip-text text-3xl font-black text-transparent"
+    >
+      CareerHub AI
+    </h1>
+
+    <button id="sidebar-close" class="lg:hidden" type="button">
+      <i data-lucide="x" class="h-6 w-6"></i>
+    </button>
+  </div>
+
+  <nav class="space-y-3">
+    <a
+      href="/"
+      class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
+    >
+      <i data-lucide="layout-dashboard" class="h-5 w-5"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <a
+      href="/placements"
+      class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/placements' or request.path == '/placements/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
+    >
+      <i data-lucide="briefcase" class="h-5 w-5"></i>
+      <span>Placements</span>
+    </a>
+
+    <a
+      href="/internships"
+      class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/internships' or request.path == '/internships/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
+    >
+      <i data-lucide="graduation-cap" class="h-5 w-5"></i>
+      <span>Internships</span>
+    </a>
+
+    <a
+      href="/analytics"
+      class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/analytics' or request.path == '/analytics/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
+    >
+      <i data-lucide="bar-chart-3" class="h-5 w-5"></i>
+      <span>Analytics</span>
+    </a>
+
+    <a
+      href="/resume-builder"
+      class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/resume-builder' or request.path == '/resume-builder/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
+    >
+      <i data-lucide="file-text" class="h-5 w-5"></i>
+      <span>Resume Builder</span>
+    </a>
+
+    <a
+      href="/attendance"
+      class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/attendance' or request.path == '/attendance/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
+    >
+      <i data-lucide="calendar" class="h-5 w-5"></i>
+      <span>Attendance</span>
+    </a>
+
+    <a
+      href="/profile"
+      class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/profile' or request.path == '/profile/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
+    >
+      <i data-lucide="graduation-cap" class="h-5 w-5"></i>
+      <span>Profile</span>
+    </a>
+  </nav>
+</aside>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("app-sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+    const toggleButton = document.getElementById("sidebar-toggle");
+    const closeButton = document.getElementById("sidebar-close");
+    const links = document.querySelectorAll(".sidebar-link");
+    const openIcon = document.querySelector(".sidebar-open-icon");
+    const closeIcon = document.querySelector(".sidebar-close-icon");
+
+    function setSidebarOpen(isOpen) {
+      sidebar.classList.toggle("-translate-x-full", !isOpen);
+      sidebar.classList.toggle("translate-x-0", isOpen);
+      overlay.classList.toggle("hidden", !isOpen);
+      openIcon.classList.toggle("hidden", isOpen);
+      closeIcon.classList.toggle("hidden", !isOpen);
+    }
+
+    toggleButton.addEventListener("click", function () {
+      setSidebarOpen(sidebar.classList.contains("-translate-x-full"));
+    });
+
+    closeButton.addEventListener("click", function () {
+      setSidebarOpen(false);
+    });
+
+    overlay.addEventListener("click", function () {
+      setSidebarOpen(false);
+    });
+
+    links.forEach(function (link) {
+      link.addEventListener("click", function () {
+        setSidebarOpen(false);
+      });
+    });
+  });
+</script>
