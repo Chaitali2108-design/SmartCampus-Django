@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="max-w-5xl mx-auto px-6 py-8 text-white">
+  <h1 class="text-4xl font-black">AI Career Roadmap</h1>
+
+  <form
+    method="POST"
+    class="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-8"
+  >
+    {% csrf_token %}
+
+    <textarea
+      name="current_skills"
+      placeholder="Current Skills"
+      class="w-full rounded-2xl bg-black/20 p-4"
+    ></textarea>
+
+    <input
+      type="text"
+      name="target_role"
+      placeholder="Target Role"
+      class="mt-4 w-full rounded-2xl bg-black/20 p-4"
+    />
+
+    <button
+      class="mt-6 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 px-8 py-4 font-bold"
+    >
+      Generate Roadmap
+    </button>
+  </form>
+
+  {% if roadmap %}
+
+  <div class="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-8">
+    <h2 class="mb-4 text-2xl font-bold">Generated Roadmap</h2>
+
+    <pre class="whitespace-pre-wrap">
+{{ roadmap }}
+        </pre
+    >
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}

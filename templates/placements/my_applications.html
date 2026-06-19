@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="px-6 py-8 text-white">
+  <div class="mb-8">
+    <h1 class="text-4xl font-black">My Applications</h1>
+    <p class="mt-2 text-slate-400">Track all jobs and internships you've applied for</p>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+    {% for app in applications %}
+    <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+      <div class="mb-4 inline-flex rounded-xl bg-purple-500/20 px-4 py-2 text-purple-200">
+        Placement
+      </div>
+      <h3 class="text-xl font-bold">{{ app.placement.company }}</h3>
+      <p class="mt-2 text-slate-300">{{ app.placement.role }}</p>
+      <p class="mt-3 flex items-center gap-2 text-slate-400">
+        <i data-lucide="map-pin" class="h-4 w-4"></i>
+        {{ app.placement.location }}
+      </p>
+      <p class="mt-2 text-green-400">{{ app.placement.package }}</p>
+      <div class="mt-5 inline-flex rounded-xl bg-green-500/20 px-4 py-2 text-green-300">
+        {{ app.status }}
+      </div>
+    </div>
+    {% endfor %}
+
+    {% for app in internship_applications %}
+    <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+      <div class="mb-4 inline-flex rounded-xl bg-pink-500/20 px-4 py-2 text-pink-200">
+        Internship
+      </div>
+      <h3 class="text-xl font-bold">{{ app.internship.company }}</h3>
+      <p class="mt-2 text-slate-300">{{ app.internship.role }}</p>
+      <p class="mt-3 flex items-center gap-2 text-slate-400">
+        <i data-lucide="map-pin" class="h-4 w-4"></i>
+        {{ app.internship.location }}
+      </p>
+      <p class="mt-2 text-green-400">{{ app.internship.stipend }}</p>
+      <div class="mt-5 inline-flex rounded-xl bg-green-500/20 px-4 py-2 text-green-300">
+        Applied
+      </div>
+    </div>
+    {% endfor %}
+
+    {% if not applications and not internship_applications %}
+    <div class="col-span-full rounded-3xl border border-white/10 bg-white/[0.04] p-10 text-center">
+      <h3 class="text-2xl font-bold">No Applications Yet</h3>
+      <p class="mt-3 text-slate-400">Start applying to placement drives or internships.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

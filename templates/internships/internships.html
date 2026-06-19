@@ -1,0 +1,283 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="text-white">
+  <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
+    {% for item in stats %}
+    <div
+      class="animate-popup delay-{{ forloop.counter }} bg-white/[0.05] border border-white/10 rounded-[30px] p-6 backdrop-blur-2xl hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300"
+    >
+      <p class="text-slate-400">{{ item.title }}</p>
+      <h2 class="text-5xl font-black mt-4">{{ item.value|safe }}</h2>
+    </div>
+    {% endfor %}
+  </div>
+
+  <section class="mb-14">
+    <div class="mb-8">
+      <h2 class="text-4xl font-black">Popular Categories</h2>
+      <p class="text-slate-400 mt-2">Explore internships by domains</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+      {% for item in categories %}
+      <div
+        class="animate-popup delay-{{ forloop.counter }} bg-white/[0.05] border border-white/10 rounded-[30px] p-8 backdrop-blur-2xl cursor-pointer hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl bg-[#dbaa14] flex items-center justify-center text-2xl font-black"
+        >
+          {{ item|slice:':1' }}
+        </div>
+        <h3 class="text-2xl font-black mt-6">{{ item }}</h3>
+        <p class="text-slate-400 mt-2">Explore opportunities</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section
+    class="relative overflow-hidden bg-white/[0.05] border border-white/10 rounded-[35px] p-8 mb-14 backdrop-blur-3xl animate-popup"
+  >
+    <div
+      class="absolute top-0 right-0 w-[250px] h-[250px] bg-pink-500/10 blur-[100px] rounded-full"
+    ></div>
+    <div
+      class="absolute bottom-0 left-0 w-[250px] h-[250px] bg-purple-500/10 blur-[100px] rounded-full"
+    ></div>
+
+    <div
+      class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8"
+    >
+      <div>
+        <div
+          class="bg-pink-500/20 text-pink-400 px-5 py-2 rounded-full inline-block text-sm mb-5"
+        >
+          Featured Program
+        </div>
+        <h2 class="text-4xl font-black leading-tight">
+          Get Internship Ready with
+          <span class="text-pink-400"> CareerHub AI</span>
+        </h2>
+        <p class="text-slate-400 mt-4 max-w-2xl">
+          Build your resume, improve interview skills, and get AI-powered career
+          guidance.
+        </p>
+      </div>
+
+      <a
+        href="{% url 'placements' %}"
+        class="bg-[#af2e62] px-8 py-4 rounded-2xl font-bold hover:scale-105 transition-all"
+      >
+        Explore Program
+      </a>
+    </div>
+  </section>
+
+  <div class="mb-10">
+    <h1 class="text-5xl font-black">Trending Internships</h1>
+    <p class="text-slate-400 mt-3 text-lg">
+      Discover premium opportunities curated for students
+    </p>
+  </div>
+
+  <form method="get" class="mb-10 grid md:grid-cols-4 gap-5 animate-popup">
+    <input
+      type="text"
+      name="q"
+      value="{{ query }}"
+      placeholder="Search internships..."
+      class="md:col-span-2 bg-white/[0.05] border border-white/10 rounded-2xl px-6 py-4 outline-none backdrop-blur-xl placeholder:text-slate-500"
+    />
+
+    <select
+      name="mode"
+      class="bg-white/[0.05] border border-white/10 rounded-2xl px-5 py-4 outline-none backdrop-blur-xl text-slate-300"
+    >
+      <option>All Modes</option>
+      <option>Remote</option>
+      <option>Hybrid</option>
+      <option>On-site</option>
+    </select>
+
+    <select
+      name="location"
+      class="bg-white/[0.05] border border-white/10 rounded-2xl px-5 py-4 outline-none backdrop-blur-xl text-slate-300"
+      onchange="this.form.submit()"
+    >
+      <option value="" {% if not selected_location %}selected{% endif %}>
+        All Locations
+      </option>
+
+      <option
+        value="Bangalore"
+        {%
+        if
+        selected_location=""
+        ="Bangalore"
+        %}selected{%
+        endif
+        %}
+      >
+        Bangalore
+      </option>
+
+      <option
+        value="Hyderabad"
+        {%
+        if
+        selected_location=""
+        ="Hyderabad"
+        %}selected{%
+        endif
+        %}
+      >
+        Hyderabad
+      </option>
+
+      <option
+        value="Mumbai"
+        {%
+        if
+        selected_location=""
+        ="Mumbai"
+        %}selected{%
+        endif
+        %}
+      >
+        Mumbai
+      </option>
+
+      <option
+        value="Remote"
+        {%
+        if
+        selected_location=""
+        ="Remote"
+        %}selected{%
+        endif
+        %}
+      >
+        Remote
+      </option>
+    </select>
+  </form>
+
+  <div class="mb-8 flex items-center gap-14 flex-wrap">
+    <div>
+      <h2 class="text-4xl font-black">Latest Opportunities</h2>
+      <p class="text-slate-400 mt-2">Curated internships from top companies</p>
+    </div>
+
+    <a
+      href="{% url 'my_applications' %}"
+      class="px-6 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold hover:scale-105 transition-all duration-300"
+    >
+      My Applications
+    </a>
+  </div>
+
+  <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+    {% for item in internships %}
+
+    <div
+      class="bg-[#221937] border border-white/5 shadow-[0_10px_40px_rgba(0,0,0,0.35)] rounded-[30px] p-7 backdrop-blur-2xl transition-all duration-300 flex flex-col justify-between min-h-[430px] hover:-translate-y-2 hover:scale-[1.02]"
+    >
+      <div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-2xl font-black">{{ item.role }}</h2>
+
+            <p class="text-slate-400 mt-1">{{ item.company }}</p>
+
+            <div class="flex gap-3 mt-5 flex-wrap mt-8">
+              <div class="bg-white/10 px-4 py-2 rounded-full text-sm font-bold">
+                💰 {{ item.stipend }}
+              </div>
+
+              <div class="bg-white/10 px-4 py-2 rounded-full text-sm font-bold">
+                📍 {{ item.location }}
+              </div>
+            </div>
+          </div>
+
+          {% if item.trending %}
+          <div
+            class="bg-pink-500/20 text-pink-400 px-4 py-2 rounded-full text-sm"
+          >
+            Trending
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="flex flex-wrap gap-3 mt-8">
+          {% for skill in item.skills_list %}
+          <div class="bg-white/10 px-4 py-2 rounded-full text-sm">
+            {{ skill }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <form
+        method="post"
+        action="{% url 'apply_internship' item.id %}"
+        class="mt-8"
+      >
+        {% csrf_token %}
+
+        <button
+          type="submit"
+          class="w-full h-[58px] bg-[#288d19] py-4 rounded-2xl font-bold hover:scale-[1.02] transition-all duration-300 flex items-center justify-center"
+        >
+          Apply Now
+        </button>
+      </form>
+    </div>
+
+    {% endfor %}
+  </div>
+
+  <section class="mt-16">
+    <div class="mb-8">
+      <h2 class="text-4xl font-black">Top Companies Hiring</h2>
+      <p class="text-slate-400 mt-2">Trusted companies hiring students</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 xl:grid-cols-5 gap-6">
+      {% for company in top_companies %}
+      <div
+        class="bg-white/[0.05] border border-white/10 rounded-[28px] p-8 backdrop-blur-2xl flex items-center justify-center text-xl font-bold cursor-pointer hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300"
+      >
+        {{ company }}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mt-16 mb-20">
+    <div class="mb-8">
+      <h2 class="text-4xl font-black">Internship Tips</h2>
+      <p class="text-slate-400 mt-2">
+        Improve your chances of getting selected
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {% for item in tips %}
+      <div
+        class="bg-white/[0.05] border border-white/10 rounded-[30px] p-8 backdrop-blur-2xl hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300"
+      >
+        <div
+          class="w-14 h-14 rounded-2xl bg-[#147b8a] flex items-center justify-center text-xl font-black"
+        >
+          {{ forloop.counter }}
+        </div>
+        <h3 class="text-2xl font-black mt-6">{{ item.title }}</h3>
+        <p class="text-slate-400 mt-3 leading-relaxed">{{ item.desc }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+{% endblock %}

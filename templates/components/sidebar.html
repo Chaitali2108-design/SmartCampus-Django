@@ -25,7 +25,7 @@
 
 <aside
   id="app-sidebar"
-  class="fixed left-0 top-0 z-50 flex h-screen w-72 -translate-x-full flex-col border-r border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl transition-all duration-500 lg:translate-x-0"
+  class="fixed left-0 top-0 z-50 flex h-screen w-72 -translate-x-full flex-col bg-white/10 backdrop-blur-xl border-r border-white/10 p-6 text-white transition-all duration-500 lg:translate-x-0"
 >
   <div class="mb-10 flex items-center justify-between lg:block">
     <h1
@@ -41,7 +41,7 @@
 
   <nav class="space-y-3">
     <a
-      href="/"
+      href="{% url 'dashboard' %}"
       class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
     >
       <i data-lucide="layout-dashboard" class="h-5 w-5"></i>
@@ -49,7 +49,7 @@
     </a>
 
     <a
-      href="/placements"
+      href="{% url 'placements' %}"
       class="sidebar-link flex items-center gap-4 rounded-2xl px-4 py-3 transition-all duration-300 {% if request.path == '/placements' or request.path == '/placements/' %}border border-pink-500/20 bg-gradient-to-r from-pink-500/20 to-purple-500/20 shadow-lg shadow-pink-500/10{% else %}hover:bg-white/10{% endif %}"
     >
       <i data-lucide="briefcase" class="h-5 w-5"></i>
