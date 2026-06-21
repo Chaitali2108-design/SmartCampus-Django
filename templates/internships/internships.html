@@ -451,22 +451,129 @@
       {% endfor %}
     </div>
 
-    <section class="mt-16">
-      <div class="mb-8">
-        <h2 class="text-4xl font-black">Top Companies Hiring</h2>
-        <p class="text-slate-400 mt-2">Trusted companies hiring students</p>
+    <section class="mt-24 mb-20">
+      <div class="text-center mb-12">
+        <div
+          class="inline-block px-5 py-2 rounded-full bg-pink-500/20 text-pink-400 text-sm font-semibold mb-5"
+        >
+          DREAM DESTINATIONS
+        </div>
+
+        <h2 class="text-5xl font-black">Work At The World's Best</h2>
+
+        <p class="text-slate-400 mt-3 text-lg">
+          Companies students dream of joining
+        </p>
       </div>
 
-      <div class="grid md:grid-cols-2 xl:grid-cols-5 gap-6">
-        {% for company in top_companies %}
-        <div
-          class="bg-[#241235]/80 border border-pink-400/10 rounded-[28px] backdrop-blur-3xl p-8 flex items-center justify-center text-xl font-bold cursor-pointer hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300"
-        >
-          {{ company }}
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="brand-card">
+          <h1>G</h1>
+          <span>Google</span>
         </div>
-        {% endfor %}
+
+        <div class="brand-card">
+          <h1>M</h1>
+          <span>Microsoft</span>
+        </div>
+
+        <div class="brand-card">
+          <h1>A</h1>
+          <span>Amazon</span>
+        </div>
+
+        <div class="brand-card">
+          <h1>∞</h1>
+          <span>Meta</span>
+        </div>
+
+        <div class="brand-card">
+          <h1>T</h1>
+          <span>Tesla</span>
+        </div>
+
+        <div class="brand-card">
+          <h1>N</h1>
+          <span>Netflix</span>
+        </div>
+
+        <div class="brand-card">
+          <h1>A</h1>
+          <span>Adobe</span>
+        </div>
+
+        <div class="brand-card">
+          <h1>S</h1>
+          <span>Spotify</span>
+        </div>
       </div>
     </section>
+
+    <style>
+      .brand-card {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+        border-radius: 30px;
+
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.02)
+        );
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+        transition: 0.45s;
+      }
+
+      .brand-card::before {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+
+        background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
+
+        filter: blur(80px);
+        opacity: 0.15;
+
+        transition: 0.45s;
+      }
+
+      .brand-card:hover {
+        transform: translateY(-15px) scale(1.05);
+      }
+
+      .brand-card:hover::before {
+        opacity: 0.45;
+      }
+
+      .brand-card h1 {
+        font-size: 72px;
+        font-weight: 900;
+
+        background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        margin-bottom: 10px;
+      }
+
+      .brand-card span {
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+      }
+    </style>
 
     <section class="mt-16 mb-20">
       <div class="mb-8">
