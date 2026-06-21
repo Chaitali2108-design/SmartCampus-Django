@@ -417,33 +417,104 @@
       {% endfor %}
     </div>
 
-    <section class="mt-24 mb-20">
-      <div class="text-center mb-12">
-        <h2 class="text-5xl font-black">Dream Companies</h2>
+    <section class="mb-20">
+      <div class="mb-6">
+        <h2 class="text-3xl font-black">Hiring Partners</h2>
 
-        <p class="text-slate-400 mt-3">
-          Where SmartCampus students want to work
+        <p class="text-slate-400 mt-2">
+          Trusted by leading technology companies
         </p>
       </div>
 
-      <div class="company-cloud">
-        <div class="company-bubble google lg">Google</div>
+      <div
+        class="relative overflow-hidden rounded-[28px] bg-[#241235]/80 border border-pink-400/10 backdrop-blur-3xl py-6"
+      >
+        <!-- Left Fade -->
 
-        <div class="company-bubble microsoft md">Microsoft</div>
+        <div
+          class="absolute left-0 top-0 h-full w-32 z-10 bg-gradient-to-r from-[#140f1f] to-transparent"
+        ></div>
 
-        <div class="company-bubble adobe sm">Adobe</div>
+        <!-- Right Fade -->
 
-        <div class="company-bubble amazon xl">Amazon</div>
+        <div
+          class="absolute right-0 top-0 h-full w-32 z-10 bg-gradient-to-l from-[#140f1f] to-transparent"
+        ></div>
 
-        <div class="company-bubble meta md">Meta</div>
+        <!-- Marquee -->
 
-        <div class="company-bubble tesla lg">Tesla</div>
+        <div class="marquee-track">
+          <span>Google</span>
+          <span>Microsoft</span>
+          <span>Amazon</span>
+          <span>Meta</span>
+          <span>Adobe</span>
+          <span>Netflix</span>
+          <span>Tesla</span>
+          <span>Spotify</span>
 
-        <div class="company-bubble spotify sm">Spotify</div>
+          <!-- Duplicate for smooth loop -->
 
-        <div class="company-bubble netflix md">Netflix</div>
+          <span>Google</span>
+          <span>Microsoft</span>
+          <span>Amazon</span>
+          <span>Meta</span>
+          <span>Adobe</span>
+          <span>Netflix</span>
+          <span>Tesla</span>
+          <span>Spotify</span>
+        </div>
       </div>
     </section>
+
+    <style>
+      .marquee-track {
+        display: flex;
+        width: max-content;
+        gap: 22px;
+
+        animation: companyScroll 24s linear infinite;
+      }
+
+      .marquee-track span {
+        min-width: max-content;
+
+        padding: 10px 20px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        backdrop-filter: blur(20px);
+
+        font-size: 15px;
+        font-weight: 700;
+
+        color: #e2e8f0;
+
+        transition: 0.3s;
+      }
+
+      .marquee-track span:hover {
+        transform: translateY(-4px);
+
+        border-color: rgba(236, 72, 153, 0.25);
+
+        box-shadow: 0 0 20px rgba(236, 72, 153, 0.15);
+      }
+
+      @keyframes companyScroll {
+        from {
+          transform: translateX(0);
+        }
+
+        to {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
 
     <!--success stories-->
     <section class="mb-24">
