@@ -1,5 +1,29 @@
 {% extends 'base.html' %} {% block content %}
 
+<div
+  class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 border border-white/10 py-3 mb-10"
+>
+  <div
+    class="whitespace-nowrap animate-[marquee_25s_linear_infinite] text-sm font-semibold"
+  >
+    🔥 Google added Frontend Intern &nbsp;&nbsp;&nbsp; 🚀 Adobe hiring UI/UX
+    Interns &nbsp;&nbsp;&nbsp; 💰 Amazon offering ₹45K stipend
+    &nbsp;&nbsp;&nbsp; 🌎 120 Remote Internships Available &nbsp;&nbsp;&nbsp; ⚡
+    New AI/ML Roles Added Today
+  </div>
+</div>
+
+<style>
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+</style>
+
 <div class="min-h-screen bg-[#140f1f] text-white overflow-hidden relative">
   <!-- BACKGROUND EFFECTS -->
 
@@ -100,28 +124,128 @@
         </div>
       </div>
     </section>
-    <section class="mb-14">
-      <div class="mb-8">
-        <h2 class="text-4xl font-black">Popular Categories</h2>
-        <p class="text-slate-400 mt-2">Explore internships by domains</p>
+    <section class="mb-20">
+      <div class="mb-8 text-center">
+        <h2 class="text-5xl font-black">Trending Skills</h2>
       </div>
 
-      <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-        {% for item in categories %}
+      <div class="mt-8 mb-8"></div>
+
+      <div class="relative h-[480px] overflow-hidden pt-10">
+        <!-- Django -->
         <div
-          class="animate-popup delay-{{ forloop.counter }} bg-[#241235]/80 border border-pink-400/10 rounded-[28px] backdrop-blur-3xl p-8 cursor-pointer hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300"
+          class="skill-bubble absolute top-[30px] left-[42%] text-purple-300 border-purple-500/30 bg-purple-500/10 text-3xl"
         >
-          <div
-            class="w-16 h-16 rounded-2xl bg-[#dbaa14] flex items-center justify-center text-2xl font-black"
-          >
-            {{ item|slice:':1' }}
-          </div>
-          <h3 class="text-2xl font-black mt-6">{{ item }}</h3>
-          <p class="text-slate-400 mt-2">Explore opportunities</p>
+          Django
         </div>
-        {% endfor %}
+
+        <!-- React -->
+        <div
+          class="skill-bubble absolute top-[110px] left-[10%] text-pink-300 border-pink-500/30 bg-pink-500/10 text-xl"
+        >
+          React
+        </div>
+
+        <!-- Machine Learning -->
+        <div
+          class="skill-bubble absolute top-[90px] right-[8%] text-yellow-300 border-yellow-500/30 bg-yellow-500/10 text-2xl"
+        >
+          Machine Learning
+        </div>
+
+        <!-- Python -->
+        <div
+          class="skill-bubble absolute top-[200px] left-[30%] text-cyan-300 border-cyan-500/30 bg-cyan-500/10 text-2xl"
+        >
+          Python
+        </div>
+
+        <!-- AWS -->
+        <div
+          class="skill-bubble absolute bottom-[80px] left-[15%] text-green-300 border-green-500/30 bg-green-500/10"
+        >
+          AWS
+        </div>
+
+        <!-- Flutter -->
+        <div
+          class="skill-bubble absolute bottom-[70px] right-[18%] text-red-300 border-red-500/30 bg-red-500/10"
+        >
+          Flutter
+        </div>
+
+        <!-- Node.js -->
+        <div
+          class="skill-bubble absolute bottom-0 left-[42%] text-indigo-300 border-indigo-500/30 bg-indigo-500/10 text-xl"
+        >
+          Node.js
+        </div>
+
+        <!-- Figma -->
+        <div
+          class="skill-bubble absolute top-[180px] right-[30%] text-fuchsia-300 border-fuchsia-500/30 bg-fuchsia-500/10"
+        >
+          Figma
+        </div>
       </div>
     </section>
+
+    <style>
+      .skill-bubble {
+        padding: 16px 28px;
+        border-radius: 999px;
+        border: 1px solid;
+        backdrop-filter: blur(20px);
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .skill-bubble:hover {
+        transform: scale(1.12);
+        box-shadow: 0 0 35px rgba(255, 255, 255, 0.15);
+      }
+
+      .skill-bubble:nth-child(2) {
+        animation-delay: 1s;
+      }
+
+      .skill-bubble:nth-child(3) {
+        animation-delay: 2s;
+      }
+
+      .skill-bubble:nth-child(4) {
+        animation-delay: 3s;
+      }
+
+      .skill-bubble:nth-child(5) {
+        animation-delay: 1.5s;
+      }
+
+      .skill-bubble:nth-child(6) {
+        animation-delay: 2.5s;
+      }
+
+      .skill-bubble:nth-child(7) {
+        animation-delay: 3.5s;
+      }
+
+      .skill-bubble:nth-child(8) {
+        animation-delay: 4s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+    </style>
 
     <section
       class="relative overflow-hidden bg-[#241235]/80 border border-pink-400/10 rounded-[28px] backdrop-blur-3xl p-8 mb-14 backdrop-blur-3xl animate-popup"
@@ -170,6 +294,7 @@
 
     <form
       method="get"
+      id="filterForm"
       action="{% url 'internships' %}#internship-section"
       class="mb-10 grid md:grid-cols-4 gap-5 animate-popup"
     >
@@ -191,13 +316,57 @@
           All Locations
         </option>
 
-        <option value="Bangalore">Bangalore</option>
+        <option
+          value="Bangalore"
+          {%
+          if
+          selected_location=""
+          ="Bangalore"
+          %}selected{%
+          endif
+          %}
+        >
+          Bangalore
+        </option>
 
-        <option value="Hyderabad">Hyderabad</option>
+        <option
+          value="Hyderabad"
+          {%
+          if
+          selected_location=""
+          ="Hyderabad"
+          %}selected{%
+          endif
+          %}
+        >
+          Hyderabad
+        </option>
 
-        <option value="Mumbai">Mumbai</option>
+        <option
+          value="Mumbai"
+          {%
+          if
+          selected_location=""
+          ="Mumbai"
+          %}selected{%
+          endif
+          %}
+        >
+          Mumbai
+        </option>
 
-        <option value="Remote">Remote</option>
+        <option
+          value="Remote"
+          {%
+          if
+          selected_location=""
+          ="Remote"
+          %}selected{%
+          endif
+          %}
+        >
+          Remote
+        </option>
       </select>
     </form>
 
@@ -323,19 +492,31 @@
         {% endfor %}
       </div>
     </section>
-  </div>
 
-  {% endblock %}
-</div>
+    <script>
+      const form = document.getElementById("filterForm");
+      const locationFilter = document.getElementById("locationFilter");
 
-<!--for location filter-->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.search.includes("location=")) {
-      document.getElementById("internshipGrid")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
+      locationFilter.addEventListener("change", function () {
+        sessionStorage.setItem("internshipScroll", window.scrollY);
+
+        form.submit();
       });
-    }
-  });
-</script>
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const scrollPos = sessionStorage.getItem("internshipScroll");
+
+        if (scrollPos) {
+          window.scrollTo({
+            top: parseInt(scrollPos),
+            behavior: "instant",
+          });
+
+          sessionStorage.removeItem("internshipScroll");
+        }
+      });
+    </script>
+
+    {% endblock %}
+  </div>
+</div>
