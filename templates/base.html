@@ -83,22 +83,22 @@
 
     <!-- Background Glow -->
     <div
-      className="absolute top-0 left-0 w-[500px] h-[500px] bg-fuchsia-600/5 blur-[140px] rounded-full"
+      class="absolute top-0 left-0 w-[500px] h-[500px] bg-fuchsia-600/5 blur-[140px] rounded-full"
     ></div>
 
     <div
-      className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 blur-[140px] rounded-full"
+      class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 blur-[140px] rounded-full"
     ></div>
 
     <div
-      className="absolute top-[40%] left-[40%] w-[300px] h-[300px] bg-purple-500/5 blur-[120px] rounded-full"
+      class="absolute top-[40%] left-[40%] w-[300px] h-[300px] bg-purple-500/5 blur-[120px] rounded-full"
     ></div>
 
     <div class="flex">
       {% include 'components/sidebar.html' %}
 
-      <div class="flex-1 pt-16 lg:ml-72 lg:pt-0">
-        {% include 'components/navbar.html' %}
+     <div class="flex-1 min-w-0 pt-16 lg:ml-72 lg:pt-0">
+          {% include 'components/navbar.html' %}
 
         <main class="p-4 sm:p-6 lg:p-8">
           {% block content %} {% endblock %}
