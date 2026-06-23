@@ -1,29 +1,5 @@
 {% extends 'base.html' %} {% block content %}
 
-<div
-  class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 border border-white/10 py-3 mb-10"
->
-  <div
-    class="whitespace-nowrap animate-[marquee_25s_linear_infinite] text-sm font-semibold"
-  >
-    🔥 Google added Frontend Intern &nbsp;&nbsp;&nbsp; 🚀 Adobe hiring UI/UX
-    Interns &nbsp;&nbsp;&nbsp; 💰 Amazon offering ₹45K stipend
-    &nbsp;&nbsp;&nbsp; 🌎 120 Remote Internships Available &nbsp;&nbsp;&nbsp; ⚡
-    New AI/ML Roles Added Today
-  </div>
-</div>
-
-<style>
-  @keyframes marquee {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
-</style>
-
 <div class="min-h-screen bg-[#140f1f] text-white overflow-hidden relative">
   <!-- BACKGROUND EFFECTS -->
 
@@ -36,6 +12,45 @@
   ></div>
 
   <div class="relative z-10 px-5 lg:px-10 py-8">
+    <!-- Live Opportunity Ticker Here -->
+
+    <div
+      class="relative overflow-x-hidden rounded-2xl bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 border border-white/10 py-3 mb-10"
+    >
+      <div class="ticker-track">
+        <span>🔥 Google added Frontend Intern</span>
+        <span>🚀 Adobe hiring UI/UX Interns</span>
+        <span>💰 Amazon offering ₹45K stipend</span>
+        <span>🌎 120 Remote Internships Available</span>
+        <span>⚡ New AI/ML Roles Added Today</span>
+
+        <!-- duplicate -->
+        <span>🔥 Google added Frontend Intern</span>
+        <span>🚀 Adobe hiring UI/UX Interns</span>
+        <span>💰 Amazon offering ₹45K stipend</span>
+        <span>🌎 120 Remote Internships Available</span>
+        <span>⚡ New AI/ML Roles Added Today</span>
+      </div>
+    </div>
+
+    <style>
+      .ticker-track {
+        display: flex;
+        width: max-content;
+        gap: 60px;
+        animation: ticker 25s linear infinite;
+      }
+
+      @keyframes ticker {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+
     <section
       class="bg-[#241235]/80 border border-pink-400/10 rounded-[34px] p-6 lg:p-8 backdrop-blur-3xl mb-10 overflow-hidden relative"
     >
@@ -417,7 +432,7 @@
       {% endfor %}
     </div>
 
-    <section class="mb-20">
+    <section class="mb-20 overflow-hidden">
       <div class="mb-6">
         <h2 class="text-3xl font-black">Hiring Partners</h2>
 
@@ -427,7 +442,7 @@
       </div>
 
       <div
-        class="relative overflow-hidden rounded-[28px] bg-[#241235]/80 border border-pink-400/10 backdrop-blur-3xl py-6"
+        class="relative overflow-hidden w-full rounded-[28px] bg-[#241235]/80 border border-pink-400/10 backdrop-blur-3xl py-6"
       >
         <!-- Left Fade -->
 
@@ -477,8 +492,6 @@
       }
 
       .marquee-track span {
-        min-width: max-content;
-
         padding: 10px 20px;
 
         border-radius: 999px;
@@ -594,6 +607,10 @@
 
     <!--Styling for dream companies-->
     <style>
+      html,
+      body {
+        overflow-x: hidden;
+      }
       .company-cloud {
         display: flex;
         justify-content: center;
@@ -886,7 +903,7 @@
         }
       });
     </script>
-
-    {% endblock %}
   </div>
 </div>
+
+{% endblock %}
