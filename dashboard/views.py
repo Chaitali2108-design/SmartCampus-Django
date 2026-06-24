@@ -16,7 +16,12 @@ from .models import InternshipApplication
 from .models import InternshipOpportunity
 
 
-
+#for recruiter dashboard
+def recruiter_dashboard(request):
+    return render(
+        request,
+        "recruiter/recruiter_dashboard.html"
+    )
 
 #For dashboard section
 from .models import KPI
