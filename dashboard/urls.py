@@ -13,4 +13,4 @@ urlpatterns = [
     path("internships/", views.internships, name="internships"),
     path("internships/<int:pk>/apply/", views.apply_internship, name="apply_internship"),
     path("recruiter-dashboard",views.recruiter_dashboard,name="recruiter_dashboard"),
-]
+]  
