@@ -365,545 +365,567 @@
       >
         My Applications
       </a>
+
+<div class="text-center mt-10">
+  <button
+    id="viewAllBtn"
+    class="px-8 py-3 rounded-2xl border border-cyan-400/20 bg-cyan-500/10 text-cyan-300 font-semibold hover:bg-cyan-500/20 hover:scale-105 transition-all duration-300"
+  >
+    View All Internships →
+  </button>
+</div>
     </div>
 
-    <div id="internshipGrid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+    <div id="internshipGrid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
       {% for item in internships %}
+      <div class="{% if forloop.counter > 3 %}hidden extra-card{% endif %}">
+        <div
+          class="internship-card bg-[#241235]/80 border border-pink-400/10 rounded-[28px] backdrop-blur-3xl p-7 backdrop-blur-2xl transition-all duration-300 flex flex-col justify-between min-h-[430px] hover:-translate-y-2 hover:scale-[1.02]"
+        >
+          <div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-2xl font-black">{{ item.role }}</h2>
 
-      <div
-        class="bg-[#241235]/80 border border-pink-400/10 rounded-[28px] backdrop-blur-3xl p-7 backdrop-blur-2xl transition-all duration-300 flex flex-col justify-between min-h-[430px] hover:-translate-y-2 hover:scale-[1.02]"
-      >
-        <div>
-          <div class="flex items-center justify-between">
-            <div>
-              <h2 class="text-2xl font-black">{{ item.role }}</h2>
+                <p class="text-slate-400 mt-1">{{ item.company }}</p>
 
-              <p class="text-slate-400 mt-1">{{ item.company }}</p>
+                <div class="flex gap-3 mt-5 flex-wrap mt-8">
+                  <div
+                    class="bg-white/10 px-4 py-2 rounded-full text-sm font-bold"
+                  >
+                    💰 {{ item.stipend }}
+                  </div>
 
-              <div class="flex gap-3 mt-5 flex-wrap mt-8">
-                <div
-                  class="bg-white/10 px-4 py-2 rounded-full text-sm font-bold"
-                >
-                  💰 {{ item.stipend }}
-                </div>
-
-                <div
-                  class="bg-white/10 px-4 py-2 rounded-full text-sm font-bold"
-                >
-                  📍 {{ item.location }}
+                  <div
+                    class="bg-white/10 px-4 py-2 rounded-full text-sm font-bold"
+                  >
+                    📍 {{ item.location }}
+                  </div>
                 </div>
               </div>
+
+              {% if item.trending %}
+              <div
+                class="bg-pink-500/20 text-pink-400 px-4 py-2 rounded-full text-sm"
+              >
+                Trending
+              </div>
+              {% endif %}
             </div>
 
-            {% if item.trending %}
-            <div
-              class="bg-pink-500/20 text-pink-400 px-4 py-2 rounded-full text-sm"
-            >
-              Trending
+            <div class="flex flex-wrap gap-3 mt-8">
+              {% for skill in item.skills_list %}
+              <div class="bg-white/10 px-4 py-2 rounded-full text-sm">
+                {{ skill }}
+              </div>
+              {% endfor %}
             </div>
-            {% endif %}
           </div>
 
-          <div class="flex flex-wrap gap-3 mt-8">
-            {% for skill in item.skills_list %}
-            <div class="bg-white/10 px-4 py-2 rounded-full text-sm">
-              {{ skill }}
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <form
-          method="post"
-          action="{% url 'apply_internship' item.id %}"
-          class="mt-8"
-        >
-          {% csrf_token %}
-
-          <button
-            type="submit"
-            class="w-full h-[58px] bg-gradient-to-r from-[#295D23] via-[#306D29] to-[#3B8533] py-4 rounded-2xl font-bold hover:scale-[1.02] transition-all duration-300 flex items-center justify-center"
+          <form
+            method="post"
+            action="{% url 'apply_internship' item.id %}"
+            class="mt-8"
           >
-            Apply Now
-          </button>
-        </form>
-      </div>
+            {% csrf_token %}
 
-      {% endfor %}
+            <button
+              type="submit"
+              class="w-full h-[58px] bg-gradient-to-r from-[#295D23] via-[#306D29] to-[#3B8533] py-4 rounded-2xl font-bold hover:scale-[1.02] transition-all duration-300 flex items-center justify-center"
+            >
+              Apply Now
+            </button>
+          </form>
+        </div>
+        </div>
+        {% endfor %}
+      
     </div>
 
-    <section class="mb-20 overflow-hidden">
-      <div class="mb-6">
-        <h2 class="text-3xl font-black">Hiring Partners</h2>
+      <section class="mb-20 overflow-hidden">
+        <div class="mb-6">
+          <h2 class="text-3xl font-black">Hiring Partners</h2>
 
-        <p class="text-slate-400 mt-2">
-          Trusted by leading technology companies
-        </p>
-      </div>
-
-      <div
-        class="relative overflow-hidden w-full rounded-[28px] bg-[#241235]/80 border border-pink-400/10 backdrop-blur-3xl py-6"
-      >
-        <!-- Left Fade -->
-
-        <div
-          class="absolute left-0 top-0 h-full w-32 z-10 bg-gradient-to-r from-[#140f1f] to-transparent"
-        ></div>
-
-        <!-- Right Fade -->
-
-        <div
-          class="absolute right-0 top-0 h-full w-32 z-10 bg-gradient-to-l from-[#140f1f] to-transparent"
-        ></div>
-
-        <!-- Marquee -->
-
-        <div class="marquee-track">
-          <span>Google</span>
-          <span>Microsoft</span>
-          <span>Amazon</span>
-          <span>Meta</span>
-          <span>Adobe</span>
-          <span>Netflix</span>
-          <span>Tesla</span>
-          <span>Spotify</span>
-
-          <!-- Duplicate for smooth loop -->
-
-          <span>Google</span>
-          <span>Microsoft</span>
-          <span>Amazon</span>
-          <span>Meta</span>
-          <span>Adobe</span>
-          <span>Netflix</span>
-          <span>Tesla</span>
-          <span>Spotify</span>
+          <p class="text-slate-400 mt-2">
+            Trusted by leading technology companies
+          </p>
         </div>
-      </div>
-    </section>
 
-    <style>
-      .marquee-track {
-        display: flex;
-        width: max-content;
-        gap: 22px;
-
-        animation: companyScroll 24s linear infinite;
-      }
-
-      .marquee-track span {
-        padding: 10px 20px;
-
-        border-radius: 999px;
-
-        background: rgba(255, 255, 255, 0.05);
-
-        border: 1px solid rgba(255, 255, 255, 0.08);
-
-        backdrop-filter: blur(20px);
-
-        font-size: 15px;
-        font-weight: 700;
-
-        color: #e2e8f0;
-
-        transition: 0.3s;
-      }
-
-      .marquee-track span:hover {
-        transform: translateY(-4px);
-
-        border-color: rgba(236, 72, 153, 0.25);
-
-        box-shadow: 0 0 20px rgba(236, 72, 153, 0.15);
-      }
-
-      @keyframes companyScroll {
-        from {
-          transform: translateX(0);
-        }
-
-        to {
-          transform: translateX(-50%);
-        }
-      }
-    </style>
-
-    <!--success stories-->
-    <section class="mb-24">
-      <div class="text-center mb-12">
         <div
-          class="inline-block px-5 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-semibold mb-4"
+          class="relative overflow-hidden w-full rounded-[28px] bg-[#241235]/80 border border-pink-400/10 backdrop-blur-3xl py-6"
         >
-          🎉 Student Achievements
-        </div>
+          <!-- Left Fade -->
 
-        <h2 class="text-5xl font-black">Success Stories</h2>
+          <div
+            class="absolute left-0 top-0 h-full w-32 z-10 bg-gradient-to-r from-[#140f1f] to-transparent"
+          ></div>
 
-        <p class="text-slate-400 mt-3">
-          Students who transformed internships into opportunities
-        </p>
-      </div>
+          <!-- Right Fade -->
 
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="success-card">
-          <div class="company-badge google">Google</div>
+          <div
+            class="absolute right-0 top-0 h-full w-32 z-10 bg-gradient-to-l from-[#140f1f] to-transparent"
+          ></div>
 
-          <h3>Aman Gupta</h3>
+          <!-- Marquee -->
 
-          <p>Frontend Intern → Software Engineer</p>
+          <div class="marquee-track">
+            <span>Google</span>
+            <span>Microsoft</span>
+            <span>Amazon</span>
+            <span>Meta</span>
+            <span>Adobe</span>
+            <span>Netflix</span>
+            <span>Tesla</span>
+            <span>Spotify</span>
 
-          <div class="salary">₹50,000/month</div>
+            <!-- Duplicate for smooth loop -->
 
-          <div class="success-rate">
-            <span>Career Growth</span>
-            <span>92%</span>
-          </div>
-
-          <div class="progress">
-            <div class="fill" style="width: 92%"></div>
-          </div>
-        </div>
-
-        <div class="success-card">
-          <div class="company-badge microsoft">Microsoft</div>
-
-          <h3>Priya Sharma</h3>
-
-          <p>AI Intern → ML Engineer</p>
-
-          <div class="salary">₹60,000/month</div>
-
-          <div class="success-rate">
-            <span>Career Growth</span>
-            <span>95%</span>
-          </div>
-
-          <div class="progress">
-            <div class="fill" style="width: 95%"></div>
+            <span>Google</span>
+            <span>Microsoft</span>
+            <span>Amazon</span>
+            <span>Meta</span>
+            <span>Adobe</span>
+            <span>Netflix</span>
+            <span>Tesla</span>
+            <span>Spotify</span>
           </div>
         </div>
+      </section>
 
-        <div class="success-card">
-          <div class="company-badge amazon">Amazon</div>
+      <style>
+        .marquee-track {
+          display: flex;
+          width: max-content;
+          gap: 22px;
 
-          <h3>Rahul Verma</h3>
-
-          <p>Backend Intern → SDE-I</p>
-
-          <div class="salary">₹55,000/month</div>
-
-          <div class="success-rate">
-            <span>Career Growth</span>
-            <span>90%</span>
-          </div>
-
-          <div class="progress">
-            <div class="fill" style="width: 90%"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--Styling for dream companies-->
-    <style>
-      html,
-      body {
-        overflow-x: hidden;
-      }
-      .company-cloud {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 28px;
-        padding: 40px 0;
-      }
-
-      .company-bubble {
-        position: relative;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 999px;
-
-        backdrop-filter: blur(20px);
-
-        font-weight: 800;
-        color: white;
-
-        transition: 0.4s;
-        cursor: pointer;
-
-        border: 1px solid transparent;
-      }
-
-      .company-bubble:hover {
-        transform: translateY(-12px) scale(1.12);
-      }
-
-      /* GOOGLE */
-
-      .google {
-        background: rgba(66, 133, 244, 0.12);
-        border-color: rgba(66, 133, 244, 0.35);
-        box-shadow: 0 0 30px rgba(66, 133, 244, 0.18);
-      }
-
-      .google:hover {
-        box-shadow: 0 0 45px rgba(66, 133, 244, 0.4);
-      }
-
-      /* MICROSOFT */
-
-      .microsoft {
-        background: rgba(52, 168, 83, 0.12);
-        border-color: rgba(52, 168, 83, 0.35);
-        box-shadow: 0 0 30px rgba(52, 168, 83, 0.18);
-      }
-
-      /* AMAZON */
-
-      .amazon {
-        background: rgba(255, 153, 0, 0.12);
-        border-color: rgba(255, 153, 0, 0.35);
-        box-shadow: 0 0 30px rgba(255, 153, 0, 0.18);
-      }
-
-      /* META */
-
-      .meta {
-        background: rgba(0, 132, 255, 0.12);
-        border-color: rgba(0, 132, 255, 0.35);
-        box-shadow: 0 0 30px rgba(0, 132, 255, 0.18);
-      }
-
-      /* TESLA */
-
-      .tesla {
-        background: rgba(255, 70, 70, 0.12);
-        border-color: rgba(255, 70, 70, 0.35);
-        box-shadow: 0 0 30px rgba(255, 70, 70, 0.18);
-      }
-
-      /* NETFLIX */
-
-      .netflix {
-        background: rgba(229, 9, 20, 0.12);
-        border-color: rgba(229, 9, 20, 0.35);
-        box-shadow: 0 0 30px rgba(229, 9, 20, 0.18);
-      }
-
-      /* SPOTIFY */
-
-      .spotify {
-        background: rgba(29, 185, 84, 0.12);
-        border-color: rgba(29, 185, 84, 0.35);
-        box-shadow: 0 0 30px rgba(29, 185, 84, 0.18);
-      }
-
-      /* ADOBE */
-
-      .adobe {
-        background: rgba(255, 61, 61, 0.12);
-        border-color: rgba(255, 61, 61, 0.35);
-        box-shadow: 0 0 30px rgba(255, 61, 61, 0.18);
-      }
-
-      .xl {
-        width: 240px;
-        height: 100px;
-        font-size: 30px;
-      }
-
-      .lg {
-        width: 200px;
-        height: 90px;
-        font-size: 26px;
-      }
-
-      .md {
-        width: 170px;
-        height: 80px;
-        font-size: 22px;
-      }
-
-      .sm {
-        width: 140px;
-        height: 70px;
-        font-size: 18px;
-      }
-
-      .company-bubble:nth-child(1) {
-        animation: float 6s ease-in-out infinite;
-      }
-
-      .company-bubble:nth-child(2) {
-        animation: float 7s ease-in-out infinite;
-      }
-
-      .company-bubble:nth-child(3) {
-        animation: float 5s ease-in-out infinite;
-      }
-
-      .company-bubble:nth-child(4) {
-        animation: float 8s ease-in-out infinite;
-      }
-
-      .company-bubble:nth-child(5) {
-        animation: float 6.5s ease-in-out infinite;
-      }
-
-      .company-bubble:nth-child(6) {
-        animation: float 7.5s ease-in-out infinite;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
+          animation: companyScroll 24s linear infinite;
         }
-        50% {
+
+        .marquee-track span {
+          padding: 10px 20px;
+
+          border-radius: 999px;
+
+          background: rgba(255, 255, 255, 0.05);
+
+          border: 1px solid rgba(255, 255, 255, 0.08);
+
+          backdrop-filter: blur(20px);
+
+          font-size: 15px;
+          font-weight: 700;
+
+          color: #e2e8f0;
+
+          transition: 0.3s;
+        }
+
+        .marquee-track span:hover {
+          transform: translateY(-4px);
+
+          border-color: rgba(236, 72, 153, 0.25);
+
+          box-shadow: 0 0 20px rgba(236, 72, 153, 0.15);
+        }
+
+        @keyframes companyScroll {
+          from {
+            transform: translateX(0);
+          }
+
+          to {
+            transform: translateX(-50%);
+          }
+        }
+      </style>
+
+      <!--success stories-->
+      <section class="mb-24">
+        <div class="text-center mb-12">
+          <div
+            class="inline-block px-5 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-semibold mb-4"
+          >
+            🎉 Student Achievements
+          </div>
+
+          <h2 class="text-5xl font-black">Success Stories</h2>
+
+          <p class="text-slate-400 mt-3">
+            Students who transformed internships into opportunities
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="success-card">
+            <div class="company-badge google">Google</div>
+
+            <h3>Aman Gupta</h3>
+
+            <p>Frontend Intern → Software Engineer</p>
+
+            <div class="salary">₹50,000/month</div>
+
+            <div class="success-rate">
+              <span>Career Growth</span>
+              <span>92%</span>
+            </div>
+
+            <div class="progress">
+              <div class="fill" style="width: 92%"></div>
+            </div>
+          </div>
+
+          <div class="success-card">
+            <div class="company-badge microsoft">Microsoft</div>
+
+            <h3>Priya Sharma</h3>
+
+            <p>AI Intern → ML Engineer</p>
+
+            <div class="salary">₹60,000/month</div>
+
+            <div class="success-rate">
+              <span>Career Growth</span>
+              <span>95%</span>
+            </div>
+
+            <div class="progress">
+              <div class="fill" style="width: 95%"></div>
+            </div>
+          </div>
+
+          <div class="success-card">
+            <div class="company-badge amazon">Amazon</div>
+
+            <h3>Rahul Verma</h3>
+
+            <p>Backend Intern → SDE-I</p>
+
+            <div class="salary">₹55,000/month</div>
+
+            <div class="success-rate">
+              <span>Career Growth</span>
+              <span>90%</span>
+            </div>
+
+            <div class="progress">
+              <div class="fill" style="width: 90%"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--Styling for dream companies-->
+      <style>
+        html,
+        body {
+          overflow-x: hidden;
+        }
+        .hidden {
+          display: none;
+        }
+        .company-cloud {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 28px;
+          padding: 40px 0;
+        }
+
+        .company-bubble {
+          position: relative;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          border-radius: 999px;
+
+          backdrop-filter: blur(20px);
+
+          font-weight: 800;
+          color: white;
+
+          transition: 0.4s;
+          cursor: pointer;
+
+          border: 1px solid transparent;
+        }
+
+        .company-bubble:hover {
+          transform: translateY(-12px) scale(1.12);
+        }
+
+        /* GOOGLE */
+
+        .google {
+          background: rgba(66, 133, 244, 0.12);
+          border-color: rgba(66, 133, 244, 0.35);
+          box-shadow: 0 0 30px rgba(66, 133, 244, 0.18);
+        }
+
+        .google:hover {
+          box-shadow: 0 0 45px rgba(66, 133, 244, 0.4);
+        }
+
+        /* MICROSOFT */
+
+        .microsoft {
+          background: rgba(52, 168, 83, 0.12);
+          border-color: rgba(52, 168, 83, 0.35);
+          box-shadow: 0 0 30px rgba(52, 168, 83, 0.18);
+        }
+
+        /* AMAZON */
+
+        .amazon {
+          background: rgba(255, 153, 0, 0.12);
+          border-color: rgba(255, 153, 0, 0.35);
+          box-shadow: 0 0 30px rgba(255, 153, 0, 0.18);
+        }
+
+        /* META */
+
+        .meta {
+          background: rgba(0, 132, 255, 0.12);
+          border-color: rgba(0, 132, 255, 0.35);
+          box-shadow: 0 0 30px rgba(0, 132, 255, 0.18);
+        }
+
+        /* TESLA */
+
+        .tesla {
+          background: rgba(255, 70, 70, 0.12);
+          border-color: rgba(255, 70, 70, 0.35);
+          box-shadow: 0 0 30px rgba(255, 70, 70, 0.18);
+        }
+
+        /* NETFLIX */
+
+        .netflix {
+          background: rgba(229, 9, 20, 0.12);
+          border-color: rgba(229, 9, 20, 0.35);
+          box-shadow: 0 0 30px rgba(229, 9, 20, 0.18);
+        }
+
+        /* SPOTIFY */
+
+        .spotify {
+          background: rgba(29, 185, 84, 0.12);
+          border-color: rgba(29, 185, 84, 0.35);
+          box-shadow: 0 0 30px rgba(29, 185, 84, 0.18);
+        }
+
+        /* ADOBE */
+
+        .adobe {
+          background: rgba(255, 61, 61, 0.12);
+          border-color: rgba(255, 61, 61, 0.35);
+          box-shadow: 0 0 30px rgba(255, 61, 61, 0.18);
+        }
+
+        .xl {
+          width: 240px;
+          height: 100px;
+          font-size: 30px;
+        }
+
+        .lg {
+          width: 200px;
+          height: 90px;
+          font-size: 26px;
+        }
+
+        .md {
+          width: 170px;
+          height: 80px;
+          font-size: 22px;
+        }
+
+        .sm {
+          width: 140px;
+          height: 70px;
+          font-size: 18px;
+        }
+
+        .company-bubble:nth-child(1) {
+          animation: float 6s ease-in-out infinite;
+        }
+
+        .company-bubble:nth-child(2) {
+          animation: float 7s ease-in-out infinite;
+        }
+
+        .company-bubble:nth-child(3) {
+          animation: float 5s ease-in-out infinite;
+        }
+
+        .company-bubble:nth-child(4) {
+          animation: float 8s ease-in-out infinite;
+        }
+
+        .company-bubble:nth-child(5) {
+          animation: float 6.5s ease-in-out infinite;
+        }
+
+        .company-bubble:nth-child(6) {
+          animation: float 7.5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-12px);
+          }
+        }
+      </style>
+
+      <!--Styling for success stories-->
+      <style>
+        .success-card {
+          position: relative;
+          overflow: hidden;
+          padding: 30px;
+          border-radius: 30px;
+
+          background: linear-gradient(
+            145deg,
+            rgba(36, 18, 53, 0.95),
+            rgba(20, 15, 31, 0.95)
+          );
+
+          border: 1px solid rgba(255, 255, 255, 0.08);
+
+          backdrop-filter: blur(30px);
+
+          transition: 0.4s;
+        }
+
+        .success-card::before {
+          content: "";
+          position: absolute;
+          top: -50px;
+          right: -50px;
+          width: 160px;
+          height: 160px;
+          border-radius: 50%;
+
+          background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
+
+          opacity: 0.15;
+          filter: blur(50px);
+        }
+
+        .success-card:hover {
           transform: translateY(-12px);
+          box-shadow: 0 0 40px rgba(236, 72, 153, 0.15);
         }
-      }
-    </style>
 
-    <!--Styling for success stories-->
-    <style>
-      .success-card {
-        position: relative;
-        overflow: hidden;
-        padding: 30px;
-        border-radius: 30px;
-
-        background: linear-gradient(
-          145deg,
-          rgba(36, 18, 53, 0.95),
-          rgba(20, 15, 31, 0.95)
-        );
-
-        border: 1px solid rgba(255, 255, 255, 0.08);
-
-        backdrop-filter: blur(30px);
-
-        transition: 0.4s;
-      }
-
-      .success-card::before {
-        content: "";
-        position: absolute;
-        top: -50px;
-        right: -50px;
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-
-        background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
-
-        opacity: 0.15;
-        filter: blur(50px);
-      }
-
-      .success-card:hover {
-        transform: translateY(-12px);
-        box-shadow: 0 0 40px rgba(236, 72, 153, 0.15);
-      }
-
-      .company-badge {
-        display: inline-block;
-        padding: 8px 16px;
-        border-radius: 999px;
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 20px;
-      }
-
-      .google {
-        background: rgba(66, 133, 244, 0.15);
-        color: #4285f4;
-      }
-
-      .microsoft {
-        background: rgba(52, 168, 83, 0.15);
-        color: #34a853;
-      }
-
-      .amazon {
-        background: rgba(255, 153, 0, 0.15);
-        color: #ff9900;
-      }
-
-      .success-card h3 {
-        font-size: 28px;
-        font-weight: 900;
-        margin-bottom: 8px;
-      }
-
-      .success-card p {
-        color: #94a3b8;
-      }
-
-      .salary {
-        margin-top: 22px;
-        font-size: 30px;
-        font-weight: 900;
-
-        background: linear-gradient(135deg, #428475, #89d7b7);
-
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .success-rate {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 25px;
-        margin-bottom: 10px;
-        font-size: 14px;
-      }
-
-      .progress {
-        height: 10px;
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 999px;
-        overflow: hidden;
-      }
-
-      .fill {
-        height: 100%;
-        border-radius: 999px;
-
-        background: linear-gradient(90deg, #760031, #bd114a, #c13383);
-      }
-    </style>
-
-    <script>
-      const form = document.getElementById("filterForm");
-      const locationFilter = document.getElementById("locationFilter");
-
-      locationFilter.addEventListener("change", function () {
-        sessionStorage.setItem("internshipScroll", window.scrollY);
-
-        form.submit();
-      });
-
-      document.addEventListener("DOMContentLoaded", function () {
-        const scrollPos = sessionStorage.getItem("internshipScroll");
-
-        if (scrollPos) {
-          window.scrollTo({
-            top: parseInt(scrollPos),
-            behavior: "instant",
-          });
-
-          sessionStorage.removeItem("internshipScroll");
+        .company-badge {
+          display: inline-block;
+          padding: 8px 16px;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 700;
+          margin-bottom: 20px;
         }
-      });
-    </script>
+
+        .google {
+          background: rgba(66, 133, 244, 0.15);
+          color: #4285f4;
+        }
+
+        .microsoft {
+          background: rgba(52, 168, 83, 0.15);
+          color: #34a853;
+        }
+
+        .amazon {
+          background: rgba(255, 153, 0, 0.15);
+          color: #ff9900;
+        }
+
+        .success-card h3 {
+          font-size: 28px;
+          font-weight: 900;
+          margin-bottom: 8px;
+        }
+
+        .success-card p {
+          color: #94a3b8;
+        }
+
+        .salary {
+          margin-top: 22px;
+          font-size: 30px;
+          font-weight: 900;
+
+          background: linear-gradient(135deg, #428475, #89d7b7);
+
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .success-rate {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 25px;
+          margin-bottom: 10px;
+          font-size: 14px;
+        }
+
+        .progress {
+          height: 10px;
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 999px;
+          overflow: hidden;
+        }
+
+        .fill {
+          height: 100%;
+          border-radius: 999px;
+
+          background: linear-gradient(90deg, #760031, #bd114a, #c13383);
+        }
+      </style>
+
+      <script>
+        const form = document.getElementById("filterForm");
+        const locationFilter = document.getElementById("locationFilter");
+
+        locationFilter.addEventListener("change", function () {
+          sessionStorage.setItem("internshipScroll", window.scrollY);
+
+          form.submit();
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+          const scrollPos = sessionStorage.getItem("internshipScroll");
+
+          if (scrollPos) {
+            window.scrollTo({
+              top: parseInt(scrollPos),
+              behavior: "instant",
+            });
+
+            sessionStorage.removeItem("internshipScroll");
+          }
+        });
+
+     document.getElementById("viewAllBtn").addEventListener("click", function () {
+  document.querySelectorAll(".extra-card").forEach(card => {
+    card.classList.remove("hidden");
+  });
+
+  this.remove();
+});
+      </script>
+    </div>
   </div>
-</div>
 
-{% endblock %}
+  {% endblock %}
+</div>
