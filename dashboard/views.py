@@ -17,12 +17,32 @@ from .models import InternshipOpportunity
 
 
 #for recruiter dashboard
+
 def recruiter_dashboard(request):
+
+    total_jobs = InternshipOpportunity.objects.count()
+
+    total_applications = InternshipApplication.objects.count()
+
+    recent_jobs = InternshipOpportunity.objects.order_by('-created_at')[:5]
+
+    recent_applications = InternshipApplication.objects.select_related(
+        'user',
+        'internship'
+    ).order_by('-applied_at')[:10]
+
+    context = {
+        "total_jobs": total_jobs,
+        "total_applications": total_applications,
+        "recent_jobs": recent_jobs,
+        "recent_applications": recent_applications,
+    }
+
     return render(
         request,
-        "recruiter/recruiter_dashboard.html"
+        "recruiter/dashboard.html",
+        context
     )
-
 #For dashboard section
 from .models import KPI
 
