@@ -12,5 +12,5 @@ urlpatterns = [
     path("roadmap/", views.ai_roadmap, name="ai_roadmap"),
     path("internships/", views.internships, name="internships"),
     path("internships/<int:pk>/apply/", views.apply_internship, name="apply_internship"),
-    path("recruiter_dashboard/",views.recruiter_dashboard,name="recruiter_dashboard"),
+    path("recruiter/",views.recruiter_dashboard,name="recruiter_dashboard"),
 ]  
