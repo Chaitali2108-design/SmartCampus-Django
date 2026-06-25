@@ -40,9 +40,11 @@ def recruiter_dashboard(request):
 
     return render(
         request,
-        "recruiter/dashboard.html",
+        "recruiter/recruiter_dashboard.html",
         context
     )
+
+
 #For dashboard section
 from .models import KPI
 
