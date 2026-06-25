@@ -29,7 +29,7 @@ def recruiter_dashboard(request):
     recent_applications = InternshipApplication.objects.select_related(
         'user',
         'internship'
-    ).order_by('-applied_at')[:10]
+    ).order_by('-applied_at')[:12]
 
     context = {
         "total_jobs": total_jobs,
