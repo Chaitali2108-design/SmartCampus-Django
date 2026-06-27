@@ -1,0 +1,260 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+  <div class="max-w-7xl mx-auto px-8 py-8">
+    <!-- Header -->
+
+    <div class="flex items-center justify-between mb-10">
+      <div>
+        <h1 class="text-4xl font-bold">Recruitment Analytics</h1>
+
+        <p class="text-gray-400 mt-2">
+          Track hiring performance, candidate trends and recruitment insights.
+        </p>
+      </div>
+
+      <div class="flex gap-3">
+        <button
+          class="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+        >
+          Last 12 Months
+        </button>
+
+        <button
+          class="px-5 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400 transition"
+        >
+          Export
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================= -->
+
+    <!-- HERO CHART -->
+
+    <!-- ========================= -->
+
+    <div
+      class="rounded-[30px] border border-white/10 bg-white/5 backdrop-blur-xl p-8 mb-8"
+    >
+      <div class="flex justify-between mb-8">
+        <div>
+          <h2 class="text-2xl font-semibold">Hiring Trend</h2>
+
+          <p class="text-gray-400 mt-1">
+            Applications, interviews, offers and hires over time.
+          </p>
+        </div>
+
+        <div class="flex gap-6 text-sm">
+          <span class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-pink-500"></span>
+            Applications
+          </span>
+
+          <span class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-violet-500"></span>
+            Interviews
+          </span>
+
+          <span class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-cyan-400"></span>
+            Offers
+          </span>
+
+          <span class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+            Hires
+          </span>
+        </div>
+      </div>
+
+      <div id="hiringChart" class="h-[420px]"></div>
+    </div>
+
+    <!-- ========================= -->
+
+    <!-- Bottom Grid -->
+
+    <!-- ========================= -->
+
+    <div class="grid grid-cols-12 gap-8">
+      <!-- Donut -->
+
+      <div
+        class="col-span-4 rounded-[30px] bg-white/5 border border-white/10 backdrop-blur-xl p-7"
+      >
+        <h3 class="text-xl font-semibold mb-6">Recruitment Sources</h3>
+
+        <div id="sourceChart"></div>
+      </div>
+
+      <!-- Heatmap -->
+
+      <div
+        class="col-span-8 rounded-[30px] bg-white/5 border border-white/10 backdrop-blur-xl p-7"
+      >
+        <h3 class="text-xl font-semibold mb-2">Application Activity</h3>
+
+        <p class="text-gray-400 mb-8">Daily application volume</p>
+
+        <div
+          id="activityHeatmap"
+          class="grid grid-cols-[repeat(30,minmax(0,1fr))] gap-2 mt-6"
+        ></div>
+
+        <div
+          class="flex justify-end items-center gap-2 mt-6 text-xs text-gray-400"
+        >
+          Less
+
+          <div class="w-3 h-3 rounded bg-white/10"></div>
+
+          <div class="w-3 h-3 rounded bg-pink-900"></div>
+
+          <div class="w-3 h-3 rounded bg-pink-700"></div>
+
+          <div class="w-3 h-3 rounded bg-pink-500"></div>
+
+          <div class="w-3 h-3 rounded bg-pink-300"></div>
+
+          More
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  new ApexCharts(document.querySelector("#hiringChart"), {
+    chart: {
+      height: 420,
+      type: "area",
+      toolbar: { show: false },
+      background: "transparent",
+      zoom: { enabled: false },
+    },
+
+    theme: {
+      mode: "dark",
+    },
+
+    stroke: {
+      curve: "smooth",
+      width: 4,
+    },
+
+    grid: {
+      borderColor: "rgba(255,255,255,.08)",
+    },
+
+    colors: ["#EC4899", "#8B5CF6", "#22D3EE", "#34D399"],
+
+    series: [
+      {
+        name: "Applications",
+        data: [220, 340, 510, 460, 610, 720, 780, 860, 910, 980, 1100, 1240],
+      },
+      {
+        name: "Interviews",
+        data: [80, 120, 190, 180, 260, 310, 330, 370, 410, 450, 490, 540],
+      },
+      {
+        name: "Offers",
+        data: [40, 60, 85, 90, 110, 140, 150, 165, 180, 210, 220, 250],
+      },
+      {
+        name: "Hires",
+        data: [20, 30, 45, 52, 66, 80, 91, 103, 115, 126, 141, 160],
+      },
+    ],
+
+    xaxis: {
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+    },
+
+    legend: {
+      show: false,
+    },
+
+    fill: {
+      type: "gradient",
+      gradient: {
+        opacityFrom: 0.35,
+        opacityTo: 0.03,
+      },
+    },
+  }).render();
+
+  const heatmap = document.getElementById("activityHeatmap");
+
+  const colors = [
+    "bg-white/10",
+    "bg-pink-900",
+    "bg-pink-700",
+    "bg-pink-500",
+    "bg-pink-300",
+  ];
+
+  for (let i = 0; i < 210; i++) {
+    const cell = document.createElement("div");
+
+    cell.className = `w-4 h-4 rounded ${colors[Math.floor(Math.random() * colors.length)]} transition-all duration-200 hover:scale-125`;
+
+    heatmap.appendChild(cell);
+  }
+</script>
+
+<script>
+  new ApexCharts(document.querySelector("#sourceChart"), {
+    chart: {
+      type: "donut",
+      height: 330,
+      background: "transparent",
+    },
+
+    theme: {
+      mode: "dark",
+    },
+
+    labels: ["LinkedIn", "Campus", "Referral", "Direct"],
+
+    series: [42, 24, 18, 16],
+
+    colors: ["#EC4899", "#8B5CF6", "#22D3EE", "#34D399"],
+
+    legend: {
+      position: "bottom",
+      labels: {
+        colors: "#fff",
+      },
+    },
+
+    dataLabels: {
+      enabled: false,
+    },
+
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "72%",
+        },
+      },
+    },
+  }).render();
+</script>
+
+{%endblock%}
