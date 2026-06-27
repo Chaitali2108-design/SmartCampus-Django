@@ -20,28 +20,26 @@ from .models import InternshipOpportunity
 
 def recruiter_dashboard(request):
 
-    total_jobs = InternshipOpportunity.objects.count()
+    internships = InternshipOpportunity.objects.all()
 
-    total_applications = InternshipApplication.objects.count()
-
-    recent_jobs = InternshipOpportunity.objects.order_by('-created_at')[:5]
-
-    recent_applications = InternshipApplication.objects.select_related(
-        'user',
-        'internship'
-    ).order_by('-applied_at')[:12]
+    applications = InternshipApplication.objects.select_related(
+        "user",
+        "internship"
+    )
 
     context = {
-        "total_jobs": total_jobs,
-        "total_applications": total_applications,
-        "recent_jobs": recent_jobs,
-        "recent_applications": recent_applications,
+        "total_jobs": internships.count(),
+        "total_applications": applications.count(),
+        "active_jobs": internships.count(),
+        "trending_jobs": internships.filter(
+            trending=True
+        ).count(),
     }
 
     return render(
         request,
-        "recruiter/recruiter_dashboard.html",
-        context
+        "recruiter/dashboard.html",
+        context,
     )
 
 
