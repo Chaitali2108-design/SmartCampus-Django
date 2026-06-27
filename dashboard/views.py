@@ -14,6 +14,8 @@ from django.contrib import messages
 from django.http import JsonResponse
 from .models import InternshipApplication
 from .models import InternshipOpportunity
+from django.db.models import Count
+
 
 
 #for recruiter dashboard
@@ -22,23 +24,31 @@ def recruiter_dashboard(request):
 
     internships = InternshipOpportunity.objects.all()
 
+
     applications = InternshipApplication.objects.select_related(
-        "user",
-        "internship"
-    )
+    "user",
+    "internship"
+    ).order_by("-applied_at")
 
     context = {
-        "total_jobs": internships.count(),
-        "total_applications": applications.count(),
-        "active_jobs": internships.count(),
-        "trending_jobs": internships.filter(
-            trending=True
-        ).count(),
-    }
+
+    "total_jobs": internships.count(),
+
+    "total_applications": applications.count(),
+
+    "active_jobs": internships.count(),
+
+    "trending_jobs": internships.filter(
+        trending=True
+    ).count(),
+
+    "recent_applications": applications[:6],
+
+}
 
     return render(
         request,
-        "recruiter/dashboard.html",
+        "recruiter/recruiter_dashboard.html",
         context,
     )
 
