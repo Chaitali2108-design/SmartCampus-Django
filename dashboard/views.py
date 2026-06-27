@@ -470,3 +470,12 @@ def apply_internship(request, pk):
     return redirect("internships")
 
 
+
+#for analytics page
+@login_required
+def analytics(request):
+    return render(
+        request,
+        "analytics/analytics.html",
+        
+    )
