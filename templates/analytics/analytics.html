@@ -37,35 +37,47 @@
     <div
       class="rounded-[30px] border border-white/10 bg-white/5 backdrop-blur-xl p-8 mb-8"
     >
-      <div class="flex justify-between mb-8">
+      <div class="flex items-start justify-between mb-8">
         <div>
-          <h2 class="text-2xl font-semibold">Hiring Trend</h2>
+          <div class="flex items-center gap-3 mb-3">
+            <h2 class="text-3xl font-bold tracking-tight">Hiring Trend</h2>
 
-          <p class="text-gray-400 mt-1">
-            Applications, interviews, offers and hires over time.
+            <span
+              class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-medium"
+            >
+              ↑ 18.4%
+            </span>
+          </div>
+
+          <p class="text-gray-400">
+            Hiring pipeline performance across the last 12 months.
           </p>
         </div>
 
-        <div class="flex gap-6 text-sm">
-          <span class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-pink-500"></span>
-            Applications
-          </span>
+        <div class="flex items-center gap-2">
+          <button
+            class="px-4 py-2 rounded-xl bg-pink-500 text-white text-sm font-medium"
+          >
+            12M
+          </button>
 
-          <span class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-violet-500"></span>
-            Interviews
-          </span>
+          <button
+            class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-sm"
+          >
+            6M
+          </button>
 
-          <span class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-cyan-400"></span>
-            Offers
-          </span>
+          <button
+            class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-sm"
+          >
+            30D
+          </button>
 
-          <span class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
-            Hires
-          </span>
+          <button
+            class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-sm"
+          >
+            7D
+          </button>
         </div>
       </div>
 
@@ -311,7 +323,7 @@
       <!-- Donut -->
 
       <div
-        class="col-span-4 rounded-[30px] bg-white/5 border border-white/10 backdrop-blur-xl p-7"
+        class="col-span-4 rounded-[30px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col"
       >
         <h3 class="text-xl font-semibold mb-6">Recruitment Sources</h3>
 
@@ -327,10 +339,32 @@
 
         <p class="text-gray-400 mb-8">Daily application volume</p>
 
-        <div
-          id="activityHeatmap"
-          class="grid grid-cols-[repeat(30,minmax(0,1fr))] gap-2 mt-6"
-        ></div>
+        <div class="flex justify-between text-xs text-gray-500 mb-3 px-8">
+          <span>Jan</span>
+          <span>Feb</span>
+          <span>Mar</span>
+          <span>Apr</span>
+          <span>May</span>
+          <span>Jun</span>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex flex-col justify-between text-xs text-gray-500 py-1">
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thur</span>
+            <span>Fri</span>
+            <span>Sat</span>
+            <span>Sun</span>
+          </div>
+
+          <div
+            id="activityHeatmap"
+            class="grid gap-2"
+            style="grid-template-columns: repeat(30, minmax(0, 1fr))"
+          ></div>
+        </div>
 
         <div
           class="flex justify-end items-center gap-2 mt-6 text-xs text-gray-400"
@@ -351,17 +385,244 @@
         </div>
       </div>
     </div>
+
+    <!-- ========================= -->
+    <!-- Department Analytics -->
+    <!-- ========================= -->
+
+    <div class="grid grid-cols-12 gap-8 mt-8">
+      <!-- Department Hiring -->
+
+      <div
+        class="col-span-8 rounded-[30px] bg-white/[0.05] border border-white/10 backdrop-blur-xl p-8"
+      >
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h2 class="text-2xl font-semibold">Hiring by Department</h2>
+
+            <p class="text-gray-400 mt-1">
+              Active recruitment demand across departments.
+            </p>
+          </div>
+
+          <span class="text-sm text-pink-400"> Updated Today </span>
+        </div>
+
+        <div class="space-y-7">
+          <!-- Engineering -->
+
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <div class="flex items-center gap-4">
+                <span class="w-32 text-gray-300"> Engineering </span>
+
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-emerald-500/15 text-emerald-400"
+                >
+                  +18%
+                </span>
+              </div>
+
+              <span class="font-semibold"> 46 Open Roles </span>
+            </div>
+
+            <div class="h-3 rounded-full bg-white/10 overflow-hidden">
+              <div
+                class="h-full w-[92%] bg-pink-500 rounded-full transition-all duration-1000"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Marketing -->
+
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <div class="flex items-center gap-4">
+                <span class="w-32 text-gray-300"> Marketing </span>
+
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-emerald-500/15 text-emerald-400"
+                >
+                  +9%
+                </span>
+              </div>
+
+              <span class="font-semibold"> 31 Open Roles </span>
+            </div>
+
+            <div class="h-3 rounded-full bg-white/10 overflow-hidden">
+              <div class="h-full w-[72%] bg-violet-500 rounded-full"></div>
+            </div>
+          </div>
+
+          <!-- Design -->
+
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <div class="flex items-center gap-4">
+                <span class="w-32 text-gray-300"> Design </span>
+
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-cyan-500/15 text-cyan-400"
+                >
+                  +4%
+                </span>
+              </div>
+
+              <span class="font-semibold"> 18 Open Roles </span>
+            </div>
+
+            <div class="h-3 rounded-full bg-white/10 overflow-hidden">
+              <div class="h-full w-[45%] bg-cyan-400 rounded-full"></div>
+            </div>
+          </div>
+
+          <!-- HR -->
+
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <div class="flex items-center gap-4">
+                <span class="w-32 text-gray-300"> Human Resources </span>
+
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-orange-500/15 text-orange-300"
+                >
+                  -2%
+                </span>
+              </div>
+
+              <span class="font-semibold"> 14 Open Roles </span>
+            </div>
+
+            <div class="h-3 rounded-full bg-white/10 overflow-hidden">
+              <div class="h-full w-[34%] bg-orange-400 rounded-full"></div>
+            </div>
+          </div>
+
+          <!-- Sales -->
+
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <div class="flex items-center gap-4">
+                <span class="w-32 text-gray-300"> Sales </span>
+
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-emerald-500/15 text-emerald-400"
+                >
+                  +12%
+                </span>
+              </div>
+
+              <span class="font-semibold"> 27 Open Roles </span>
+            </div>
+
+            <div class="h-3 rounded-full bg-white/10 overflow-hidden">
+              <div class="h-full w-[63%] bg-emerald-400 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Recruiters -->
+
+      <div
+        class="col-span-4 rounded-[30px] bg-white/[0.05] border border-white/10 backdrop-blur-xl p-8"
+      >
+        <h2 class="text-2xl font-semibold">Top Recruiters</h2>
+
+        <p class="text-gray-400 mt-1 mb-8">
+          Best hiring performance this month.
+        </p>
+
+        <div class="space-y-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center font-bold"
+              >
+                PS
+              </div>
+
+              <div>
+                <div class="font-semibold">Priya Sharma</div>
+
+                <div class="text-sm text-gray-400">Senior Recruiter</div>
+              </div>
+            </div>
+
+            <div class="text-right">
+              <div class="font-bold">124</div>
+
+              <div class="text-xs text-gray-400">Hires</div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-violet-500/20 flex items-center justify-center font-bold"
+              >
+                RP
+              </div>
+
+              <div>
+                <div class="font-semibold">Rahul Patel</div>
+
+                <div class="text-sm text-gray-400">Talent Partner</div>
+              </div>
+            </div>
+
+            <div class="text-right">
+              <div class="font-bold">98</div>
+
+              <div class="text-xs text-gray-400">Hires</div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center font-bold"
+              >
+                AV
+              </div>
+
+              <div>
+                <div class="font-semibold">Anita Verma</div>
+
+                <div class="text-sm text-gray-400">HR Specialist</div>
+              </div>
+            </div>
+
+            <div class="text-right">
+              <div class="font-bold">87</div>
+
+              <div class="text-xs text-gray-400">Hires</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
   new ApexCharts(document.querySelector("#hiringChart"), {
     chart: {
-      height: 420,
       type: "area",
-      toolbar: { show: false },
+      height: 420,
+      toolbar: {
+        show: false,
+      },
+      zoom: {
+        enabled: false,
+      },
       background: "transparent",
-      zoom: { enabled: false },
+      animations: {
+        enabled: true,
+        easing: "easeinout",
+        speed: 1200,
+      },
     },
 
     theme: {
@@ -371,10 +632,30 @@
     stroke: {
       curve: "smooth",
       width: 4,
+      lineCap: "round",
+    },
+    markers: {
+      size: 0,
+      hover: {
+        size: 7,
+      },
+    },
+    tooltip: {
+      theme: "dark",
+      shared: true,
+      intersect: false,
+      style: {
+        fontSize: "13px",
+      },
     },
 
     grid: {
-      borderColor: "rgba(255,255,255,.08)",
+      borderColor: "rgba(255,255,255,.05)",
+      strokeDashArray: 5,
+      padding: {
+        left: 15,
+        right: 15,
+      },
     },
 
     colors: ["#EC4899", "#8B5CF6", "#22D3EE", "#34D399"],
@@ -413,17 +694,50 @@
         "Nov",
         "Dec",
       ],
+
+      crosshairs: {
+        show: true,
+        stroke: {
+          color: "#EC4899",
+          width: 1,
+          dashArray: 5,
+        },
+      },
+
+      labels: {
+        style: {
+          colors: "#9CA3AF",
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#9CA3AF",
+        },
+      },
     },
 
     legend: {
-      show: false,
+      show: true,
+      position: "top",
+      horizontalAlign: "left",
+      labels: {
+        colors: "#D1D5DB",
+      },
     },
 
     fill: {
       type: "gradient",
+
       gradient: {
-        opacityFrom: 0.35,
-        opacityTo: 0.03,
+        shade: "dark",
+
+        opacityFrom: 0.3,
+
+        opacityTo: 0.02,
+
+        stops: [0, 90, 100],
       },
     },
   }).render();
@@ -437,6 +751,10 @@
     "bg-pink-500",
     "bg-pink-300",
   ];
+
+  const distribution = [0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 4];
+
+  const level = distribution[Math.floor(Math.random() * distribution.length)];
 
   for (let i = 0; i < 210; i++) {
     const cell = document.createElement("div");
