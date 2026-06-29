@@ -545,3 +545,8 @@ def preparation(request):
         "preparation/index.html",
         {"rounds": rounds},
     )
+
+def preparation_test(request, round_id):
+    return render(request, "preparation/test.html", {
+        "round_id": round_id
+    })
