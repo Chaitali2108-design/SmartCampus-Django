@@ -13,5 +13,4 @@ urlpatterns = [
     path("internships/", views.internships, name="internships"),
     path("internships/<int:pk>/apply/", views.apply_internship, name="apply_internship"),
     path("recruiter/",views.recruiter_dashboard,name="recruiter_dashboard"),
-    path("analytics/",views.analytics,name="analytics"),
 ]  
