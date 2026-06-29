@@ -470,4 +470,78 @@ def apply_internship(request, pk):
     return redirect("internships")
 
 
+#preparation page
 
+@login_required
+def preparation(request):
+    rounds = [
+        {
+            "id": 1,
+            "title": "Aptitude Test",
+            "description": "Quantitative, Logical & Verbal",
+            "questions": 25,
+            "duration": "30 mins",
+            "icon": "brain",
+            "color": "from-pink-500 to-pink-600",
+        },
+        {
+            "id": 2,
+            "title": "Technical MCQs",
+            "description": "OS, DBMS, CN, OOP",
+            "questions": 30,
+            "duration": "40 mins",
+            "icon": "cpu",
+            "color": "from-violet-500 to-purple-600",
+        },
+        {
+            "id": 3,
+            "title": "Coding Challenge",
+            "description": "Programming Problems",
+            "questions": 3,
+            "duration": "60 mins",
+            "icon": "code",
+            "color": "from-cyan-500 to-blue-500",
+        },
+        {
+            "id": 4,
+            "title": "Group Discussion",
+            "description": "Communication & Ideas",
+            "questions": 1,
+            "duration": "20 mins",
+            "icon": "users",
+            "color": "from-orange-500 to-amber-500",
+        },
+        {
+            "id": 5,
+            "title": "Technical Interview",
+            "description": "Core Subject Questions",
+            "questions": 20,
+            "duration": "45 mins",
+            "icon": "message-square",
+            "color": "from-emerald-500 to-green-500",
+        },
+        {
+            "id": 6,
+            "title": "HR Interview",
+            "description": "Behavioral Questions",
+            "questions": 15,
+            "duration": "25 mins",
+            "icon": "briefcase",
+            "color": "from-indigo-500 to-indigo-700",
+        },
+        {
+            "id": 7,
+            "title": "Company Mock Test",
+            "description": "TCS, Infosys, Google & More",
+            "questions": 50,
+            "duration": "90 mins",
+            "icon": "building-2",
+            "color": "from-rose-500 to-red-500",
+        },
+    ]
+
+    return render(
+        request,
+        "preparation/index.html",
+        {"rounds": rounds},
+    )
