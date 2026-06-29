@@ -1,0 +1,312 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+  <div class="max-w-[1700px] mx-auto px-8 py-8">
+    <!-- Header -->
+
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold">Aptitude Assessment</h1>
+
+        <p class="text-gray-400 mt-2">
+          Read every question carefully before answering.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div
+          class="rounded-2xl border border-pink-500/20 bg-pink-500/10 px-6 py-3"
+        >
+          <span class="text-sm text-gray-300"> Time Left </span>
+
+          <h2 class="text-2xl font-bold text-pink-400">30:00</h2>
+        </div>
+
+        <button
+          class="px-6 py-3 rounded-2xl bg-red-500 hover:bg-red-400 transition"
+        >
+          Submit Test
+        </button>
+      </div>
+    </div>
+
+    <!-- Layout -->
+
+    <div class="grid grid-cols-12 gap-8">
+      <!-- Question Area -->
+
+      <div
+        class="col-span-8 rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-xl p-8"
+      >
+        <div class="flex items-center justify-between">
+          <span class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300">
+            Question 4 of 25
+          </span>
+
+          <span class="text-gray-400"> 16% Completed </span>
+        </div>
+
+        <!-- Progress -->
+
+        <div class="h-3 rounded-full bg-white/10 overflow-hidden mt-6 mb-10">
+          <div
+            class="h-full w-[16%] bg-gradient-to-r from-pink-500 to-violet-500"
+          ></div>
+        </div>
+
+        <!-- Question -->
+
+        <h2 id="questionText" class="text-3xl font-semibold leading-relaxed">
+          Which data structure is used in Breadth First Search (BFS)?
+        </h2>
+
+        <!-- Options -->
+
+        <div class="mt-10 space-y-5">
+          <label
+            class="optionCard group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500/30 transition"
+          >
+            <input type="radio" name="answer" class="hidden optionInput" />
+
+            <div
+              class="w-6 h-6 rounded-full border-2 border-gray-500 group-hover:border-pink-400"
+            ></div>
+
+            <span class="text-lg optionText"></span>
+          </label>
+
+          <label
+            class="optionCard group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500/30 transition"
+          >
+            <input type="radio" name="answer" class="hidden optionInput" />
+
+            <div
+              class="w-6 h-6 rounded-full border-2 border-gray-500 group-hover:border-pink-400"
+            ></div>
+
+            <span class="text-lg optionText"></span>
+          </label>
+
+          <label
+            class="optionCard group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500/30 transition"
+          >
+            <input type="radio" name="answer" class="hidden optionInput" />
+
+            <div
+              class="w-6 h-6 rounded-full border-2 border-gray-500 group-hover:border-pink-400"
+            ></div>
+
+            <span class="text-lg optionText"></span>
+          </label>
+
+          <label
+            class="optionCard group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500/30 transition"
+          >
+            <input type="radio" name="answer" class="hidden optionInput" />
+
+            <div
+              class="w-6 h-6 rounded-full border-2 border-gray-500 group-hover:border-pink-400"
+            ></div>
+
+            <span class="text-lg optionText"></span>
+          </label>
+        </div>
+
+        <!-- Footer -->
+
+        <div
+          class="flex justify-between items-center mt-14 pt-8 border-t border-white/10"
+        >
+          <button
+            id="prevBtn"
+            class="px-6 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10"
+          >
+            Previous
+          </button>
+
+          <button
+            id="nextBtn"
+            class="px-8 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400"
+          >
+            Next Question
+          </button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+
+      <div
+        class="col-span-4 rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-xl p-8"
+      >
+        <h3 class="text-xl font-semibold mb-8">Question Palette</h3>
+
+        <div class="grid grid-cols-5 gap-3">
+          {% for i in "1234567890123456789012345" %}
+
+          <button
+            class="aspect-square rounded-xl bg-white/5 border border-white/10 hover:bg-pink-500 hover:border-pink-500 transition"
+          >
+            {{ forloop.counter }}
+          </button>
+
+          {% endfor %}
+        </div>
+
+        <div class="mt-10">
+          <h3 class="text-xl font-semibold mb-6">Test Summary</h3>
+
+          <div class="space-y-5">
+            <div class="flex justify-between">
+              <span class="text-gray-400"> Answered </span>
+
+              <span class="text-green-400"> 12 </span>
+            </div>
+
+            <div class="flex justify-between">
+              <span class="text-gray-400"> Review </span>
+
+              <span class="text-yellow-400"> 3 </span>
+            </div>
+
+            <div class="flex justify-between">
+              <span class="text-gray-400"> Remaining </span>
+
+              <span class="text-red-400"> 10 </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: "Which data structure is used in Breadth First Search (BFS)?",
+      options: ["Queue", "Stack", "Heap", "Binary Tree"],
+      answer: null,
+      review: false,
+    },
+
+    {
+      question: "Which SQL command removes a table?",
+      options: ["DELETE", "DROP", "REMOVE", "CLEAR"],
+      answer: null,
+      review: false,
+    },
+
+    {
+      question: "Which protocol is connection oriented?",
+      options: ["TCP", "UDP", "HTTP", "SMTP"],
+      answer: null,
+      review: false,
+    },
+
+    {
+      question: "Which sorting algorithm has O(n log n) average complexity?",
+      options: [
+        "Merge Sort",
+        "Bubble Sort",
+        "Selection Sort",
+        "Insertion Sort",
+      ],
+      answer: null,
+      review: false,
+    },
+
+    {
+      question:
+        "Which OS scheduling algorithm gives minimum average waiting time?",
+      options: ["SJF", "FCFS", "Round Robin", "Priority"],
+      answer: null,
+      review: false,
+    },
+  ];
+
+  const questionText = document.getElementById("questionText");
+
+  const optionTexts = document.querySelectorAll(".optionText");
+
+  const optionInputs = document.querySelectorAll(".optionInput");
+
+  const optionCards = document.querySelectorAll(".optionCard");
+
+  let currentQuestion = 0;
+
+  const nextBtn = document.getElementById("nextBtn");
+  const prevBtn = document.getElementById("prevBtn");
+
+  function renderQuestion() {
+    const q = questions[currentQuestion];
+
+    questionText.innerHTML = q.question;
+
+    optionTexts.forEach((option, index) => {
+      option.innerHTML = q.options[index];
+
+      optionInputs[index].checked = q.answer === index;
+    });
+    updateOptionStyles();
+  }
+
+  optionInputs.forEach((radio, index) => {
+    radio.addEventListener("change", () => {
+      questions[currentQuestion].answer = index;
+    });
+  });
+
+  nextBtn.onclick = () => {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+
+      renderQuestion();
+    }
+  };
+
+  prevBtn.onclick = () => {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+
+      renderQuestion();
+    }
+  };
+
+  optionCards.forEach((card, index) => {
+    card.addEventListener("click", () => {
+      questions[currentQuestion].answer = index;
+
+      optionInputs[index].checked = true;
+
+      updateOptionStyles();
+    });
+  });
+
+  function updateOptionStyles() {
+    optionCards.forEach((card, index) => {
+      if (questions[currentQuestion].answer === index) {
+        card.classList.remove("border-white/10", "bg-white/5");
+
+        card.classList.add(
+          "border-sky-400",
+          "bg-sky-500/20",
+          "shadow-lg",
+          "shadow-sky-500/20",
+        );
+      } else {
+        card.classList.remove(
+          "border-sky-400",
+          "bg-sky-500/20",
+          "shadow-lg",
+          "shadow-sky-500/20",
+        );
+
+        card.classList.add("border-white/10", "bg-white/5");
+      }
+    });
+  }
+
+  renderQuestion();
+</script>
+
+{% endblock %}
