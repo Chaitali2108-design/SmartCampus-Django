@@ -39,8 +39,10 @@
         class="col-span-8 rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-xl p-8"
       >
         <div class="flex items-center justify-between">
-          <span class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300">
-            Question 4 of 25
+          <span
+            id="questionNumber"
+            class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300"
+          >
           </span>
 
           <span class="text-gray-400"> 16% Completed </span>
@@ -56,9 +58,10 @@
 
         <!-- Question -->
 
-        <h2 id="questionText" class="text-3xl font-semibold leading-relaxed">
-          Which data structure is used in Breadth First Search (BFS)?
-        </h2>
+        <h2
+          id="questionText"
+          class="text-3xl font-semibold leading-relaxed"
+        ></h2>
 
         <!-- Options -->
 
@@ -140,17 +143,7 @@
       >
         <h3 class="text-xl font-semibold mb-8">Question Palette</h3>
 
-        <div class="grid grid-cols-5 gap-3">
-          {% for i in "1234567890123456789012345" %}
-
-          <button
-            class="aspect-square rounded-xl bg-white/5 border border-white/10 hover:bg-pink-500 hover:border-pink-500 transition"
-          >
-            {{ forloop.counter }}
-          </button>
-
-          {% endfor %}
-        </div>
+        <div id="questionPalette" class="grid grid-cols-5 gap-3"></div>
 
         <div class="mt-10">
           <h3 class="text-xl font-semibold mb-6">Test Summary</h3>
@@ -185,22 +178,28 @@
     {
       question: "Which data structure is used in Breadth First Search (BFS)?",
       options: ["Queue", "Stack", "Heap", "Binary Tree"],
+      number: 1,
       answer: null,
       review: false,
+      visited: false,
     },
 
     {
       question: "Which SQL command removes a table?",
       options: ["DELETE", "DROP", "REMOVE", "CLEAR"],
+      number: 2,
       answer: null,
       review: false,
+      visited: false,
     },
 
     {
       question: "Which protocol is connection oriented?",
       options: ["TCP", "UDP", "HTTP", "SMTP"],
+      number: 3,
       answer: null,
       review: false,
+      visited: false,
     },
 
     {
@@ -211,20 +210,25 @@
         "Selection Sort",
         "Insertion Sort",
       ],
+      number: 4,
       answer: null,
       review: false,
+      visited: false,
     },
 
     {
       question:
         "Which OS scheduling algorithm gives minimum average waiting time?",
       options: ["SJF", "FCFS", "Round Robin", "Priority"],
+      number: 5,
       answer: null,
       review: false,
+      visited: false,
     },
   ];
 
   const questionText = document.getElementById("questionText");
+  const questionNumber = document.getElementById("questionNumber");
 
   const optionTexts = document.querySelectorAll(".optionText");
 
@@ -236,11 +240,14 @@
 
   const nextBtn = document.getElementById("nextBtn");
   const prevBtn = document.getElementById("prevBtn");
+  const palette = document.getElementById("questionPalette");
 
   function renderQuestion() {
+    questions[currentQuestion].visited = true;
     const q = questions[currentQuestion];
 
     questionText.innerHTML = q.question;
+    questionNumber.innerHTML = q.number;
 
     optionTexts.forEach((option, index) => {
       option.innerHTML = q.options[index];
@@ -248,6 +255,7 @@
       optionInputs[index].checked = q.answer === index;
     });
     updateOptionStyles();
+    updatePalette();
   }
 
   optionInputs.forEach((radio, index) => {
@@ -306,6 +314,52 @@
     });
   }
 
+  function createPalette() {
+    palette.innerHTML = "";
+
+    questions.forEach((q, index) => {
+      const btn = document.createElement("button");
+
+      btn.innerHTML = index + 1;
+
+      btn.className =
+        "paletteBtn aspect-square rounded-xl border transition-all duration-300";
+
+      btn.onclick = () => {
+        currentQuestion = index;
+        renderQuestion();
+      };
+
+      palette.appendChild(btn);
+    });
+  }
+
+  function updatePalette() {
+    const buttons = document.querySelectorAll(".paletteBtn");
+
+    buttons.forEach((btn, index) => {
+      btn.className =
+        "paletteBtn aspect-square rounded-xl border transition-all duration-300";
+
+      if (index === currentQuestion) {
+        btn.classList.add("bg-pink-500", "border-pink-500", "text-white");
+      } else if (questions[index].answer !== null) {
+        btn.classList.add("bg-sky-500/20", "border-sky-400", "text-sky-300");
+      } else if (questions[index].review) {
+        btn.classList.add(
+          "bg-yellow-500/20",
+          "border-yellow-400",
+          "text-yellow-300",
+        );
+      } else if (questions[index].visited) {
+        btn.classList.add("bg-white/10", "border-white/20");
+      } else {
+        btn.classList.add("bg-white/5", "border-white/10");
+      }
+    });
+  }
+
+  createPalette();
   renderQuestion();
 </script>
 
