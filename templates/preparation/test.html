@@ -174,58 +174,11 @@
 </div>
 
 <script>
-  const questions = [
-    {
-      question: "Which data structure is used in Breadth First Search (BFS)?",
-      options: ["Queue", "Stack", "Heap", "Binary Tree"],
-      number: 1,
-      answer: null,
-      review: false,
-      visited: false,
-    },
+  const testType = "{{ test_type }}";
+</script>
 
-    {
-      question: "Which SQL command removes a table?",
-      options: ["DELETE", "DROP", "REMOVE", "CLEAR"],
-      number: 2,
-      answer: null,
-      review: false,
-      visited: false,
-    },
-
-    {
-      question: "Which protocol is connection oriented?",
-      options: ["TCP", "UDP", "HTTP", "SMTP"],
-      number: 3,
-      answer: null,
-      review: false,
-      visited: false,
-    },
-
-    {
-      question: "Which sorting algorithm has O(n log n) average complexity?",
-      options: [
-        "Merge Sort",
-        "Bubble Sort",
-        "Selection Sort",
-        "Insertion Sort",
-      ],
-      number: 4,
-      answer: null,
-      review: false,
-      visited: false,
-    },
-
-    {
-      question:
-        "Which OS scheduling algorithm gives minimum average waiting time?",
-      options: ["SJF", "FCFS", "Round Robin", "Priority"],
-      number: 5,
-      answer: null,
-      review: false,
-      visited: false,
-    },
-  ];
+<script>
+  let questions = [];
 
   const questionText = document.getElementById("questionText");
   const questionNumber = document.getElementById("questionNumber");
@@ -359,8 +312,16 @@
     });
   }
 
-  createPalette();
-  renderQuestion();
+  async function loadQuestions() {
+    const response = await fetch(`/static/data/${testType}.json`);
+
+    questions = await response.json();
+
+    createPalette();
+    renderQuestion();
+  }
+
+  loadQuestions();
 </script>
 
 {% endblock %}
