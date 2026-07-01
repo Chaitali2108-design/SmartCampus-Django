@@ -483,6 +483,7 @@ def preparation(request):
             "duration": "30 mins",
             "icon": "brain",
             "color": "from-pink-500 to-pink-600",
+            "test_type": "aptitude",
         },
         {
             "id": 2,
@@ -492,6 +493,7 @@ def preparation(request):
             "duration": "40 mins",
             "icon": "cpu",
             "color": "from-violet-500 to-purple-600",
+            "test_type": "technical",
         },
         {
             "id": 3,
@@ -501,29 +503,33 @@ def preparation(request):
             "duration": "60 mins",
             "icon": "code",
             "color": "from-cyan-500 to-blue-500",
+            "test_type": "coding",
         },
         {
             "id": 4,
-            "title": "Group Discussion",
+            "title": "Communication Test",
             "description": "Communication & Ideas",
             "questions": 1,
             "duration": "20 mins",
             "icon": "users",
             "color": "from-orange-500 to-amber-500",
+            "test_type": "communication",
         },
         {
             "id": 5,
-            "title": "Technical Interview",
+            "title": "HR Interview",
             "description": "Core Subject Questions",
             "questions": 20,
             "duration": "45 mins",
             "icon": "message-square",
             "color": "from-emerald-500 to-green-500",
+            "test_type": "hr",
         },
         {
             "id": 6,
-            "title": "HR Interview",
-            "description": "Behavioral Questions",
+            "title": "Logical Reasoning",
+            "test_type": "logical",
+           "description": "Behavioral Questions",
             "questions": 15,
             "duration": "25 mins",
             "icon": "briefcase",
@@ -531,7 +537,8 @@ def preparation(request):
         },
         {
             "id": 7,
-            "title": "Company Mock Test",
+            "title": "Quantitative Aptitude",
+            "test_type": "quantitative",
             "description": "TCS, Infosys, Google & More",
             "questions": 50,
             "duration": "90 mins",
@@ -546,7 +553,7 @@ def preparation(request):
         {"rounds": rounds},
     )
 
-def preparation_test(request, round_id):
+def preparation_test(request, test_type):
     return render(request, "preparation/test.html", {
-        "round_id": round_id
+        "test_type": test_type
     })
