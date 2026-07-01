@@ -254,10 +254,13 @@
   optionCards.forEach((card, index) => {
     card.addEventListener("click", () => {
       questions[currentQuestion].answer = index;
+      questions[currentQuestion].review = false;
 
       optionInputs[index].checked = true;
 
       updateOptionStyles();
+      updatePalette();
+      updateSummary();
     });
   });
 
