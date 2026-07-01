@@ -200,8 +200,7 @@
     const q = questions[currentQuestion];
 
     questionText.innerHTML = q.question;
-    questionNumber.innerHTML = q.number;
-
+    questionNumber.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
     optionTexts.forEach((option, index) => {
       option.innerHTML = q.options[index];
 
@@ -316,6 +315,12 @@
     const response = await fetch(`/static/data/${testType}.json`);
 
     questions = await response.json();
+
+    questions.forEach((q) => {
+      q.answer = null;
+      q.review = false;
+      q.visited = false;
+    });
 
     createPalette();
     renderQuestion();
