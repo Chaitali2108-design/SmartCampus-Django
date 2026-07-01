@@ -153,19 +153,19 @@
             <div class="flex justify-between">
               <span class="text-gray-400"> Answered </span>
 
-              <span class="text-green-400"> 12 </span>
+              <span id="answeredCount" class="text-green-400"> 12 </span>
             </div>
 
             <div class="flex justify-between">
               <span class="text-gray-400"> Review </span>
 
-              <span class="text-yellow-400"> 3 </span>
+              <span id="reviewCount" class="text-yellow-400"> 3 </span>
             </div>
 
             <div class="flex justify-between">
               <span class="text-gray-400"> Remaining </span>
 
-              <span class="text-red-400"> 10 </span>
+              <span id="remainingCount" class="text-red-400"> 10 </span>
             </div>
           </div>
         </div>
@@ -218,6 +218,7 @@
     });
     updateOptionStyles();
     updatePalette();
+    updateSummary();
   }
 
   optionInputs.forEach((radio, index) => {
@@ -227,9 +228,17 @@
   });
 
   nextBtn.onclick = () => {
+    if (questions[currentQuestion].answer === null) {
+      questions[currentQuestion].review = true;
+    } else {
+      questions[currentQuestion].review = false;
+    }
+
+    updateSummary();
+    updatePalette();
+
     if (currentQuestion < questions.length - 1) {
       currentQuestion++;
-
       renderQuestion();
     }
   };
@@ -319,6 +328,18 @@
         btn.classList.add("bg-white/5", "border-white/10");
       }
     });
+  }
+
+  function updateSummary() {
+    const answered = questions.filter((q) => q.answer !== null).length;
+
+    const review = questions.filter((q) => q.review).length;
+
+    const remaining = questions.length - answered;
+
+    document.getElementById("answeredCount").textContent = answered;
+    document.getElementById("reviewCount").textContent = review;
+    document.getElementById("remainingCount").textContent = remaining;
   }
 
   async function loadQuestions() {
