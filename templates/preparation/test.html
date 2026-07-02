@@ -421,15 +421,24 @@
       }
     });
 
-    alert(
-      `Test Submitted!
+    fetch("{% url 'preparation_result' %}", {
+      method: "POST",
 
-Score : ${score}/${questions.length}
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": "{{ csrf_token }}",
+      },
 
-Answered : ${answered}
-
-Unanswered : ${review}`,
-    );
+      body: JSON.stringify({
+        score: score,
+        total: questions.length,
+        answered: answered,
+        review: review,
+        percentage: Math.round((score / questions.length) * 100),
+      }),
+    }).then(() => {
+      window.location.href = "{% url 'preparation_result' %}";
+    });
   }
 </script>
 
