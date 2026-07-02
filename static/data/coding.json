@@ -1,0 +1,492 @@
+[
+  {
+    "id": 1,
+    "question": "Which of the following is a valid variable name in C?",
+    "options": ["2value", "_count", "float", "my-value"],
+    "correctAnswer": 1,
+    "explanation": "Variable names can begin with an underscore but not with a digit or contain hyphens."
+  },
+  {
+    "id": 2,
+    "question": "What is the output of: print(5 // 2) in Python?",
+    "options": ["2.5", "2", "3", "2.0"],
+    "correctAnswer": 1,
+    "explanation": "The // operator performs floor division."
+  },
+  {
+    "id": 3,
+    "question": "Which loop executes at least once?",
+    "options": ["for", "while", "do-while", "foreach"],
+    "correctAnswer": 2,
+    "explanation": "A do-while loop checks the condition after executing the loop body."
+  },
+  {
+    "id": 4,
+    "question": "Which keyword is used to exit a loop immediately?",
+    "options": ["continue", "break", "return", "stop"],
+    "correctAnswer": 1,
+    "explanation": "The break statement terminates the nearest loop."
+  },
+  {
+    "id": 5,
+    "question": "Which data structure follows the LIFO principle?",
+    "options": ["Queue", "Stack", "Linked List", "Heap"],
+    "correctAnswer": 1,
+    "explanation": "Stack follows Last In, First Out."
+  },
+  {
+    "id": 6,
+    "question": "Which searching algorithm requires sorted data?",
+    "options": ["Linear Search", "Binary Search", "Depth First Search", "Hash Search"],
+    "correctAnswer": 1,
+    "explanation": "Binary Search works only on sorted collections."
+  },
+  {
+    "id": 7,
+    "question": "What is the time complexity of Binary Search?",
+    "options": ["O(n)", "O(log n)", "O(n²)", "O(1)"],
+    "correctAnswer": 1,
+    "explanation": "Binary Search repeatedly halves the search space."
+  },
+  {
+    "id": 8,
+    "question": "Which sorting algorithm repeatedly swaps adjacent elements?",
+    "options": ["Merge Sort", "Quick Sort", "Bubble Sort", "Heap Sort"],
+    "correctAnswer": 2,
+    "explanation": "Bubble Sort compares and swaps adjacent elements."
+  },
+  {
+    "id": 9,
+    "question": "Which OOP principle allows one class to acquire properties of another?",
+    "options": ["Polymorphism", "Inheritance", "Encapsulation", "Abstraction"],
+    "correctAnswer": 1,
+    "explanation": "Inheritance enables code reuse between classes."
+  },
+  {
+    "id": 10,
+    "question": "Which keyword creates an object in Java?",
+    "options": ["create", "new", "class", "object"],
+    "correctAnswer": 1,
+    "explanation": "The new keyword allocates memory for an object."
+  },
+  {
+    "id": 11,
+    "question": "Which data structure follows the FIFO principle?",
+    "options": ["Stack", "Queue", "Tree", "Graph"],
+    "correctAnswer": 1,
+    "explanation": "Queue follows First In First Out."
+  },
+  {
+    "id": 12,
+    "question": "Which operator is used to find the remainder after division in C?",
+    "options": ["/", "%", "//", "*"],
+    "correctAnswer": 1,
+    "explanation": "The modulus (%) operator returns the remainder."
+  },
+  {
+    "id": 13,
+    "question": "Which of the following is NOT a primitive data type in Java?",
+    "options": ["int", "float", "String", "char"],
+    "correctAnswer": 2,
+    "explanation": "String is a class, not a primitive type."
+  },
+  {
+    "id": 14,
+    "question": "Which keyword is used to define a function in Python?",
+    "options": ["func", "function", "def", "method"],
+    "correctAnswer": 2,
+    "explanation": "Python functions are declared using the def keyword."
+  },
+  {
+    "id": 15,
+    "question": "Which traversal visits Left → Root → Right?",
+    "options": ["Preorder", "Inorder", "Postorder", "Level Order"],
+    "correctAnswer": 1,
+    "explanation": "Inorder traversal visits Left, Root, then Right."
+  },
+  {
+    "id": 16,
+    "question": "Which sorting algorithm selects the smallest element in every pass?",
+    "options": ["Bubble Sort", "Insertion Sort", "Selection Sort", "Merge Sort"],
+    "correctAnswer": 2,
+    "explanation": "Selection Sort repeatedly places the minimum element."
+  },
+  {
+    "id": 17,
+    "question": "Which keyword prevents a method from being overridden in Java?",
+    "options": ["static", "const", "final", "private"],
+    "correctAnswer": 2,
+    "explanation": "A final method cannot be overridden."
+  },
+  {
+    "id": 18,
+    "question": "Which algorithm is commonly used for shortest path in weighted graphs?",
+    "options": ["DFS", "BFS", "Dijkstra", "KMP"],
+    "correctAnswer": 2,
+    "explanation": "Dijkstra's algorithm finds the shortest path in graphs with non-negative edge weights."
+  },
+  {
+    "id": 19,
+    "question": "Which symbol is used to access members through a pointer in C++?",
+    "options": [".", "::", "->", "&"],
+    "correctAnswer": 2,
+    "explanation": "The arrow operator (->) accesses members through pointers."
+  },
+  {
+    "id": 20,
+    "question": "What is the worst-case time complexity of Bubble Sort?",
+    "options": ["O(n)", "O(log n)", "O(n²)", "O(n log n)"],
+    "correctAnswer": 2,
+    "explanation": "Bubble Sort has O(n²) worst-case complexity."
+  },
+  {
+    "id": 21,
+    "question": "Which data structure is used for implementing recursion?",
+    "options": ["Queue", "Stack", "Heap", "Array"],
+    "correctAnswer": 1,
+    "explanation": "Recursive function calls are stored in the call stack."
+  },
+  {
+    "id": 22,
+    "question": "Which traversal of a Binary Search Tree gives sorted output?",
+    "options": ["Preorder", "Postorder", "Inorder", "Level Order"],
+    "correctAnswer": 2,
+    "explanation": "Inorder traversal of a BST visits elements in sorted order."
+  },
+  {
+    "id": 23,
+    "question": "Which keyword is used to handle exceptions in Java?",
+    "options": ["error", "catch", "throw", "try"],
+    "correctAnswer": 3,
+    "explanation": "Exception handling begins with the try block."
+  },
+  {
+    "id": 24,
+    "question": "Which searching algorithm checks every element one by one?",
+    "options": ["Binary Search", "Linear Search", "DFS", "BFS"],
+    "correctAnswer": 1,
+    "explanation": "Linear Search compares the target with each element sequentially."
+  },
+  {
+    "id": 25,
+    "question": "Which sorting algorithm divides the array into halves recursively?",
+    "options": ["Bubble Sort", "Selection Sort", "Merge Sort", "Insertion Sort"],
+    "correctAnswer": 2,
+    "explanation": "Merge Sort uses the divide-and-conquer technique."
+  },
+  {
+    "id": 26,
+    "question": "Which Python collection stores key-value pairs?",
+    "options": ["List", "Tuple", "Dictionary", "Set"],
+    "correctAnswer": 2,
+    "explanation": "A dictionary stores data as key-value pairs."
+  },
+  {
+    "id": 27,
+    "question": "Which symbol is used for single-line comments in Python?",
+    "options": ["//", "#", "/*", "--"],
+    "correctAnswer": 1,
+    "explanation": "The # symbol is used for comments in Python."
+  },
+  {
+    "id": 28,
+    "question": "Which SQL statement adds a new record into a table?",
+    "options": ["UPDATE", "INSERT", "SELECT", "CREATE"],
+    "correctAnswer": 1,
+    "explanation": "INSERT is used to add new rows."
+  },
+  {
+    "id": 29,
+    "question": "Which Java collection does NOT allow duplicate elements?",
+    "options": ["ArrayList", "LinkedList", "Set", "Vector"],
+    "correctAnswer": 2,
+    "explanation": "A Set stores only unique elements."
+  },
+  {
+    "id": 30,
+    "question": "Which notation describes the worst-case performance of an algorithm?",
+    "options": ["Big O", "Big Ω", "Theta", "Sigma"],
+    "correctAnswer": 0,
+    "explanation": "Big O notation represents the upper bound (worst case) of an algorithm."
+  },
+  {
+    "id": 31,
+    "question": "Which data structure is used in Breadth First Search (BFS)?",
+    "options": ["Stack", "Queue", "Heap", "Tree"],
+    "correctAnswer": 1,
+    "explanation": "BFS explores nodes level by level using a queue."
+  },
+  {
+    "id": 32,
+    "question": "Which keyword is used to inherit a class in C++?",
+    "options": ["extends", "inherits", ":", "implements"],
+    "correctAnswer": 2,
+    "explanation": "C++ uses ':' for inheritance."
+  },
+  {
+    "id": 33,
+    "question": "What is the default value of a boolean variable in Java?",
+    "options": ["true", "false", "0", "null"],
+    "correctAnswer": 1,
+    "explanation": "Instance boolean variables are initialized to false."
+  },
+  {
+    "id": 34,
+    "question": "Which function is used to find the length of a string in C?",
+    "options": ["size()", "length()", "strlen()", "count()"],
+    "correctAnswer": 2,
+    "explanation": "strlen() returns the length of a C string."
+  },
+  {
+    "id": 35,
+    "question": "Which algorithm is based on Divide and Conquer?",
+    "options": ["Bubble Sort", "Merge Sort", "Selection Sort", "Insertion Sort"],
+    "correctAnswer": 1,
+    "explanation": "Merge Sort recursively divides and merges arrays."
+  },
+  {
+    "id": 36,
+    "question": "Which traversal uses a queue?",
+    "options": ["DFS", "Preorder", "Inorder", "Level Order"],
+    "correctAnswer": 3,
+    "explanation": "Level Order traversal is implemented using a queue."
+  },
+  {
+    "id": 37,
+    "question": "Which operator is used for logical AND in Java?",
+    "options": ["&", "&&", "|", "||"],
+    "correctAnswer": 1,
+    "explanation": "&& is the logical AND operator."
+  },
+  {
+    "id": 38,
+    "question": "Which of the following is immutable in Java?",
+    "options": ["String", "StringBuilder", "ArrayList", "Vector"],
+    "correctAnswer": 0,
+    "explanation": "String objects cannot be modified after creation."
+  },
+  {
+    "id": 39,
+    "question": "Which data structure is best for implementing Undo functionality?",
+    "options": ["Queue", "Stack", "Heap", "Tree"],
+    "correctAnswer": 1,
+    "explanation": "Undo operations follow the LIFO principle."
+  },
+  {
+    "id": 40,
+    "question": "What is the average-case time complexity of Quick Sort?",
+    "options": ["O(n²)", "O(log n)", "O(n log n)", "O(n)"],
+    "correctAnswer": 2,
+    "explanation": "Quick Sort runs in O(n log n) on average."
+  },
+  {
+    "id": 41,
+    "question": "Which data structure is used to implement function calls?",
+    "options": ["Queue", "Stack", "Linked List", "Graph"],
+    "correctAnswer": 1,
+    "explanation": "Function calls are managed using the call stack."
+  },
+  {
+    "id": 42,
+    "question": "Which operator checks equality in JavaScript?",
+    "options": ["=", "==", "===", "Both == and ==="],
+    "correctAnswer": 3,
+    "explanation": "Both == and === compare values, but === also checks data type."
+  },
+  {
+    "id": 43,
+    "question": "Which traversal visits Root → Left → Right?",
+    "options": ["Inorder", "Preorder", "Postorder", "Level Order"],
+    "correctAnswer": 1,
+    "explanation": "Preorder traversal follows Root, Left, Right."
+  },
+  {
+    "id": 44,
+    "question": "Which SQL clause is used to sort records?",
+    "options": ["GROUP BY", "HAVING", "ORDER BY", "SORT"],
+    "correctAnswer": 2,
+    "explanation": "ORDER BY sorts the result set."
+  },
+  {
+    "id": 45,
+    "question": "Which of the following is NOT a linear data structure?",
+    "options": ["Stack", "Queue", "Array", "Tree"],
+    "correctAnswer": 3,
+    "explanation": "A tree is a non-linear data structure."
+  },
+  {
+    "id": 46,
+    "question": "Which C++ feature allows multiple functions with the same name but different parameters?",
+    "options": ["Inheritance", "Overloading", "Overriding", "Abstraction"],
+    "correctAnswer": 1,
+    "explanation": "Function overloading enables multiple functions with the same name."
+  },
+  {
+    "id": 47,
+    "question": "Which algorithm is commonly used for finding the minimum spanning tree?",
+    "options": ["Dijkstra", "Prim", "Binary Search", "DFS"],
+    "correctAnswer": 1,
+    "explanation": "Prim's algorithm constructs a Minimum Spanning Tree."
+  },
+  {
+    "id": 48,
+    "question": "Which Java collection maintains insertion order?",
+    "options": ["HashSet", "TreeSet", "LinkedHashSet", "PriorityQueue"],
+    "correctAnswer": 2,
+    "explanation": "LinkedHashSet preserves insertion order."
+  },
+  {
+    "id": 49,
+    "question": "What is the worst-case time complexity of Linear Search?",
+    "options": ["O(log n)", "O(1)", "O(n)", "O(n log n)"],
+    "correctAnswer": 2,
+    "explanation": "Linear Search may examine every element."
+  },
+  {
+    "id": 50,
+    "question": "Which keyword is used to stop the current iteration and continue with the next iteration of a loop?",
+    "options": ["break", "continue", "return", "exit"],
+    "correctAnswer": 1,
+    "explanation": "The continue statement skips the remaining code in the current iteration."
+  },
+  {
+    "id": 51,
+    "question": "What is the output of Python: len('Placement')?",
+    "options": ["8", "9", "10", "11"],
+    "correctAnswer": 1,
+    "explanation": "'Placement' contains 9 characters."
+  },
+  {
+    "id": 52,
+    "question": "Which keyword is used to stop a loop immediately in Python?",
+    "options": ["continue", "pass", "break", "exit"],
+    "correctAnswer": 2,
+    "explanation": "'break' immediately exits the loop."
+  },
+  {
+    "id": 53,
+    "question": "Which Java collection stores unique elements only?",
+    "options": ["ArrayList", "LinkedList", "HashSet", "Vector"],
+    "correctAnswer": 2,
+    "explanation": "HashSet does not allow duplicate elements."
+  },
+  {
+    "id": 54,
+    "question": "Which SQL statement is used to update existing records?",
+    "options": ["ALTER", "UPDATE", "MODIFY", "CHANGE"],
+    "correctAnswer": 1,
+    "explanation": "UPDATE modifies existing rows."
+  },
+  {
+    "id": 55,
+    "question": "Which sorting algorithm repeatedly swaps adjacent elements?",
+    "options": ["Merge Sort", "Quick Sort", "Bubble Sort", "Heap Sort"],
+    "correctAnswer": 2,
+    "explanation": "Bubble Sort compares and swaps adjacent elements."
+  },
+  {
+    "id": 56,
+    "question": "Which data structure follows FIFO order?",
+    "options": ["Stack", "Queue", "Tree", "Graph"],
+    "correctAnswer": 1,
+    "explanation": "Queue follows First In First Out."
+  },
+  {
+    "id": 57,
+    "question": "Which HTTP method is commonly used to retrieve data?",
+    "options": ["POST", "PUT", "GET", "DELETE"],
+    "correctAnswer": 2,
+    "explanation": "GET requests retrieve resources."
+  },
+  {
+    "id": 58,
+    "question": "Which symbol is used for comments in Python?",
+    "options": ["//", "/* */", "#", "--"],
+    "correctAnswer": 2,
+    "explanation": "Python uses # for single-line comments."
+  },
+  {
+    "id": 59,
+    "question": "Which operator checks equality in Java?",
+    "options": ["=", "==", "!=", "==="],
+    "correctAnswer": 1,
+    "explanation": "== compares primitive values."
+  },
+  {
+    "id": 60,
+    "question": "Which search algorithm requires sorted data?",
+    "options": ["Linear Search", "Binary Search", "DFS", "BFS"],
+    "correctAnswer": 1,
+    "explanation": "Binary Search works only on sorted collections."
+  },
+  {
+    "id": 61,
+    "question": "Which of the following is a NoSQL database?",
+    "options": ["MySQL", "Oracle", "MongoDB", "PostgreSQL"],
+    "correctAnswer": 2,
+    "explanation": "MongoDB is a popular NoSQL document database."
+  },
+  {
+    "id": 62,
+    "question": "Which keyword is used to inherit a class in C++?",
+    "options": ["extends", "inherits", ":", "implements"],
+    "correctAnswer": 2,
+    "explanation": "C++ uses the ':' operator to specify inheritance."
+  },
+  {
+    "id": 63,
+    "question": "Which data structure is used for Breadth First Search (BFS)?",
+    "options": ["Stack", "Queue", "Heap", "Tree"],
+    "correctAnswer": 1,
+    "explanation": "BFS explores nodes level by level using a queue."
+  },
+  {
+    "id": 64,
+    "question": "What is the default value of an uninitialized boolean variable in Java?",
+    "options": ["true", "false", "0", "null"],
+    "correctAnswer": 1,
+    "explanation": "Instance boolean variables are initialized to false by default."
+  },
+  {
+    "id": 65,
+    "question": "Which HTML tag is used to create a hyperlink?",
+    "options": ["<link>", "<a>", "<href>", "<url>"],
+    "correctAnswer": 1,
+    "explanation": "The <a> (anchor) tag creates hyperlinks."
+  },
+  {
+    "id": 66,
+    "question": "Which CSS property is used to change the text color?",
+    "options": ["font-color", "text-color", "color", "foreground"],
+    "correctAnswer": 2,
+    "explanation": "The color property sets the text color."
+  },
+  {
+    "id": 67,
+    "question": "Which JavaScript method converts a JSON string into an object?",
+    "options": ["JSON.stringify()", "JSON.convert()", "JSON.parse()", "JSON.object()"],
+    "correctAnswer": 2,
+    "explanation": "JSON.parse() converts a JSON string into a JavaScript object."
+  },
+  {
+    "id": 68,
+    "question": "Which algorithm is commonly used to find the shortest path in a weighted graph?",
+    "options": ["DFS", "BFS", "Dijkstra's Algorithm", "Prim's Algorithm"],
+    "correctAnswer": 2,
+    "explanation": "Dijkstra's algorithm finds the shortest path in graphs with non-negative edge weights."
+  },
+  {
+    "id": 69,
+    "question": "Which SQL aggregate function returns the total number of records?",
+    "options": ["SUM()", "COUNT()", "TOTAL()", "AVG()"],
+    "correctAnswer": 1,
+    "explanation": "COUNT() returns the number of rows."
+  },
+  {
+    "id": 70,
+    "question": "Which time complexity is considered the most efficient among these?",
+    "options": ["O(n²)", "O(n log n)", "O(log n)", "O(n)"],
+    "correctAnswer": 2,
+    "explanation": "O(log n) grows the slowest among the given complexities."
+  }
+]
