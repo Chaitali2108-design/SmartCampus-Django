@@ -552,8 +552,30 @@ def preparation(request):
         "preparation/index.html",
         {"rounds": rounds},
     )
-
+#for tests
 def preparation_test(request, test_type):
     return render(request, "preparation/test.html", {
         "test_type": test_type
     })
+
+#for result of test
+import json
+from django.http import JsonResponse
+
+def preparation_result(request):
+
+    if request.method == "POST":
+
+        data = json.loads(request.body)
+
+        request.session["result"] = data
+
+        return JsonResponse({"success":True})
+
+    return render(
+        request,
+        "preparation/result.html",
+        {
+            "result":request.session.get("result",{})
+        }
+    )
