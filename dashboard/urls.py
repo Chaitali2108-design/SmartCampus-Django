@@ -15,4 +15,5 @@ urlpatterns = [
     path("recruiter/",views.recruiter_dashboard,name="recruiter_dashboard"),
     path("preparation/", views.preparation, name="preparation"),
     path("preparation/test/<str:test_type>/",views.preparation_test,name="preparation_test",),
+    path("preparation/result/",views.preparation_result,name="preparation_result"),
     ]  
