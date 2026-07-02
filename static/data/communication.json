@@ -1,0 +1,742 @@
+[
+  {
+    "id": 1,
+    "question": "Choose the correct sentence.",
+    "options": [
+      "He don't like coffee.",
+      "He doesn't likes coffee.",
+      "He doesn't like coffee.",
+      "He not like coffee."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 2,
+    "question": "Choose the synonym of 'Abundant'.",
+    "options": ["Scarce", "Plentiful", "Tiny", "Limited"],
+    "correctAnswer": 1
+  },
+  {
+    "id": 3,
+    "question": "Choose the antonym of 'Expand'.",
+    "options": ["Increase", "Stretch", "Contract", "Develop"],
+    "correctAnswer": 2
+  },
+  {
+    "id": 4,
+    "question": "Which sentence is most appropriate in a professional email?",
+    "options": [
+      "Send me the file ASAP.",
+      "Hey, what's up?",
+      "Could you please share the file at your earliest convenience?",
+      "Give me the file now."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 5,
+    "question": "Complete the sentence: She has been working here ___ 2022.",
+    "options": ["for", "since", "from", "at"],
+    "correctAnswer": 1
+  },
+  {
+    "id": 6,
+    "question": "Identify the correctly spelled word.",
+    "options": ["Accomodation", "Accommodation", "Acommodation", "Accommadation"],
+    "correctAnswer": 1
+  },
+  {
+    "id": 7,
+    "question": "Choose the most suitable closing for a formal email.",
+    "options": ["Cheers", "Bye", "Yours sincerely", "Take care"],
+    "correctAnswer": 2
+  },
+  {
+    "id": 8,
+    "question": "Choose the correct passive voice: 'The manager approved the proposal.'",
+    "options": [
+      "The proposal approved by the manager.",
+      "The proposal was approved by the manager.",
+      "The proposal is approved by the manager.",
+      "The proposal has approved by the manager."
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 9,
+    "question": "Choose the one-word substitution for 'A person who can speak many languages'.",
+    "options": ["Linguist", "Polyglot", "Translator", "Scholar"],
+    "correctAnswer": 1
+  },
+  {
+    "id": 10,
+    "question": "If you don't understand a question during an interview, what should you do?",
+    "options": [
+      "Stay silent.",
+      "Guess the answer.",
+      "Politely ask the interviewer to repeat or clarify.",
+      "Change the topic."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 11,
+    "question": "Which of the following is an example of active listening?",
+    "options": [
+      "Interrupting frequently",
+      "Maintaining eye contact and asking relevant questions",
+      "Looking at your phone while listening",
+      "Changing the topic quickly"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 12,
+    "question": "What is the purpose of a formal email subject line?",
+    "options": [
+      "To decorate the email",
+      "To summarize the email's purpose",
+      "To greet the receiver",
+      "To mention your address"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 13,
+    "question": "Which communication skill is most important during a job interview?",
+    "options": [
+      "Speaking loudly",
+      "Using complex vocabulary",
+      "Clear and confident communication",
+      "Talking continuously"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 14,
+    "question": "Which sentence is grammatically correct?",
+    "options": [
+      "She don't like coffee.",
+      "She doesn't likes coffee.",
+      "She doesn't like coffee.",
+      "She not like coffee."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 15,
+    "question": "Which of the following is considered positive body language?",
+    "options": [
+      "Avoiding eye contact",
+      "Crossing arms tightly",
+      "Maintaining an open posture",
+      "Looking at the floor"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 16,
+    "question": "When receiving constructive feedback, the best response is to:",
+    "options": [
+      "Argue immediately",
+      "Ignore the feedback",
+      "Listen carefully and consider improvements",
+      "Leave the conversation"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 17,
+    "question": "Which of the following improves professional communication?",
+    "options": [
+      "Using slang in emails",
+      "Writing clear and concise messages",
+      "Using emojis in formal reports",
+      "Ignoring grammar"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 18,
+    "question": "In a presentation, maintaining eye contact mainly helps to:",
+    "options": [
+      "Read the slides better",
+      "Build audience engagement and confidence",
+      "Reduce presentation time",
+      "Avoid answering questions"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 19,
+    "question": "Which is the most appropriate way to disagree in a professional meeting?",
+    "options": [
+      "Raise your voice",
+      "Respectfully explain your viewpoint",
+      "Interrupt others",
+      "Ignore everyone's opinion"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 20,
+    "question": "Which phrase is most suitable to end a formal email?",
+    "options": [
+      "See ya!",
+      "Thanks bro",
+      "Kind regards",
+      "Bye bye"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 21,
+    "question": "What should you do before answering an interview question?",
+    "options": [
+      "Interrupt the interviewer",
+      "Think for a few seconds",
+      "Start speaking immediately",
+      "Ask an unrelated question"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 22,
+    "question": "Which of the following is an example of verbal communication?",
+    "options": [
+      "Facial expressions",
+      "Body posture",
+      "Speaking during a meeting",
+      "Hand gestures"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 23,
+    "question": "Which of these should be avoided in a professional presentation?",
+    "options": [
+      "Clear voice",
+      "Proper eye contact",
+      "Reading every word from slides",
+      "Confident posture"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 24,
+    "question": "Which greeting is most appropriate in a formal email?",
+    "options": [
+      "Hey buddy,",
+      "Hi dude,",
+      "Dear Sir/Madam,",
+      "What's up?"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 25,
+    "question": "The primary purpose of communication is to:",
+    "options": [
+      "Confuse the listener",
+      "Exchange information effectively",
+      "Win every argument",
+      "Speak continuously"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 26,
+    "question": "Which is an example of non-verbal communication?",
+    "options": [
+      "Email",
+      "Phone call",
+      "Smile",
+      "Letter"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 27,
+    "question": "What should be your tone during a professional discussion?",
+    "options": [
+      "Aggressive",
+      "Polite and respectful",
+      "Sarcastic",
+      "Very casual"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 28,
+    "question": "Which of the following demonstrates good listening skills?",
+    "options": [
+      "Interrupting often",
+      "Checking your phone",
+      "Nodding and responding appropriately",
+      "Looking away continuously"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 29,
+    "question": "What is the best way to ask for clarification?",
+    "options": [
+      "Remain silent",
+      "Politely ask the speaker to explain",
+      "Guess the meaning",
+      "Change the topic"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 30,
+    "question": "Which quality is most important for effective workplace communication?",
+    "options": [
+      "Clarity",
+      "Speed",
+      "Volume",
+      "Length of message"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 31,
+    "question": "Which communication barrier occurs due to differences in language?",
+    "options": [
+      "Physical barrier",
+      "Psychological barrier",
+      "Language barrier",
+      "Cultural barrier"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 32,
+    "question": "A good presentation should primarily be:",
+    "options": [
+      "Lengthy",
+      "Clear and organized",
+      "Filled with animations",
+      "Read directly from slides"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 33,
+    "question": "Which of the following is NOT an effective communication skill?",
+    "options": [
+      "Empathy",
+      "Active listening",
+      "Interrupting others",
+      "Clear speaking"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 34,
+    "question": "In a group discussion, you should:",
+    "options": [
+      "Dominate the conversation",
+      "Respect others' opinions",
+      "Stay silent throughout",
+      "Interrupt frequently"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 35,
+    "question": "What does eye contact mainly indicate during communication?",
+    "options": [
+      "Boredom",
+      "Confidence and attentiveness",
+      "Aggression only",
+      "Disinterest"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 36,
+    "question": "Which sentence is the most professional?",
+    "options": [
+      "Send it ASAP!!",
+      "Kindly send the report by 5 PM.",
+      "Do it now.",
+      "Why haven't you sent it?"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 37,
+    "question": "What should you do if you don't know the answer in an interview?",
+    "options": [
+      "Guess randomly",
+      "Remain silent",
+      "Honestly admit it and explain your approach",
+      "Change the topic"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 38,
+    "question": "Which communication method provides an immediate response?",
+    "options": [
+      "Email",
+      "Letter",
+      "Face-to-face conversation",
+      "Notice board"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 39,
+    "question": "Which of the following is an example of written communication?",
+    "options": [
+      "Speech",
+      "Phone call",
+      "Business report",
+      "Presentation"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 40,
+    "question": "Which quality helps build trust during communication?",
+    "options": [
+      "Honesty",
+      "Speaking loudly",
+      "Using difficult words",
+      "Talking continuously"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 41,
+    "question": "Which of the following is the best way to begin a professional presentation?",
+    "options": [
+      "Apologize for being nervous",
+      "Start with a clear introduction",
+      "Read every word from the slides",
+      "Begin without greeting the audience"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 42,
+    "question": "What is the purpose of paraphrasing during communication?",
+    "options": [
+      "To confuse the listener",
+      "To confirm understanding",
+      "To avoid listening",
+      "To change the topic"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 43,
+    "question": "Which of these is considered a communication barrier?",
+    "options": [
+      "Active listening",
+      "Noise",
+      "Eye contact",
+      "Empathy"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 44,
+    "question": "The STAR method is commonly used to answer:",
+    "options": [
+      "Mathematics questions",
+      "Behavioral interview questions",
+      "Programming questions",
+      "Grammar questions"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 45,
+    "question": "Which of the following improves email readability?",
+    "options": [
+      "Long paragraphs",
+      "Clear formatting and bullet points",
+      "Using all capital letters",
+      "Ignoring punctuation"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 46,
+    "question": "What should you do before sending a professional email?",
+    "options": [
+      "Send it immediately",
+      "Proofread for grammar and spelling",
+      "Remove the subject line",
+      "Use informal language"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 47,
+    "question": "Which of the following is a sign of effective teamwork?",
+    "options": [
+      "Ignoring team members",
+      "Respectful collaboration",
+      "Taking all the credit",
+      "Avoiding communication"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 48,
+    "question": "During a virtual meeting, you should:",
+    "options": [
+      "Mute yourself when not speaking",
+      "Talk over others",
+      "Keep unnecessary background noise",
+      "Ignore the meeting agenda"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 49,
+    "question": "Which communication skill helps resolve workplace conflicts?",
+    "options": [
+      "Aggressive speaking",
+      "Active listening and empathy",
+      "Ignoring the issue",
+      "Blaming others"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 50,
+    "question": "What is the most important characteristic of professional communication?",
+    "options": [
+      "Clarity",
+      "Complex vocabulary",
+      "Speaking rapidly",
+      "Using technical jargon everywhere"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 51,
+    "question": "Which of the following demonstrates empathy during communication?",
+    "options": [
+      "Ignoring others' feelings",
+      "Understanding another person's perspective",
+      "Interrupting the speaker",
+      "Changing the topic"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 52,
+    "question": "What should you do if you disagree with your manager?",
+    "options": [
+      "Argue aggressively",
+      "Respectfully explain your viewpoint",
+      "Ignore the discussion",
+      "Complain to coworkers"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 53,
+    "question": "Which of the following is the best example of constructive feedback?",
+    "options": [
+      "Your work is terrible.",
+      "You should quit.",
+      "Your report is good; adding more examples would make it stronger.",
+      "This is useless."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 54,
+    "question": "In professional communication, abbreviations like 'LOL' or 'OMG' should generally be:",
+    "options": [
+      "Used in formal emails",
+      "Avoided in professional communication",
+      "Used in reports",
+      "Preferred over complete words"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 55,
+    "question": "Which of the following is a closed-ended question?",
+    "options": [
+      "What are your career goals?",
+      "How did you solve the problem?",
+      "Did you complete the project?",
+      "What improvements do you suggest?"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 56,
+    "question": "Which communication skill is most useful while negotiating?",
+    "options": [
+      "Patience",
+      "Interrupting",
+      "Speaking continuously",
+      "Avoiding eye contact"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 57,
+    "question": "When speaking in a meeting, you should:",
+    "options": [
+      "Speak clearly and stay on the topic",
+      "Speak as fast as possible",
+      "Use difficult words unnecessarily",
+      "Talk over others"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 58,
+    "question": "Which of the following is the most effective way to handle a misunderstanding?",
+    "options": [
+      "Ignore it",
+      "Clarify the issue politely",
+      "Blame the other person",
+      "End the conversation"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 59,
+    "question": "What is the purpose of asking open-ended questions?",
+    "options": [
+      "To get only 'Yes' or 'No' answers",
+      "To encourage detailed responses",
+      "To shorten conversations",
+      "To confuse the listener"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 60,
+    "question": "Which quality is essential for becoming an effective communicator?",
+    "options": [
+      "Confidence",
+      "Arrogance",
+      "Speaking loudly",
+      "Ignoring feedback"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 61,
+    "question": "Which sentence uses proper subject-verb agreement?",
+    "options": [
+      "The team are winning.",
+      "The team is winning.",
+      "The team were winning.",
+      "The team have winning."
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 62,
+    "question": "What is the best way to respond when you do not know the answer in an interview?",
+    "options": [
+      "Guess confidently",
+      "Remain silent",
+      "Admit you don't know and explain how you would find the answer",
+      "Change the topic"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 63,
+    "question": "Which word is closest in meaning to 'Precise'?",
+    "options": [
+      "Accurate",
+      "Careless",
+      "Confusing",
+      "Random"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 64,
+    "question": "Which sentence is grammatically correct?",
+    "options": [
+      "She don't like coffee.",
+      "She doesn't likes coffee.",
+      "She doesn't like coffee.",
+      "She not likes coffee."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 65,
+    "question": "Which is the most appropriate greeting in a formal email?",
+    "options": [
+      "Hey buddy,",
+      "Hi dude,",
+      "Dear Sir/Madam,",
+      "What's up?"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 66,
+    "question": "Which of the following improves communication in a team?",
+    "options": [
+      "Interrupting others",
+      "Active listening",
+      "Ignoring feedback",
+      "Speaking loudly"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 67,
+    "question": "Which sentence is written in the active voice?",
+    "options": [
+      "The report was prepared by John.",
+      "The task was completed yesterday.",
+      "John prepared the report.",
+      "The meeting was conducted."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 68,
+    "question": "What should you do before answering an interview question?",
+    "options": [
+      "Interrupt the interviewer",
+      "Take a moment to understand the question",
+      "Answer immediately without thinking",
+      "Ask an unrelated question"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 69,
+    "question": "Which sentence is punctuated correctly?",
+    "options": [
+      "Let's eat Grandma.",
+      "Lets eat, Grandma.",
+      "Let's eat, Grandma.",
+      "Lets eat Grandma."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 70,
+    "question": "Which quality is most important for effective workplace communication?",
+    "options": [
+      "Arrogance",
+      "Clarity",
+      "Aggression",
+      "Impatience"
+    ],
+    "correctAnswer": 1
+  }
+]
