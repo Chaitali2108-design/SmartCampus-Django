@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% block content %}
+
+<div
+  class="min-h-screen bg-[#140F1F] text-white flex items-center justify-center px-6"
+>
+  <div
+    class="w-full max-w-3xl rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-10"
+  >
+    <div class="text-center">
+      <div
+        class="w-28 h-28 mx-auto rounded-full bg-green-500/20 flex items-center justify-center"
+      >
+        <span class="text-5xl">🏆</span>
+      </div>
+
+      <h1 class="text-4xl font-bold mt-6">Test Completed</h1>
+
+      <p class="text-gray-400 mt-2">Here is your performance summary</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-6 mt-12">
+      <div class="rounded-2xl bg-white/5 p-6 border border-white/10">
+        <p class="text-gray-400">Score</p>
+
+        <h2 class="text-4xl font-bold text-green-400">
+          {{ result.score }}/{{ result.total }}
+        </h2>
+      </div>
+
+      <div class="rounded-2xl bg-white/5 p-6 border border-white/10">
+        <p class="text-gray-400">Percentage</p>
+
+        <h2 class="text-4xl font-bold text-pink-400">
+          {{ result.percentage }}%
+        </h2>
+      </div>
+
+      <div class="rounded-2xl bg-white/5 p-6 border border-white/10">
+        <p class="text-gray-400">Answered</p>
+
+        <h2 class="text-4xl font-bold text-sky-400">{{ result.answered }}</h2>
+      </div>
+
+      <div class="rounded-2xl bg-white/5 p-6 border border-white/10">
+        <p class="text-gray-400">Unanswered</p>
+
+        <h2 class="text-4xl font-bold text-yellow-400">{{ result.review }}</h2>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <div class="h-5 bg-white/10 rounded-full overflow-hidden">
+        <div
+          class="h-full bg-gradient-to-r from-pink-500 to-violet-500"
+          style="width: {{ result.percentage }}%;"
+        ></div>
+      </div>
+    </div>
+
+    <div class="flex justify-center gap-5 mt-10">
+      <a
+        href="{% url 'preparation' %}"
+        class="px-8 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400 transition"
+      >
+        Back to Tests
+      </a>
+
+      <button
+        onclick="history.back()"
+        class="px-8 py-3 rounded-2xl border border-white/10 hover:bg-white/10"
+      >
+        Retake Test
+      </button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
