@@ -566,6 +566,14 @@ def preparation_test(request, test_type, page):
         "passing_score": "40%",
         "marks": 70,
         "negative_marking": "No",
+         "category": "Online Assessment",
+        "type": "MCQ",
+
+        "sections": [
+            "Quantitative Aptitude",
+            "Logical Reasoning",
+            "Verbal Ability",
+        ],
     },
 
     "technical": {
@@ -577,6 +585,19 @@ def preparation_test(request, test_type, page):
         "passing_score": "40%",
         "marks": 50,
         "negative_marking": "No",
+        "category": "Technical Screening",
+        "type": "MCQ",
+
+        "sections": [
+            "Operating Systems",
+            "Database Management System",
+            "Computer Networks",
+            "Object-Oriented Programming",
+            "Data Structures & Algorithms",
+            "Software Engineering",
+            "SQL",
+            "Java",
+        ],
     },
 
     "coding": {
@@ -588,6 +609,16 @@ def preparation_test(request, test_type, page):
         "passing_score": "N/A",
         "marks": 100,
         "negative_marking": "No",
+        "category": "Programming Assessment",
+        "type": "Coding",
+
+        "sections": [
+            "Problem Solving",
+            "Programming Logic",
+            "Algorithms",
+            "Debugging",
+            "Optimization",
+        ],
     },
 
     "communication": {
@@ -599,6 +630,16 @@ def preparation_test(request, test_type, page):
         "passing_score": "N/A",
         "marks": 50,
         "negative_marking": "No",
+        "category": "Communication Skills",
+        "type": "Written",
+
+        "sections": [
+            "Email Writing",
+            "Grammar",
+            "Professional Writing",
+            "Situation-Based Responses",
+            "Comprehension",
+        ],
     },
 
     "hr": {
@@ -610,6 +651,19 @@ def preparation_test(request, test_type, page):
         "passing_score": "N/A",
         "marks": 100,
         "negative_marking": "No",
+        "category": "HR Interview",
+        "type": "Interview",
+
+        "sections": [
+            "Self Introduction",
+            "Strengths & Weaknesses",
+            "Career Goals",
+            "Leadership",
+            "Teamwork",
+            "Problem Solving",
+            "Behavioral Questions",
+            "Company Fit",
+        ],
     },
 }
     assessment = ASSESSMENTS.get(test_type)
