@@ -15,6 +15,7 @@ from django.http import JsonResponse
 from .models import InternshipApplication
 from .models import InternshipOpportunity
 from django.db.models import Count
+from datetime import date
 
 
 
@@ -225,6 +226,9 @@ def profile(request):
     if profile.skills:
         readiness += 15
 
+    if profile.email:
+        readiness += 15
+
     if profile.bio:
         readiness += 10
 
@@ -236,6 +240,7 @@ def profile(request):
 
     if profile.resume:
         readiness += 15
+
 
     return render(
         request,
@@ -479,18 +484,18 @@ def preparation(request):
             "id": 1,
             "title": "Aptitude Test",
             "description": "Quantitative, Logical & Verbal",
-            "questions": 25,
-            "duration": "30 mins",
+            "questions": 70,
+            "duration": "70 mins",
             "icon": "brain",
             "color": "from-pink-500 to-pink-600",
             "test_type": "aptitude",
         },
         {
             "id": 2,
-            "title": "Technical MCQs",
+            "title": "Technical Assessment",
             "description": "OS, DBMS, CN, OOP",
-            "questions": 30,
-            "duration": "40 mins",
+            "questions": 50,
+            "duration": "60 mins",
             "icon": "cpu",
             "color": "from-violet-500 to-purple-600",
             "test_type": "technical",
@@ -499,8 +504,8 @@ def preparation(request):
             "id": 3,
             "title": "Coding Challenge",
             "description": "Programming Problems",
-            "questions": 3,
-            "duration": "60 mins",
+            "questions": 2,
+            "duration": "90 mins",
             "icon": "code",
             "color": "from-cyan-500 to-blue-500",
             "test_type": "coding",
@@ -509,8 +514,8 @@ def preparation(request):
             "id": 4,
             "title": "Communication Test",
             "description": "Communication & Ideas",
-            "questions": 1,
-            "duration": "20 mins",
+            "questions": 5,
+            "duration": "30 mins",
             "icon": "users",
             "color": "from-orange-500 to-amber-500",
             "test_type": "communication",
@@ -519,31 +524,11 @@ def preparation(request):
             "id": 5,
             "title": "HR Interview",
             "description": "Core Subject Questions",
-            "questions": 20,
-            "duration": "45 mins",
-            "icon": "message-square",
+            "questions": 10,
+            "duration": "20 mins",
+            "icon":"briefcase-business",
             "color": "from-emerald-500 to-green-500",
             "test_type": "hr",
-        },
-        {
-            "id": 6,
-            "title": "Logical Reasoning",
-            "test_type": "logical",
-           "description": "Behavioral Questions",
-            "questions": 15,
-            "duration": "25 mins",
-            "icon": "briefcase",
-            "color": "from-indigo-500 to-indigo-700",
-        },
-        {
-            "id": 7,
-            "title": "Quantitative Aptitude",
-            "test_type": "quantitative",
-            "description": "TCS, Infosys, Google & More",
-            "questions": 50,
-            "duration": "90 mins",
-            "icon": "building-2",
-            "color": "from-rose-500 to-red-500",
         },
     ]
 
@@ -566,7 +551,9 @@ def preparation_test(request, test_type, page):
         "passing_score": "40%",
         "marks": 70,
         "negative_marking": "No",
-         "category": "Online Assessment",
+        "icon": "brain",
+        "color": "from-pink-500 to-pink-600",
+        "category": "Online Assessment",
         "type": "MCQ",
 
         "sections": [
@@ -585,6 +572,8 @@ def preparation_test(request, test_type, page):
         "passing_score": "40%",
         "marks": 50,
         "negative_marking": "No",
+        "icon": "cpu",
+        "color": "from-violet-500 to-purple-600",
         "category": "Technical Screening",
         "type": "MCQ",
 
@@ -609,6 +598,8 @@ def preparation_test(request, test_type, page):
         "passing_score": "N/A",
         "marks": 100,
         "negative_marking": "No",
+        "icon": "code",
+        "color": "from-cyan-500 to-blue-500",
         "category": "Programming Assessment",
         "type": "Coding",
 
@@ -630,6 +621,8 @@ def preparation_test(request, test_type, page):
         "passing_score": "N/A",
         "marks": 50,
         "negative_marking": "No",
+        "color": "from-orange-500 to-amber-500",
+        "icon": "users",
         "category": "Communication Skills",
         "type": "Written",
 
@@ -651,6 +644,8 @@ def preparation_test(request, test_type, page):
         "passing_score": "N/A",
         "marks": 100,
         "negative_marking": "No",
+        "color": "from-emerald-500 to-green-500",
+        "icon":"briefcase-business",
         "category": "HR Interview",
         "type": "Interview",
 
@@ -668,9 +663,13 @@ def preparation_test(request, test_type, page):
 }
     assessment = ASSESSMENTS.get(test_type)
 
+    profile = StudentProfile.objects.filter(user=request.user).first()
+
     context = {
         "test_type": test_type,
         "assessment": assessment,
+        "profile":profile,
+        "assessment_date": date.today(),
     }
 
     if page == "instructions":
