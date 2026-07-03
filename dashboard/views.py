@@ -552,11 +552,79 @@ def preparation(request):
         "preparation/index.html",
         {"rounds": rounds},
     )
-#for tests
-def preparation_test(request, test_type):
-    return render(request, "preparation/test.html", {
-        "test_type": test_type
-    })
+#for job preparation
+@login_required
+def preparation_test(request, test_type, page):
+
+    ASSESSMENTS = {
+    "aptitude": {
+        "title": "Aptitude Assessment",
+        "subtitle": "Quantitative Aptitude, Logical Reasoning and Verbal Ability",
+        "questions": 70,
+        "duration": "70 Minutes",
+        "difficulty": "Medium",
+        "passing_score": "40%",
+        "marks": 70,
+        "negative_marking": "No",
+    },
+
+    "technical": {
+        "title": "Technical Assessment",
+        "subtitle": "Computer Science Fundamentals",
+        "questions": 50,
+        "duration": "60 Minutes",
+        "difficulty": "Medium",
+        "passing_score": "40%",
+        "marks": 50,
+        "negative_marking": "No",
+    },
+
+    "coding": {
+        "title": "Coding Assessment",
+        "subtitle": "Programming & Problem Solving",
+        "questions": 2,
+        "duration": "90 Minutes",
+        "difficulty": "Medium",
+        "passing_score": "N/A",
+        "marks": 100,
+        "negative_marking": "No",
+    },
+
+    "communication": {
+        "title": "Communication Assessment",
+        "subtitle": "Written Communication & Email Writing",
+        "questions": 5,
+        "duration": "30 Minutes",
+        "difficulty": "Easy",
+        "passing_score": "N/A",
+        "marks": 50,
+        "negative_marking": "No",
+    },
+
+    "hr": {
+        "title": "HR Interview",
+        "subtitle": "Behavioral & Personal Interview",
+        "questions": 10,
+        "duration": "20 Minutes",
+        "difficulty": "Easy",
+        "passing_score": "N/A",
+        "marks": 100,
+        "negative_marking": "No",
+    },
+}
+    assessment = ASSESSMENTS.get(test_type)
+
+    context = {
+        "test_type": test_type,
+        "assessment": assessment,
+    }
+
+    if page == "instructions":
+        template = "preparation/shared/instructions.html"
+    else:
+        template = f"preparation/{test_type}/{page}.html"
+
+    return render(request, template, context)
 
 #for result of test
 import json
