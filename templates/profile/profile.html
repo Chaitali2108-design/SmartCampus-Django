@@ -60,11 +60,13 @@
 
         <div class="grid md:grid-cols-2 gap-6">
           {{ form.full_name }} {{ form.college }} {{ form.branch }}
-          {{form.year}} {{ form.email }} {{ form.phone }} {{ form.github }}
-          {{form.linkedin }} {{ form.location }} {{ form.cgpa }}
+          {{form.year}} {{ form.phone }} {{ form.github }} {{form.linkedin }}
+          {{form.location }} {{ form.cgpa }}
         </div>
 
         <div class="mt-6">{{ form.skills }}</div>
+
+        <div class="mt-6">{{ form.email }}</div>
 
         <div class="mt-6">{{ form.bio }}</div>
 
