@@ -88,6 +88,7 @@ class StudentProfileForm(forms.ModelForm):
             "location",
             "profile_photo",
             "resume",
+            "email",
         ]
 
         widgets = {
@@ -141,6 +142,11 @@ class StudentProfileForm(forms.ModelForm):
             "location": forms.TextInput(attrs={
                 "class": "profile-input",
                 "placeholder": "Location"
+            }),
+
+            "email": forms.EmailInput(attrs={
+                "class":"profile-input",
+                "placeholder":"Email ID"
             }),
         }
 
