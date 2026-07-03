@@ -13,7 +13,9 @@ urlpatterns = [
     path("internships/", views.internships, name="internships"),
     path("internships/<int:pk>/apply/", views.apply_internship, name="apply_internship"),
     path("recruiter/",views.recruiter_dashboard,name="recruiter_dashboard"),
+
+    #for job preparation page
     path("preparation/", views.preparation, name="preparation"),
-    path("preparation/test/<str:test_type>/",views.preparation_test,name="preparation_test",),
+    path("preparation/<str:test_type>/<str:page>/",views.preparation_test,name="preparation_test",),
     path("preparation/result/",views.preparation_result,name="preparation_result"),
     ]  
