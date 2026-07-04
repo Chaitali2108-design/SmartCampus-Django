@@ -1,7 +1,9 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content%}
+{{questions|json_script:"questions-data" }}
 
 <div class="min-h-screen bg-[#140F1F] text-white">
   <!-- Header -->
+
   <header
     class="sticky top-0 z-50 border-b border-white/10 bg-[#140F1F]/90 backdrop-blur-xl"
   >
@@ -9,26 +11,29 @@
       class="max-w-[1700px] mx-auto px-8 py-5 flex items-center justify-between"
     >
       <div>
-        <h1 class="text-2xl font-bold">{{ assessment.title }}</h1>
+        <h1 class="text-3xl font-bold">{{ assessment.title }}</h1>
 
-        <p class="text-gray-400 text-sm mt-1">{{ assessment.subtitle }}</p>
+        <p class="text-gray-400 mt-2">{{ assessment.subtitle }}</p>
       </div>
 
-      <div class="flex items-center gap-10">
+      <div class="flex items-center gap-8">
         <div class="text-center">
           <p class="text-gray-400 text-sm">Candidate</p>
 
           <h3 class="font-semibold">{{ profile.full_name }}</h3>
         </div>
 
-        <div class="text-center">
-          <p class="text-gray-400 text-sm">Time Left</p>
+        <div
+          class="rounded-2xl bg-pink-500/10 border border-pink-500/20 px-6 py-3"
+        >
+          <p class="text-sm text-gray-300">Time Left</p>
 
-          <h3 id="timer" class="text-2xl font-bold text-pink-400">70:00</h3>
+          <h2 id="timer" class="text-2xl font-bold text-pink-400">--</h2>
         </div>
 
         <button
-          class="px-7 py-3 rounded-2xl bg-red-500 hover:bg-red-400 transition"
+          id="submitBtn"
+          class="px-6 py-3 rounded-2xl bg-red-500 hover:bg-red-400 transition"
         >
           Submit Test
         </button>
@@ -36,217 +41,144 @@
     </div>
   </header>
 
-  <!-- Main -->
+  <!-- Main Layout -->
 
   <div class="max-w-[1700px] mx-auto p-8">
-    <div class="grid lg:grid-cols-4 gap-8">
-      <!-- LEFT -->
+    <div class="grid grid-cols-12 gap-8">
+      <!-- Left Side -->
 
-      <div class="lg:col-span-3">
-        <!-- Progress Card -->
+      <div class="col-span-8">
+        <!-- Progress -->
 
         <div
-          class="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 mb-6"
+          class="rounded-[28px] bg-white/5 border border-white/10 p-7 backdrop-blur-xl mb-7"
         >
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h2 class="text-xl font-semibold">Progress</h2>
-
-              <p class="text-gray-400 text-sm">
-                Question {{ forloop.counter|default:1 }} of {{questions|length}}
-              </p>
-            </div>
-
+          <div class="flex justify-between items-center">
             <span
-              class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300 text-sm"
+              id="questionNumber"
+              class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300"
             >
-              {{ assessment.type }}
             </span>
+
+            <span id="progressText" class="text-gray-400"> </span>
           </div>
 
-          <div class="w-full h-3 rounded-full bg-white/10 overflow-hidden">
+          <div class="h-3 rounded-full bg-white/10 overflow-hidden mt-6">
             <div
+              id="progressBar"
               class="h-full bg-gradient-to-r from-pink-500 to-violet-500"
-              style="width: 20%"
+              style="width: 0%"
             ></div>
           </div>
         </div>
 
         <!-- Question Card -->
 
-        {% with question=questions.0 %}
-
         <div
-          class="rounded-[30px] border border-white/10 bg-white/5 backdrop-blur-xl p-8"
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8"
         >
-          <div class="flex items-center justify-between mb-8">
+          <div class="flex justify-between mb-8">
             <span
-              class="px-4 py-2 rounded-full bg-violet-500/10 text-violet-300 text-sm"
+              id="sectionBadge"
+              class="px-4 py-2 rounded-full bg-violet-500/10 text-violet-300"
             >
-              {{ question.section|title }}
             </span>
 
-            <span class="text-gray-400"> Marks : {{ question.marks }} </span>
+            <span id="marks" class="text-gray-400"> </span>
           </div>
 
-          <h2 class="text-2xl font-semibold leading-9">
-            Q1. {{ question.question }}
-          </h2>
+          <h2
+            id="questionText"
+            class="text-3xl font-semibold leading-relaxed"
+          ></h2>
 
-          {% if question.question_image %}
-
-          <img
-            src="{{ question.question_image.url }}"
-            class="mt-6 rounded-2xl max-h-72"
-          />
-
-          {% endif %} {% if question.code_snippet %}
+          <img id="questionImage" class="hidden mt-8 rounded-2xl max-h-72" />
 
           <pre
-            class="mt-6 rounded-2xl bg-black/30 border border-white/10 p-5 overflow-x-auto text-sm"
-          >
-{{ question.code_snippet }}</pre
-          >
-
-          {% endif %}
+            id="codeSnippet"
+            class="hidden mt-8 rounded-2xl bg-black/30 border border-white/10 p-5 overflow-x-auto"
+          ></pre>
 
           <!-- Options -->
 
-          <div class="mt-10 space-y-4">
-            <label
-              class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500 transition"
-            >
-              <input type="radio" name="answer" />
-
-              <span>{{ question.option_a }}</span>
-            </label>
+          <div class="mt-10 space-y-5">
+            {% for i in "1234" %}
 
             <label
-              class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500 transition"
+              class="optionCard group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer transition hover:border-pink-500"
             >
-              <input type="radio" name="answer" />
+              <input type="radio" class="hidden optionInput" name="answer" />
 
-              <span>{{ question.option_b }}</span>
+              <div class="w-6 h-6 rounded-full border-2 border-gray-500"></div>
+
+              <span class="optionText text-lg"></span>
             </label>
 
-            <label
-              class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500 transition"
-            >
-              <input type="radio" name="answer" />
-
-              <span>{{ question.option_c }}</span>
-            </label>
-
-            <label
-              class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500 transition"
-            >
-              <input type="radio" name="answer" />
-
-              <span>{{ question.option_d }}</span>
-            </label>
+            {% endfor %}
           </div>
 
-          <!-- Navigation -->
+          <!-- Footer -->
 
-          <div class="mt-10 flex items-center justify-between">
+          <div class="flex justify-between mt-14 pt-8 border-t border-white/10">
             <button
-              class="px-6 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+              id="prevBtn"
+              class="px-6 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10"
             >
-              ← Previous
+              Previous
             </button>
 
             <div class="flex gap-4">
               <button
-                class="px-6 py-3 rounded-2xl border border-yellow-500/30 bg-yellow-500/10 text-yellow-300"
+                id="reviewBtn"
+                class="px-6 py-3 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-300"
               >
                 Mark for Review
               </button>
 
               <button
-                class="px-6 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400 transition"
+                id="nextBtn"
+                class="px-8 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400"
               >
-                Next →
+                Next
               </button>
             </div>
           </div>
         </div>
-
-        {% endwith %}
       </div>
 
-      <!-- RIGHT -->
+      <!-- Sidebar -->
 
-      <div class="sticky top-28 space-y-6">
-        <!-- Question Palette -->
+      <div class="col-span-4">
         <div
-          class="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl p-6"
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8"
         >
-          <h2 class="text-xl font-semibold mb-6">Question Palette</h2>
+          <h2 class="text-xl font-semibold mb-8">Question Palette</h2>
 
-          <div class="grid grid-cols-5 gap-3">
-            {% for question in questions %}
+          <div id="questionPalette" class="grid grid-cols-5 gap-3"></div>
 
-            <button
-              class="h-11 w-11 rounded-xl border border-white/10 bg-white/5 hover:bg-pink-500 hover:border-pink-500 transition"
-            >
-              {{ forloop.counter }}
-            </button>
+          <div class="mt-10 border-t border-white/10 pt-8">
+            <h3 class="text-xl font-semibold mb-6">Test Summary</h3>
 
-            {% endfor %}
-          </div>
-        </div>
+            <div class="space-y-4">
+              <div class="flex justify-between">
+                <span class="text-gray-400"> Answered </span>
 
-        <!-- Legend -->
-        <div
-          class="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl p-6"
-        >
-          <h2 class="text-lg font-semibold mb-5">Legend</h2>
+                <span id="answeredCount" class="text-green-400"> 0 </span>
+              </div>
 
-          <div class="space-y-4 text-sm">
-            <div class="flex items-center gap-3">
-              <div class="w-5 h-5 rounded bg-pink-500"></div>
-              <span>Current Question</span>
-            </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400"> Review </span>
 
-            <div class="flex items-center gap-3">
-              <div class="w-5 h-5 rounded bg-green-500"></div>
-              <span>Answered</span>
-            </div>
+                <span id="reviewCount" class="text-yellow-400"> 0 </span>
+              </div>
 
-            <div class="flex items-center gap-3">
-              <div class="w-5 h-5 rounded bg-yellow-500"></div>
-              <span>Marked for Review</span>
-            </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400"> Remaining </span>
 
-            <div class="flex items-center gap-3">
-              <div
-                class="w-5 h-5 rounded bg-white/10 border border-white/20"
-              ></div>
-              <span>Not Answered</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Attempt Summary -->
-        <div
-          class="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl p-6"
-        >
-          <h2 class="text-lg font-semibold mb-5">Attempt Summary</h2>
-
-          <div class="space-y-4">
-            <div class="flex justify-between">
-              <span class="text-gray-400">Answered</span>
-              <span id="answeredCount">0</span>
-            </div>
-
-            <div class="flex justify-between">
-              <span class="text-gray-400">Not Answered</span>
-              <span id="notAnsweredCount">{{ questions|length }}</span>
-            </div>
-
-            <div class="flex justify-between">
-              <span class="text-gray-400">Review</span>
-              <span id="reviewCount">0</span>
+                <span id="remainingCount" class="text-red-400">
+                  {{ assessment.questions }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -254,5 +186,237 @@
     </div>
   </div>
 </div>
+
+{% csrf_token %}
+
+<script>
+
+  const testType="{{ test_type }}";
+
+  const assessmentDuration={{ assessment.questions }};
+</script>
+
+<script>
+  const djangoQuestions = JSON.parse(
+    document.getElementById("questions-data").textContent,
+  );
+
+  let questions = djangoQuestions.map((q) => ({
+    id: q.id,
+    question: q.question,
+    section: q.section,
+    marks: q.marks,
+    image: q.question_image,
+    code: q.code_snippet,
+
+    options: [q.option_a, q.option_b, q.option_c, q.option_d],
+
+    correctAnswer: {
+      A: 0,
+      B: 1,
+      C: 2,
+      D: 3,
+    }[q.correct_option],
+
+    answer: null,
+    review: false,
+    visited: false,
+  }));
+
+  let currentQuestion = 0;
+
+  // ================= Elements =================
+
+  const questionText = document.getElementById("questionText");
+  const sectionBadge = document.getElementById("sectionBadge");
+  const marks = document.getElementById("marks");
+
+  const optionCards = document.querySelectorAll(".optionCard");
+  const optionInputs = document.querySelectorAll(".optionInput");
+  const optionTexts = document.querySelectorAll(".optionText");
+
+  const questionNumber = document.getElementById("questionNumber");
+  const progressText = document.getElementById("progressText");
+  const progressBar = document.getElementById("progressBar");
+
+  const image = document.getElementById("questionImage");
+  const code = document.getElementById("codeSnippet");
+
+  const palette = document.getElementById("questionPalette");
+
+  // ================= Render =================
+
+  function renderQuestion() {
+    const q = questions[currentQuestion];
+
+    q.visited = true;
+
+    questionText.innerHTML = q.question;
+
+    sectionBadge.innerHTML = q.section;
+
+    marks.innerHTML = `Marks : ${q.marks}`;
+
+    questionNumber.innerHTML = `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    const percentage = Math.round(
+      ((currentQuestion + 1) / questions.length) * 100,
+    );
+
+    progressText.innerHTML = `${percentage}% Completed`;
+
+    progressBar.style.width = percentage + "%";
+
+    optionTexts.forEach((option, index) => {
+      option.innerHTML = q.options[index];
+
+      optionInputs[index].checked = q.answer === index;
+    });
+
+    if (q.image) {
+      image.src = "/media/" + q.image;
+
+      image.classList.remove("hidden");
+    } else {
+      image.classList.add("hidden");
+    }
+
+    if (q.code) {
+      code.innerText = q.code;
+
+      code.classList.remove("hidden");
+    } else {
+      code.classList.add("hidden");
+    }
+
+    updateOptionStyles();
+
+    updatePalette();
+
+    updateSummary();
+  }
+
+  // ================= Options =================
+
+  optionCards.forEach((card, index) => {
+    card.onclick = () => {
+      questions[currentQuestion].answer = index;
+
+      questions[currentQuestion].review = false;
+
+      optionInputs[index].checked = true;
+
+      updateOptionStyles();
+
+      updatePalette();
+
+      updateSummary();
+    };
+  });
+
+  function updateOptionStyles() {
+    optionCards.forEach((card, index) => {
+      card.classList.remove("border-sky-400", "bg-sky-500/20");
+
+      card.classList.add("border-white/10", "bg-white/5");
+
+      if (questions[currentQuestion].answer === index) {
+        card.classList.remove("border-white/10", "bg-white/5");
+
+        card.classList.add("border-sky-400", "bg-sky-500/20");
+      }
+    });
+  }
+
+  // ================= Navigation =================
+
+  document.getElementById("nextBtn").onclick = () => {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+
+      renderQuestion();
+    }
+  };
+
+  document.getElementById("prevBtn").onclick = () => {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+
+      renderQuestion();
+    }
+  };
+
+  // ================= Review =================
+
+  document.getElementById("reviewBtn").onclick = () => {
+    questions[currentQuestion].review = true;
+
+    updatePalette();
+
+    updateSummary();
+  };
+
+  // ================= Palette =================
+
+  function createPalette() {
+    palette.innerHTML = "";
+
+    questions.forEach((q, index) => {
+      const btn = document.createElement("button");
+
+      btn.innerHTML = index + 1;
+
+      btn.className = "paletteBtn aspect-square rounded-xl border transition";
+
+      btn.onclick = () => {
+        currentQuestion = index;
+
+        renderQuestion();
+      };
+
+      palette.appendChild(btn);
+    });
+  }
+
+  function updatePalette() {
+    const buttons = document.querySelectorAll(".paletteBtn");
+
+    buttons.forEach((btn, index) => {
+      btn.className = "paletteBtn aspect-square rounded-xl border transition";
+
+      if (index === currentQuestion) {
+        btn.classList.add("bg-pink-500", "border-pink-500");
+      } else if (questions[index].answer !== null) {
+        btn.classList.add("bg-green-500/20", "border-green-400");
+      } else if (questions[index].review) {
+        btn.classList.add("bg-yellow-500/20", "border-yellow-400");
+      } else if (questions[index].visited) {
+        btn.classList.add("bg-white/10");
+      }
+    });
+  }
+
+  // ================= Summary =================
+
+  function updateSummary() {
+    const answered = questions.filter((q) => q.answer !== null).length;
+
+    const review = questions.filter((q) => q.review).length;
+
+    const remaining = questions.length - answered;
+
+    document.getElementById("answeredCount").innerHTML = answered;
+
+    document.getElementById("reviewCount").innerHTML = review;
+
+    document.getElementById("remainingCount").innerHTML = remaining;
+  }
+
+  // ================= Initial =================
+
+  createPalette();
+
+  renderQuestion();
+</script>
 
 {% endblock %}
