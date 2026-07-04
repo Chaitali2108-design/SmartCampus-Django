@@ -129,13 +129,6 @@
 
             <div class="flex gap-4">
               <button
-                id="reviewBtn"
-                class="px-6 py-3 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-300"
-              >
-                Mark for Review
-              </button>
-
-              <button
                 id="nextBtn"
                 class="px-8 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400"
               >
@@ -247,6 +240,7 @@
   // ================= Render =================
 
   function renderQuestion() {
+    questions[currentQuestion].visited = true;
     const q = questions[currentQuestion];
 
     q.visited = true;
@@ -346,16 +340,6 @@
     }
   };
 
-  // ================= Review =================
-
-  document.getElementById("reviewBtn").onclick = () => {
-    questions[currentQuestion].review = true;
-
-    updatePalette();
-
-    updateSummary();
-  };
-
   // ================= Palette =================
 
   function createPalette() {
@@ -382,16 +366,25 @@
     const buttons = document.querySelectorAll(".paletteBtn");
 
     buttons.forEach((btn, index) => {
-      btn.className = "paletteBtn aspect-square rounded-xl border transition";
+      btn.className =
+        "paletteBtn aspect-square rounded-xl border transition-all duration-300";
 
       if (index === currentQuestion) {
-        btn.classList.add("bg-pink-500", "border-pink-500");
+        btn.classList.add("bg-pink-500", "border-pink-500", "text-white");
       } else if (questions[index].answer !== null) {
-        btn.classList.add("bg-green-500/20", "border-green-400");
-      } else if (questions[index].review) {
-        btn.classList.add("bg-yellow-500/20", "border-yellow-400");
-      } else if (questions[index].visited) {
-        btn.classList.add("bg-white/10");
+        btn.classList.add(
+          "bg-green-500/20",
+          "border-green-400",
+          "text-green-300",
+        );
+      } else if (questions[index].visited && questions[index].answer === null) {
+        btn.classList.add(
+          "bg-yellow-500/20",
+          "border-yellow-400",
+          "text-yellow-300",
+        );
+      } else {
+        btn.classList.add("bg-white/5", "border-white/10", "text-gray-400");
       }
     });
   }
@@ -401,15 +394,17 @@
   function updateSummary() {
     const answered = questions.filter((q) => q.answer !== null).length;
 
-    const review = questions.filter((q) => q.review).length;
+    const review = questions.filter(
+      (q) => q.visited && q.answer === null,
+    ).length;
 
-    const remaining = questions.length - answered;
+    const remaining = questions.filter((q) => !q.visited).length;
 
-    document.getElementById("answeredCount").innerHTML = answered;
+    document.getElementById("answeredCount").textContent = answered;
 
-    document.getElementById("reviewCount").innerHTML = review;
+    document.getElementById("reviewCount").textContent = review;
 
-    document.getElementById("remainingCount").innerHTML = remaining;
+    document.getElementById("remainingCount").textContent = remaining;
   }
 
   // ================= Initial =================
