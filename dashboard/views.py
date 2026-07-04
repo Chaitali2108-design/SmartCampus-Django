@@ -666,10 +666,20 @@ def preparation_test(request, test_type, page):
     
     questions = []
 
-    if page == "test" and test_type in ["aptitude", "technical"]:
-        questions = Question.objects.filter(
-        test_type=test_type
-        ).order_by("id")
+    for q in Question.objects.filter(test_type=test_type).order_by("id"):
+        questions.append({
+        "id": q.id,
+        "question": q.question,
+        "section": q.section,
+        "marks": q.marks,
+        "option_a": q.option_a,
+        "option_b": q.option_b,
+        "option_c": q.option_c,
+        "option_d": q.option_d,
+        "correct_option": q.correct_option,
+        "question_image": q.question_image.url if q.question_image else "",
+        "code_snippet": q.code_snippet,
+    })
 
     assessment = ASSESSMENTS.get(test_type)
 
@@ -688,10 +698,7 @@ def preparation_test(request, test_type, page):
     else:
         template = f"preparation/{test_type}/{page}.html"
 
-    print(page)
-    print(test_type)
-    print(questions)
-
+    
     return render(request, template, context)
 
 #for result of test
