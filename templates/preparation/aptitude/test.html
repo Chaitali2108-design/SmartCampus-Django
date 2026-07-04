@@ -1,0 +1,258 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+  <!-- Header -->
+  <header
+    class="sticky top-0 z-50 border-b border-white/10 bg-[#140F1F]/90 backdrop-blur-xl"
+  >
+    <div
+      class="max-w-[1700px] mx-auto px-8 py-5 flex items-center justify-between"
+    >
+      <div>
+        <h1 class="text-2xl font-bold">{{ assessment.title }}</h1>
+
+        <p class="text-gray-400 text-sm mt-1">{{ assessment.subtitle }}</p>
+      </div>
+
+      <div class="flex items-center gap-10">
+        <div class="text-center">
+          <p class="text-gray-400 text-sm">Candidate</p>
+
+          <h3 class="font-semibold">{{ profile.full_name }}</h3>
+        </div>
+
+        <div class="text-center">
+          <p class="text-gray-400 text-sm">Time Left</p>
+
+          <h3 id="timer" class="text-2xl font-bold text-pink-400">70:00</h3>
+        </div>
+
+        <button
+          class="px-7 py-3 rounded-2xl bg-red-500 hover:bg-red-400 transition"
+        >
+          Submit Test
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+
+  <div class="max-w-[1700px] mx-auto p-8">
+    <div class="grid lg:grid-cols-4 gap-8">
+      <!-- LEFT -->
+
+      <div class="lg:col-span-3">
+        <!-- Progress Card -->
+
+        <div
+          class="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 mb-6"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-xl font-semibold">Progress</h2>
+
+              <p class="text-gray-400 text-sm">
+                Question {{ forloop.counter|default:1 }} of {{questions|length}}
+              </p>
+            </div>
+
+            <span
+              class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300 text-sm"
+            >
+              {{ assessment.type }}
+            </span>
+          </div>
+
+          <div class="w-full h-3 rounded-full bg-white/10 overflow-hidden">
+            <div
+              class="h-full bg-gradient-to-r from-pink-500 to-violet-500"
+              style="width: 20%"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Question Card -->
+
+        {% with question=questions.0 %}
+
+        <div
+          class="rounded-[30px] border border-white/10 bg-white/5 backdrop-blur-xl p-8"
+        >
+          <div class="flex items-center justify-between mb-8">
+            <span
+              class="px-4 py-2 rounded-full bg-violet-500/10 text-violet-300 text-sm"
+            >
+              {{ question.section|title }}
+            </span>
+
+            <span class="text-gray-400"> Marks : {{ question.marks }} </span>
+          </div>
+
+          <h2 class="text-2xl font-semibold leading-9">
+            Q1. {{ question.question }}
+          </h2>
+
+          {% if question.question_image %}
+
+          <img
+            src="{{ question.question_image.url }}"
+            class="mt-6 rounded-2xl max-h-72"
+          />
+
+          {% endif %} {% if question.code_snippet %}
+
+          <pre
+            class="mt-6 rounded-2xl bg-black/30 border border-white/10 p-5 overflow-x-auto text-sm"
+          >
+{{ question.code_snippet }}</pre
+          >
+
+          {% endif %}
+
+          <!-- Options -->
+
+          <div class="mt-10 space-y-4">
+            <label
+              class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500 transition"
+            >
+              <input type="radio" name="answer" />
+
+              <span>{{ question.option_a }}</span>
+            </label>
+
+            <label
+              class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500 transition"
+            >
+              <input type="radio" name="answer" />
+
+              <span>{{ question.option_b }}</span>
+            </label>
+
+            <label
+              class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500 transition"
+            >
+              <input type="radio" name="answer" />
+
+              <span>{{ question.option_c }}</span>
+            </label>
+
+            <label
+              class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-pink-500 transition"
+            >
+              <input type="radio" name="answer" />
+
+              <span>{{ question.option_d }}</span>
+            </label>
+          </div>
+
+          <!-- Navigation -->
+
+          <div class="mt-10 flex items-center justify-between">
+            <button
+              class="px-6 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+            >
+              ← Previous
+            </button>
+
+            <div class="flex gap-4">
+              <button
+                class="px-6 py-3 rounded-2xl border border-yellow-500/30 bg-yellow-500/10 text-yellow-300"
+              >
+                Mark for Review
+              </button>
+
+              <button
+                class="px-6 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400 transition"
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {% endwith %}
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="sticky top-28 space-y-6">
+        <!-- Question Palette -->
+        <div
+          class="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl p-6"
+        >
+          <h2 class="text-xl font-semibold mb-6">Question Palette</h2>
+
+          <div class="grid grid-cols-5 gap-3">
+            {% for question in questions %}
+
+            <button
+              class="h-11 w-11 rounded-xl border border-white/10 bg-white/5 hover:bg-pink-500 hover:border-pink-500 transition"
+            >
+              {{ forloop.counter }}
+            </button>
+
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div
+          class="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl p-6"
+        >
+          <h2 class="text-lg font-semibold mb-5">Legend</h2>
+
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded bg-pink-500"></div>
+              <span>Current Question</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded bg-green-500"></div>
+              <span>Answered</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded bg-yellow-500"></div>
+              <span>Marked for Review</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div
+                class="w-5 h-5 rounded bg-white/10 border border-white/20"
+              ></div>
+              <span>Not Answered</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attempt Summary -->
+        <div
+          class="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl p-6"
+        >
+          <h2 class="text-lg font-semibold mb-5">Attempt Summary</h2>
+
+          <div class="space-y-4">
+            <div class="flex justify-between">
+              <span class="text-gray-400">Answered</span>
+              <span id="answeredCount">0</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span class="text-gray-400">Not Answered</span>
+              <span id="notAnsweredCount">{{ questions|length }}</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span class="text-gray-400">Review</span>
+              <span id="reviewCount">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
