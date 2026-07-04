@@ -8,6 +8,7 @@ from .models import StudentProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .forms import SignupForm
+from .models import Question
 from django.shortcuts import get_object_or_404
 from .models import Application
 from django.contrib import messages
@@ -661,6 +662,15 @@ def preparation_test(request, test_type, page):
         ],
     },
 }
+    
+    
+    questions = []
+
+    if page == "test" and test_type in ["aptitude", "technical"]:
+        questions = Question.objects.filter(
+        test_type=test_type
+        ).order_by("id")
+
     assessment = ASSESSMENTS.get(test_type)
 
     profile = StudentProfile.objects.filter(user=request.user).first()
@@ -670,12 +680,17 @@ def preparation_test(request, test_type, page):
         "assessment": assessment,
         "profile":profile,
         "assessment_date": date.today(),
+        "questions":questions,
     }
 
     if page == "instructions":
         template = "preparation/shared/instructions.html"
     else:
         template = f"preparation/{test_type}/{page}.html"
+
+    print(page)
+    print(test_type)
+    print(questions)
 
     return render(request, template, context)
 
