@@ -4,8 +4,69 @@ from .models import Application
 from .models import InternshipOpportunity, InternshipApplication
 
 
+
 admin.site.register(Internship)
 admin.site.register(PlacementDrive)
 admin.site.register(Application)
 admin.site.register(InternshipOpportunity)
 admin.site.register(InternshipApplication)
+
+
+
+from .models import Question, TestAttempt, StudentAnswer
+
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "test_type",
+        "section",
+        "difficulty",
+        "marks",
+    )
+
+    list_filter = (
+        "test_type",
+        "section",
+        "difficulty",
+    )
+
+    search_fields = (
+        "question",
+    )
+
+
+@admin.register(TestAttempt)
+class TestAttemptAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "student",
+        "test_type",
+        "status",
+        "score",
+        "started_at",
+    )
+
+    list_filter = (
+        "test_type",
+        "status",
+    )
+
+    search_fields = (
+        "student__full_name",
+    )
+
+
+@admin.register(StudentAnswer)
+class StudentAnswerAdmin(admin.ModelAdmin):
+    list_display = (
+        "attempt",
+        "question",
+        "selected_option",
+        "marked_for_review",
+    )
+
+    list_filter = (
+        "marked_for_review",
+    )
