@@ -211,3 +211,142 @@ class InternshipApplication(models.Model):
 
     class Meta:
         unique_together = ('user', 'internship')
+
+#for job preparations page
+
+class Question(models.Model):
+    TEST_TYPES = [
+        ("aptitude", "Aptitude"),
+        ("technical", "Technical"),
+    ]
+
+    SECTION_CHOICES = [
+        ("quantitative", "Quantitative Aptitude"),
+        ("logical", "Logical Reasoning"),
+        ("verbal", "Verbal Ability"),
+        ("os", "Operating Systems"),
+        ("dbms", "Database Management System"),
+        ("cn", "Computer Networks"),
+        ("oops", "Object-Oriented Programming"),
+        ("dsa", "Data Structures & Algorithms"),
+        ("sql", "SQL"),
+        ("java", "Java"),
+        ("software", "Software Engineering"),
+    ]
+
+    DIFFICULTY = [
+        ("easy", "Easy"),
+        ("medium", "Medium"),
+        ("hard", "Hard"),
+    ]
+
+    test_type = models.CharField(max_length=20, choices=TEST_TYPES)
+    section = models.CharField(max_length=50, choices=SECTION_CHOICES)
+
+    question = models.TextField()
+
+    option_a = models.CharField(max_length=500)
+    option_b = models.CharField(max_length=500)
+    option_c = models.CharField(max_length=500)
+    option_d = models.CharField(max_length=500)
+
+    correct_option = models.CharField(max_length=1)
+
+    difficulty = models.CharField(
+        max_length=10,
+        choices=DIFFICULTY,
+        default="medium",
+    )
+
+    marks = models.PositiveSmallIntegerField(default=1)
+
+    negative_marks = models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        default=0,
+    )
+
+    question_image = models.ImageField(
+    upload_to="questions/",
+    blank=True,
+    null=True
+    )
+
+    code_snippet = models.TextField(
+    blank=True,
+    default=""
+    )
+
+    explanation = models.TextField(blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.question[:60]
+    
+
+class TestAttempt(models.Model):
+    STATUS_CHOICES = [
+        ("in_progress", "In Progress"),
+        ("submitted", "Submitted"),
+    ]
+
+    student = models.ForeignKey(
+        StudentProfile,
+        on_delete=models.CASCADE,
+        related_name="test_attempts"
+    )
+
+    test_type = models.CharField(
+        max_length=20,
+        choices=Question.TEST_TYPES
+    )
+
+    started_at = models.DateTimeField(auto_now_add=True)
+    submitted_at = models.DateTimeField(blank=True, null=True)
+
+    total_questions = models.PositiveIntegerField(default=0)
+    score = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="in_progress"
+    )
+
+    def __str__(self):
+        return f"{self.student.full_name} - {self.test_type}"
+    
+
+class StudentAnswer(models.Model):
+    OPTION_CHOICES = [
+        ("A", "Option A"),
+        ("B", "Option B"),
+        ("C", "Option C"),
+        ("D", "Option D"),
+    ]
+
+    attempt = models.ForeignKey(
+        TestAttempt,
+        on_delete=models.CASCADE,
+        related_name="answers"
+    )
+
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE
+    )
+
+    selected_option = models.CharField(
+        max_length=1,
+        choices=OPTION_CHOICES,
+        blank=True,
+        default=""
+    )
+
+    marked_for_review = models.BooleanField(default=False)
+
+    answered_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("attempt", "question")
