@@ -190,270 +190,344 @@
 </script>
 
 <script>
-      const djangoQuestions = JSON.parse(
-        document.getElementById("questions-data").textContent,
-      );
-
-      let questions = djangoQuestions.map((q) => ({
-        id: q.id,
-        question: q.question,
-        section: q.section,
-        marks: q.marks,
-        image: q.question_image,
-        code: q.code_snippet,
-
-        options: [q.option_a, q.option_b, q.option_c, q.option_d],
-
-        correctAnswer: {
-          A: 0,
-          B: 1,
-          C: 2,
-          D: 3,
-        }[q.correct_option],
-
-        answer: null,
-        review: false,
-        visited: false,
-      }));
-
-      let currentQuestion = 0;
-
-      // ================= Elements =================
-
-      const questionText = document.getElementById("questionText");
-      const sectionBadge = document.getElementById("sectionBadge");
-      const marks = document.getElementById("marks");
-
-      const optionCards = document.querySelectorAll(".optionCard");
-      const optionInputs = document.querySelectorAll(".optionInput");
-      const optionTexts = document.querySelectorAll(".optionText");
-
-      const questionNumber = document.getElementById("questionNumber");
-      const progressText = document.getElementById("progressText");
-      const progressBar = document.getElementById("progressBar");
-
-      const image = document.getElementById("questionImage");
-      const code = document.getElementById("codeSnippet");
-
-      const palette = document.getElementById("questionPalette");
-
-      // ================= Render =================
-
-      function renderQuestion() {
-        questions[currentQuestion].visited = true;
-        const q = questions[currentQuestion];
-
-        q.visited = true;
-
-        questionText.innerHTML = q.question;
-
-        sectionBadge.innerHTML = q.section;
-
-        marks.innerHTML = `Marks : ${q.marks}`;
-
-        questionNumber.innerHTML = `Question ${currentQuestion + 1} of ${questions.length}`;
-
-        const percentage = Math.round(
-          ((currentQuestion + 1) / questions.length) * 100,
+        const djangoQuestions = JSON.parse(
+          document.getElementById("questions-data").textContent,
         );
 
-        progressText.innerHTML = `${percentage}% Completed`;
+        let questions = djangoQuestions.map((q) => ({
+          id: q.id,
+          question: q.question,
+          section: q.section,
+          marks: q.marks,
+          image: q.question_image,
+          code: q.code_snippet,
 
-        progressBar.style.width = percentage + "%";
+          options: [q.option_a, q.option_b, q.option_c, q.option_d],
 
-        optionTexts.forEach((option, index) => {
-          option.innerHTML = q.options[index];
+          correctAnswer: {
+            A: 0,
+            B: 1,
+            C: 2,
+            D: 3,
+          }[q.correct_option],
 
-          optionInputs[index].checked = q.answer === index;
-        });
+          answer: null,
+          review: false,
+          visited: false,
+        }));
 
-        if (q.image) {
-          image.src = "/media/" + q.image;
+        let currentQuestion = 0;
 
-          image.classList.remove("hidden");
-        } else {
-          image.classList.add("hidden");
-        }
+        // ================= Elements =================
 
-        if (q.code) {
-          code.innerText = q.code;
+        const questionText = document.getElementById("questionText");
+        const sectionBadge = document.getElementById("sectionBadge");
+        const marks = document.getElementById("marks");
 
-          code.classList.remove("hidden");
-        } else {
-          code.classList.add("hidden");
-        }
+        const optionCards = document.querySelectorAll(".optionCard");
+        const optionInputs = document.querySelectorAll(".optionInput");
+        const optionTexts = document.querySelectorAll(".optionText");
 
-        updateOptionStyles();
+        const questionNumber = document.getElementById("questionNumber");
+        const progressText = document.getElementById("progressText");
+        const progressBar = document.getElementById("progressBar");
 
-        updatePalette();
+        const image = document.getElementById("questionImage");
+        const code = document.getElementById("codeSnippet");
 
-        updateSummary();
-      }
+        const palette = document.getElementById("questionPalette");
 
-      // ================= Options =================
+        // ================= Render =================
 
-      optionCards.forEach((card, index) => {
-        card.onclick = () => {
-          questions[currentQuestion].answer = index;
+        function renderQuestion() {
+          questions[currentQuestion].visited = true;
+          const q = questions[currentQuestion];
 
-          questions[currentQuestion].review = false;
+          q.visited = true;
 
-          optionInputs[index].checked = true;
+          questionText.innerHTML = q.question;
+
+          sectionBadge.innerHTML = q.section;
+
+          marks.innerHTML = `Marks : ${q.marks}`;
+
+          questionNumber.innerHTML = `Question ${currentQuestion + 1} of ${questions.length}`;
+
+          const percentage = Math.round(
+            ((currentQuestion + 1) / questions.length) * 100,
+          );
+
+          progressText.innerHTML = `${percentage}% Completed`;
+
+          progressBar.style.width = percentage + "%";
+
+          optionTexts.forEach((option, index) => {
+            option.innerHTML = q.options[index];
+
+            optionInputs[index].checked = q.answer === index;
+          });
+
+          if (q.image) {
+            image.src = "/media/" + q.image;
+
+            image.classList.remove("hidden");
+          } else {
+            image.classList.add("hidden");
+          }
+
+          if (q.code) {
+            code.innerText = q.code;
+
+            code.classList.remove("hidden");
+          } else {
+            code.classList.add("hidden");
+          }
 
           updateOptionStyles();
 
           updatePalette();
 
           updateSummary();
-        };
-      });
+        }
 
-      function updateOptionStyles() {
+        // ================= Options =================
+
         optionCards.forEach((card, index) => {
-          card.classList.remove("border-sky-400", "bg-sky-500/20");
+          card.onclick = () => {
+            questions[currentQuestion].answer = index;
 
-          card.classList.add("border-white/10", "bg-white/5");
+            questions[currentQuestion].review = false;
 
-          if (questions[currentQuestion].answer === index) {
-            card.classList.remove("border-white/10", "bg-white/5");
+            optionInputs[index].checked = true;
 
-            card.classList.add("border-sky-400", "bg-sky-500/20");
-          }
+            updateOptionStyles();
+
+            updatePalette();
+
+            updateSummary();
+          };
         });
-      }
 
-      // ================= Navigation =================
+        function updateOptionStyles() {
+          optionCards.forEach((card, index) => {
+            card.classList.remove("border-sky-400", "bg-sky-500/20");
 
-      document.getElementById("nextBtn").onclick = () => {
-        if (currentQuestion < questions.length - 1) {
-          currentQuestion++;
+            card.classList.add("border-white/10", "bg-white/5");
 
-          renderQuestion();
+            if (questions[currentQuestion].answer === index) {
+              card.classList.remove("border-white/10", "bg-white/5");
+
+              card.classList.add("border-sky-400", "bg-sky-500/20");
+            }
+          });
         }
-      };
 
-      document.getElementById("prevBtn").onclick = () => {
-        if (currentQuestion > 0) {
-          currentQuestion--;
+        // ================= Navigation =================
 
-          renderQuestion();
-        }
-      };
-
-      document
-      .getElementById("submitBtn")
-      .addEventListener("click",()=>{
-
-      if(confirm("Are you sure you want to submit the test?")){
-
-          submitTest();
-
-      }
-
-  });
-
-      // ================= Palette =================
-
-      function createPalette() {
-        palette.innerHTML = "";
-
-        questions.forEach((q, index) => {
-          const btn = document.createElement("button");
-
-          btn.innerHTML = index + 1;
-
-          btn.className = "paletteBtn aspect-square rounded-xl border transition";
-
-          btn.onclick = () => {
-            currentQuestion = index;
+        document.getElementById("nextBtn").onclick = () => {
+          if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
 
             renderQuestion();
-          };
-
-          palette.appendChild(btn);
-        });
-      }
-
-      function updatePalette() {
-        const buttons = document.querySelectorAll(".paletteBtn");
-
-        buttons.forEach((btn, index) => {
-          btn.className =
-            "paletteBtn aspect-square rounded-xl border transition-all duration-300";
-
-          if (index === currentQuestion) {
-            btn.classList.add("bg-pink-500", "border-pink-500", "text-white");
-          } else if (questions[index].answer !== null) {
-            btn.classList.add(
-              "bg-green-500/20",
-              "border-green-400",
-              "text-green-300",
-            );
-          } else if (questions[index].visited && questions[index].answer === null) {
-            btn.classList.add(
-              "bg-yellow-500/20",
-              "border-yellow-400",
-              "text-yellow-300",
-            );
-          } else {
-            btn.classList.add("bg-white/5", "border-white/10", "text-gray-400");
           }
-        });
-      }
+        };
 
-      //Timer//
-      const timer = document.getElementById("timer");
+        document.getElementById("prevBtn").onclick = () => {
+          if (currentQuestion > 0) {
+            currentQuestion--;
 
-    // Total duration from Django
-    let totalTime = {{ assessment.questions }} * 60;
+            renderQuestion();
+          }
+        };
 
-    function updateTimer() {
+        document
+        .getElementById("submitBtn")
+        .addEventListener("click",()=>{
 
-        const minutes = Math.floor(totalTime / 60);
-        const seconds = totalTime % 60;
-
-        timer.textContent =
-            `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
-
-        if (totalTime <= 0) {
-
-            clearInterval(timerInterval);
+        if(confirm("Are you sure you want to submit the test?")){
 
             submitTest();
 
-            return;
         }
 
-        totalTime--;
-    }
+    });
 
-    updateTimer();
+    //Submit Test Button Function//
+    function submitTest(){
 
-    const timerInterval = setInterval(updateTimer,1000);
+      clearInterval(timerInterval);
 
-      // ================= Summary =================
+      let score = 0;
 
-      function updateSummary() {
-        const answered = questions.filter((q) => q.answer !== null).length;
+      let answered = 0;
 
-        const review = questions.filter(
-          (q) => q.visited && q.answer === null,
-        ).length;
+      let unanswered = 0;
 
-        const remaining = questions.filter((q) => !q.visited).length;
+      questions.forEach(q=>{
 
-        document.getElementById("answeredCount").textContent = answered;
+          if(q.answer!==null){
 
-        document.getElementById("reviewCount").textContent = review;
+              answered++;
 
-        document.getElementById("remainingCount").textContent = remaining;
+              const selected =
+              ["A","B","C","D"][q.answer];
+
+              if(selected===q.correct_option){
+
+                  score += q.marks;
+
+              }
+
+          }
+
+          else{
+
+              unanswered++;
+
+          }
+
+      });
+
+      const result={
+
+          total_questions:questions.length,
+
+          answered:answered,
+
+          unanswered:unanswered,
+
+          score:score,
+
+          total_marks:questions.reduce(
+              (sum,q)=>sum+q.marks,
+              0
+          )
+
+      };
+
+      fetch("{% url 'preparation_result' %}",{
+
+          method:"POST",
+
+          headers:{
+              "Content-Type":"application/json",
+              "X-CSRFToken":"{{ csrf_token }}"
+          },
+
+          body:JSON.stringify(result)
+
+      })
+      .then(r=>r.json())
+      .then(()=>{
+
+          window.location.href="{% url 'preparation_result' %}";
+
+      });
+
+  }
+
+        // ================= Palette =================
+
+        function createPalette() {
+          palette.innerHTML = "";
+
+          questions.forEach((q, index) => {
+            const btn = document.createElement("button");
+
+            btn.innerHTML = index + 1;
+
+            btn.className = "paletteBtn aspect-square rounded-xl border transition";
+
+            btn.onclick = () => {
+              currentQuestion = index;
+
+              renderQuestion();
+            };
+
+            palette.appendChild(btn);
+          });
+        }
+
+        function updatePalette() {
+          const buttons = document.querySelectorAll(".paletteBtn");
+
+          buttons.forEach((btn, index) => {
+            btn.className =
+              "paletteBtn aspect-square rounded-xl border transition-all duration-300";
+
+            if (index === currentQuestion) {
+              btn.classList.add("bg-pink-500", "border-pink-500", "text-white");
+            } else if (questions[index].answer !== null) {
+              btn.classList.add(
+                "bg-green-500/20",
+                "border-green-400",
+                "text-green-300",
+              );
+            } else if (questions[index].visited && questions[index].answer === null) {
+              btn.classList.add(
+                "bg-yellow-500/20",
+                "border-yellow-400",
+                "text-yellow-300",
+              );
+            } else {
+              btn.classList.add("bg-white/5", "border-white/10", "text-gray-400");
+            }
+          });
+        }
+
+        //Timer//
+        const timer = document.getElementById("timer");
+
+      // Total duration from Django
+      let totalTime = {{ assessment.questions }} * 60;
+
+      function updateTimer() {
+
+          const minutes = Math.floor(totalTime / 60);
+          const seconds = totalTime % 60;
+
+          timer.textContent =
+              `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+          if (totalTime <= 0) {
+
+              clearInterval(timerInterval);
+
+              submitTest();
+
+              return;
+          }
+
+          totalTime--;
       }
 
-      // ================= Initial =================
+      updateTimer();
 
-      createPalette();
+      const timerInterval = setInterval(updateTimer,1000);
 
-      renderQuestion();
+        // ================= Summary =================
+
+        function updateSummary() {
+          const answered = questions.filter((q) => q.answer !== null).length;
+
+          const review = questions.filter(
+            (q) => q.visited && q.answer === null,
+          ).length;
+
+          const remaining = questions.filter((q) => !q.visited).length;
+
+          document.getElementById("answeredCount").textContent = answered;
+
+          document.getElementById("reviewCount").textContent = review;
+
+          document.getElementById("remainingCount").textContent = remaining;
+        }
+
+        // ================= Initial =================
+
+        createPalette();
+
+        renderQuestion();
 </script>
 
 {% endblock %}
