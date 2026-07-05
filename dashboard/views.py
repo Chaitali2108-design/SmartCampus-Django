@@ -717,7 +717,7 @@ def preparation_result(request):
 
     return render(
         request,
-        "preparation/result.html",
+        "preparation/result/result.html",
         {
             "result":request.session.get("result",{})
         }
