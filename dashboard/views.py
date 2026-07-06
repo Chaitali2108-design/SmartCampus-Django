@@ -677,9 +677,13 @@ def preparation_test(request, test_type, page):
        all_questions = list(
          Question.objects.filter(
          test_type=test_type,
-         difficulty=difficulty   # Later this will come from user selection
+         difficulty=difficulty  # Later this will come from user selection
+         
     )
 )
+       print(test_type)
+       print(difficulty)
+       print(len(all_questions))
 
        question_count = ASSESSMENTS[test_type]["questions"]
 
@@ -689,7 +693,8 @@ def preparation_test(request, test_type, page):
 )
 
     
-
+       questions = []
+       
        for q in questions_db:
         questions.append({
         "id": q.id,
