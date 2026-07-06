@@ -77,44 +77,39 @@
         <div
           class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8"
         >
-          <div class="flex justify-between mb-8">
-            <span
-              id="sectionBadge"
-              class="px-4 py-2 rounded-full bg-violet-500/10 text-violet-300"
-            >
-            </span>
+          <div class="rounded-[32px] bg-white/5 border border-white/10 p-8">
+            <div class="flex justify-between mb-6">
+              <span id="sectionBadge"></span>
+              <span id="marks"></span>
+            </div>
 
-            <span id="marks" class="text-gray-400"> </span>
-          </div>
+            <h2 id="questionText" class="text-2xl font-semibold mb-8"></h2>
 
-          <h2
-            id="questionText"
-            class="text-3xl font-semibold leading-relaxed"
-          ></h2>
+            <img id="questionImage" class="hidden mb-6 rounded-xl" />
 
-          <img id="questionImage" class="hidden mt-8 rounded-2xl max-h-72" />
+            <pre id="codeSnippet" class="hidden"></pre>
 
-          <pre
-            id="codeSnippet"
-            class="hidden mt-8 rounded-2xl bg-black/30 border border-white/10 p-5 overflow-x-auto"
-          ></pre>
+            <div class="space-y-4">
+              <label class="optionCard">
+                <input class="optionInput" type="radio" name="answer" />
+                <span class="optionText"></span>
+              </label>
 
-          <!-- Options -->
+              <label class="optionCard">
+                <input class="optionInput" type="radio" name="answer" />
+                <span class="optionText"></span>
+              </label>
 
-          <div class="mt-10 space-y-5">
-            {% for i in "1234" %}
+              <label class="optionCard">
+                <input class="optionInput" type="radio" name="answer" />
+                <span class="optionText"></span>
+              </label>
 
-            <label
-              class="optionCard group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/5 p-5 cursor-pointer transition hover:border-pink-500"
-            >
-              <input type="radio" class="hidden optionInput" name="answer" />
-
-              <div class="w-6 h-6 rounded-full border-2 border-gray-500"></div>
-
-              <span class="optionText text-lg"></span>
-            </label>
-
-            {% endfor %}
+              <label class="optionCard">
+                <input class="optionInput" type="radio" name="answer" />
+                <span class="optionText"></span>
+              </label>
+            </div>
           </div>
 
           <!-- Footer -->
