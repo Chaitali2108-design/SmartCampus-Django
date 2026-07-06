@@ -542,6 +542,10 @@ def preparation(request):
 @login_required
 def preparation_test(request, test_type, page):
 
+    difficulty = ""
+
+    difficulty = request.GET.get("difficulty", "").lower()
+
     ASSESSMENTS = {
     "aptitude": {
         "title": "Aptitude Assessment",
@@ -666,7 +670,27 @@ def preparation_test(request, test_type, page):
     
     questions = []
 
-    for q in Question.objects.filter(test_type=test_type).order_by("id"):
+    from random import sample
+
+    if page=="test":
+
+       all_questions = list(
+         Question.objects.filter(
+         test_type=test_type,
+         difficulty=difficulty   # Later this will come from user selection
+    )
+)
+
+       question_count = ASSESSMENTS[test_type]["questions"]
+
+       questions_db = sample(
+       all_questions,
+       min(question_count, len(all_questions))
+)
+
+    
+
+       for q in questions_db:
         questions.append({
         "id": q.id,
         "question": q.question,
@@ -691,9 +715,11 @@ def preparation_test(request, test_type, page):
         "profile":profile,
         "assessment_date": date.today(),
         "questions":questions,
+        "difficulty":difficulty,
     }
-
-    if page == "instructions":
+    if page=="difficulty":
+        template="preparation/shared/difficulty.html"
+    elif page == "instructions":
         template = "preparation/shared/instructions.html"
     else:
         template = f"preparation/{test_type}/{page}.html"
@@ -721,4 +747,101 @@ def preparation_result(request):
         {
             "result":request.session.get("result",{})
         }
+    )
+
+
+import json
+from django.contrib import messages
+from .models import Question
+
+@login_required
+def generate_questions(request):
+
+    if request.method == "POST":
+
+        test_type = request.POST.get("test_type")
+        difficulty = request.POST.get("difficulty")
+        count = int(request.POST.get("count"))
+
+        prompt = """
+Generate exactly %d %s level %s multiple choice questions.
+
+Rules:
+- Return ONLY valid JSON.
+- No markdown.
+- No explanation.
+- Mix all topics equally.
+- Every question must have 4 options.
+
+Return ONLY this JSON object:
+
+{
+  "questions":[
+    {
+      "question":"",
+      "section":"",
+      "option_a":"",
+      "option_b":"",
+      "option_c":"",
+      "option_d":"",
+      "correct_option":"A",
+      "marks":1
+    }
+  ]
+}
+""" % (count, difficulty, test_type)
+
+        try:
+
+            response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            response_format={"type": "json_object"},
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        )
+            
+            content = response.choices[0].message.content
+
+            print(content)
+
+            data = json.loads(content)
+
+            import pprint
+            pprint.pp(data)
+
+
+            created=0
+
+            for q in data["questions"]:
+                Question.objects.create(
+                    test_type=test_type,
+                    difficulty=difficulty,
+                    question=q["question"],
+                    section=q["section"],
+                    option_a=q["option_a"],
+                    option_b=q["option_b"],
+                    option_c=q["option_c"],
+                    option_d=q["option_d"],
+                    correct_option=q["correct_option"],
+                    marks=q["marks"],
+            )
+
+                created += 1
+
+            messages.success(
+                request,
+                f"{created} questions generated successfully."
+            )
+
+        except Exception as e:
+            print(e)
+            raise e
+
+    return render(
+        request,
+        "preparation/admin/generate_questions.html",
     )
