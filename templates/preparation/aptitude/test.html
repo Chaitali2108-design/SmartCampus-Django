@@ -44,14 +44,14 @@
   <!-- Main Layout -->
 
   <div class="max-w-[1700px] mx-auto p-8">
-    <div class="grid grid-cols-12 gap-8">
+    <div class="grid grid-cols-12 gap-8 items-stretch">
       <!-- Left Side -->
 
-      <div class="col-span-8">
+      <div class="col-span-8 flex flex-col gap-8">
         <!-- Progress -->
 
         <div
-          class="rounded-[28px] bg-white/5 border border-white/10 p-7 backdrop-blur-xl mb-7"
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
         >
           <div class="flex justify-between items-center">
             <span
@@ -75,70 +75,134 @@
         <!-- Question Card -->
 
         <div
-          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8"
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
         >
-          <div class="rounded-[32px] bg-white/5 border border-white/10 p-8">
-            <div class="flex justify-between mb-6">
-              <span id="sectionBadge"></span>
-              <span id="marks"></span>
-            </div>
+          <!-- Question Header -->
 
-            <h2 id="questionText" class="text-2xl font-semibold mb-8"></h2>
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-4">
+              <span
+                id="sectionBadge"
+                class="px-4 py-2 rounded-full bg-violet-500/20 border border-violet-400/30 text-violet-300 text-sm font-medium"
+              >
+              </span>
 
-            <img id="questionImage" class="hidden mb-6 rounded-xl" />
-
-            <pre id="codeSnippet" class="hidden"></pre>
-
-            <div class="space-y-4">
-              <label class="optionCard">
-                <input class="optionInput" type="radio" name="answer" />
-                <span class="optionText"></span>
-              </label>
-
-              <label class="optionCard">
-                <input class="optionInput" type="radio" name="answer" />
-                <span class="optionText"></span>
-              </label>
-
-              <label class="optionCard">
-                <input class="optionInput" type="radio" name="answer" />
-                <span class="optionText"></span>
-              </label>
-
-              <label class="optionCard">
-                <input class="optionInput" type="radio" name="answer" />
-                <span class="optionText"></span>
-              </label>
+              <span
+                id="marks"
+                class="px-4 py-2 rounded-full bg-pink-500/20 border border-pink-400/30 text-pink-300 text-sm font-medium"
+              >
+              </span>
             </div>
           </div>
 
-          <!-- Footer -->
+          <!-- Question -->
 
-          <div class="flex justify-between mt-14 pt-8 border-t border-white/10">
+          <h2
+            id="questionText"
+            class="text-2xl leading-10 font-semibold text-white mb-8"
+          ></h2>
+
+          <!-- Image -->
+
+          <img
+            id="questionImage"
+            class="hidden rounded-2xl border border-white/10 mb-8 max-h-80 mx-auto"
+          />
+
+          <!-- Code -->
+
+          <pre
+            id="codeSnippet"
+            class="hidden bg-[#0D1117] border border-white/10 rounded-2xl text-sm text-green-300 p-6 overflow-x-auto mb-8"
+          ></pre>
+
+          <!-- Options -->
+
+          <div class="space-y-3">
+            <label
+              class="optionCard group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
+            >
+              <input class="optionInput hidden" type="radio" name="answer" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-lg font-bold"
+              >
+                A
+              </div>
+
+              <span class="optionText text-lg text-gray-200"></span>
+            </label>
+
+            <label
+              class="optionCard group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
+            >
+              <input class="optionInput hidden" type="radio" name="answer" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-lg font-bold"
+              >
+                B
+              </div>
+
+              <span class="optionText text-lg text-gray-200"></span>
+            </label>
+
+            <label
+              class="optionCard group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
+            >
+              <input class="optionInput hidden" type="radio" name="answer" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-lg font-bold"
+              >
+                C
+              </div>
+
+              <span class="optionText text-lg text-gray-200"></span>
+            </label>
+
+            <label
+              class="optionCard group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
+            >
+              <input class="optionInput hidden" type="radio" name="answer" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-lg font-bold"
+              >
+                D
+              </div>
+
+              <span class="optionText text-lg text-gray-200"></span>
+            </label>
+          </div>
+
+          <!-- Navigation -->
+
+          <div
+            class="flex justify-between items-center mt-10 pt-8 border-t border-white/10"
+          >
             <button
               id="prevBtn"
-              class="px-6 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10"
+              class="px-7 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
             >
-              Previous
+              ← Previous
             </button>
 
-            <div class="flex gap-4">
-              <button
-                id="nextBtn"
-                class="px-8 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400"
-              >
-                Next
-              </button>
-            </div>
+            <button
+              id="nextBtn"
+              class="px-8 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-violet-500 hover:scale-105 transition-all duration-300"
+            >
+              Next →
+            </button>
           </div>
         </div>
       </div>
 
       <!-- Sidebar -->
 
-      <div class="col-span-4">
+      <div class="col-span-4 flex">
         <div
-          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8"
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
         >
           <h2 class="text-xl font-semibold mb-8">Question Palette</h2>
 
@@ -185,343 +249,396 @@
 </script>
 
 <script>
-        const djangoQuestions = JSON.parse(
-          document.getElementById("questions-data").textContent,
-        );
+                const djangoQuestions = JSON.parse(
+                  document.getElementById("questions-data").textContent,
+                );
 
-        let questions = djangoQuestions.map((q) => ({
-          id: q.id,
-          question: q.question,
-          section: q.section,
-          marks: q.marks,
-          image: q.question_image,
-          code: q.code_snippet,
+                let questions = djangoQuestions.map((q) => ({
+                  id: q.id,
+                  question: q.question,
+                  section: q.section,
+                  marks: q.marks,
+                  image: q.question_image,
+                  code: q.code_snippet,
 
-          options: [q.option_a, q.option_b, q.option_c, q.option_d],
+                  options: [q.option_a, q.option_b, q.option_c, q.option_d],
 
-          correctAnswer: {
-            A: 0,
-            B: 1,
-            C: 2,
-            D: 3,
-          }[q.correct_option],
+                  correctAnswer: {
+                    A: 0,
+                    B: 1,
+                    C: 2,
+                    D: 3,
+                  }[q.correct_option],
 
-          answer: null,
-          review: false,
-          visited: false,
-        }));
+                  answer: null,
+                  review: false,
+                  visited: false,
+                }));
 
-        let currentQuestion = 0;
+                let currentQuestion = 0;
 
-        // ================= Elements =================
+                // ================= Elements =================
 
-        const questionText = document.getElementById("questionText");
-        const sectionBadge = document.getElementById("sectionBadge");
-        const marks = document.getElementById("marks");
+                const questionText = document.getElementById("questionText");
+                const sectionBadge = document.getElementById("sectionBadge");
+                const marks = document.getElementById("marks");
 
-        const optionCards = document.querySelectorAll(".optionCard");
-        const optionInputs = document.querySelectorAll(".optionInput");
-        const optionTexts = document.querySelectorAll(".optionText");
+                const optionCards = document.querySelectorAll(".optionCard");
+                const optionInputs = document.querySelectorAll(".optionInput");
+                const optionTexts = document.querySelectorAll(".optionText");
 
-        const questionNumber = document.getElementById("questionNumber");
-        const progressText = document.getElementById("progressText");
-        const progressBar = document.getElementById("progressBar");
+                const questionNumber = document.getElementById("questionNumber");
+                const progressText = document.getElementById("progressText");
+                const progressBar = document.getElementById("progressBar");
 
-        const image = document.getElementById("questionImage");
-        const code = document.getElementById("codeSnippet");
+                const image = document.getElementById("questionImage");
+                const code = document.getElementById("codeSnippet");
 
-        const palette = document.getElementById("questionPalette");
+                const palette = document.getElementById("questionPalette");
+                let expandedPalette = false;
 
-        // ================= Render =================
+                // ================= Render =================
 
-        function renderQuestion() {
-          questions[currentQuestion].visited = true;
-          const q = questions[currentQuestion];
+                function renderQuestion() {
+                  questions[currentQuestion].visited = true;
+                  const q = questions[currentQuestion];
 
-          q.visited = true;
+                  q.visited = true;
 
-          questionText.innerHTML = q.question;
+                  questionText.innerHTML = q.question;
 
-          sectionBadge.innerHTML = q.section;
+                  sectionBadge.innerHTML = q.section;
 
-          marks.innerHTML = `Marks : ${q.marks}`;
+                  marks.innerHTML = `Marks : ${q.marks}`;
 
-          questionNumber.innerHTML = `Question ${currentQuestion + 1} of ${questions.length}`;
+                  questionNumber.innerHTML = `Question ${currentQuestion + 1} of ${questions.length}`;
 
-          const percentage = Math.round(
-            ((currentQuestion + 1) / questions.length) * 100,
-          );
+                  const percentage = Math.round(
+                    ((currentQuestion + 1) / questions.length) * 100,
+                  );
 
-          progressText.innerHTML = `${percentage}% Completed`;
+                  progressText.innerHTML = `${percentage}% Completed`;
 
-          progressBar.style.width = percentage + "%";
+                  progressBar.style.width = percentage + "%";
 
-          optionTexts.forEach((option, index) => {
-            option.innerHTML = q.options[index];
+                  optionTexts.forEach((option, index) => {
+                    option.innerHTML = q.options[index];
 
-            optionInputs[index].checked = q.answer === index;
+                    optionInputs[index].checked = q.answer === index;
+                  });
+
+                  if (q.image) {
+                    image.src = "/media/" + q.image;
+
+                    image.classList.remove("hidden");
+                  } else {
+                    image.classList.add("hidden");
+                  }
+
+                  if (q.code) {
+                    code.innerText = q.code;
+
+                    code.classList.remove("hidden");
+                  } else {
+                    code.classList.add("hidden");
+                  }
+
+                  updateOptionStyles();
+
+                  updatePalette();
+
+                  updateSummary();
+                }
+
+                // ================= Options =================
+
+                optionInputs.forEach((input, index) => {
+
+              input.addEventListener("change", () => {
+
+              questions[currentQuestion].answer = index;
+              questions[currentQuestion].review = false;
+
+              updateOptionStyles();
+              updatePalette();
+              updateSummary();
+
           });
 
-          if (q.image) {
-            image.src = "/media/" + q.image;
+      });
 
-            image.classList.remove("hidden");
-          } else {
-            image.classList.add("hidden");
-          }
-
-          if (q.code) {
-            code.innerText = q.code;
-
-            code.classList.remove("hidden");
-          } else {
-            code.classList.add("hidden");
-          }
-
-          updateOptionStyles();
-
-          updatePalette();
-
-          updateSummary();
-        }
-
-        // ================= Options =================
+                function updateOptionStyles() {
 
         optionCards.forEach((card, index) => {
-          card.onclick = () => {
-            questions[currentQuestion].answer = index;
 
-            questions[currentQuestion].review = false;
-
-            optionInputs[index].checked = true;
-
-            updateOptionStyles();
-
-            updatePalette();
-
-            updateSummary();
-          };
-        });
-
-        function updateOptionStyles() {
-          optionCards.forEach((card, index) => {
-            card.classList.remove("border-sky-400", "bg-sky-500/20");
-
-            card.classList.add("border-white/10", "bg-white/5");
+            card.className =
+            "optionCard flex items-center gap-4 p-4 rounded-2xl border transition-all duration-200 cursor-pointer bg-white/5 border-white/10 hover:border-pink-500 hover:bg-pink-500/10";
 
             if (questions[currentQuestion].answer === index) {
-              card.classList.remove("border-white/10", "bg-white/5");
 
-              card.classList.add("border-sky-400", "bg-sky-500/20");
+                card.classList.remove(
+                    "hover:border-pink-500",
+                    "hover:bg-pink-500/10"
+                );
+
+                card.classList.remove(
+                    "bg-white/5",
+                    "border-white/10"
+                );
+
+                card.classList.add(
+                    "bg-sky-500/20",
+                    "border-sky-500",
+                    "shadow-lg",
+                    "shadow-blue-500/20"
+                );
             }
-          });
-        }
 
-        // ================= Navigation =================
+        });
 
-        document.getElementById("nextBtn").onclick = () => {
-          if (currentQuestion < questions.length - 1) {
-            currentQuestion++;
+    }
 
-            renderQuestion();
-          }
-        };
+                // ================= Navigation =================
 
-        document.getElementById("prevBtn").onclick = () => {
-          if (currentQuestion > 0) {
-            currentQuestion--;
+                document.getElementById("nextBtn").onclick = () => {
+                  if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
 
-            renderQuestion();
-          }
-        };
+                    renderQuestion();
+                  }
+                };
 
-        document
-        .getElementById("submitBtn")
-        .addEventListener("click",()=>{
+                document.getElementById("prevBtn").onclick = () => {
+                  if (currentQuestion > 0) {
+                    currentQuestion--;
 
-        if(confirm("Are you sure you want to submit the test?")){
+                    renderQuestion();
+                  }
+                };
 
-            submitTest();
+                document
+                .getElementById("submitBtn")
+                .addEventListener("click",()=>{
 
-        }
+                if(confirm("Are you sure you want to submit the test?")){
 
-    });
+                    submitTest();
 
-    //Submit Test Button Function//
-    function submitTest(){
+                }
 
-      clearInterval(timerInterval);
+            });
 
-      let score = 0;
-
-      let answered = 0;
-
-      let unanswered = 0;
-
-      questions.forEach(q=>{
-
-          if(q.answer!==null){
-
-              answered++;
-
-
-
-              if(q.answer===q.correctAnswer){
-
-                  score += q.marks;
-
-              }
-
-          }
-
-          else{
-
-              unanswered++;
-
-          }
-
-      });
-
-      const result={
-
-          total_questions:questions.length,
-
-          answered:answered,
-
-          unanswered:unanswered,
-
-          score:score,
-
-          total_marks:questions.reduce(
-              (sum,q)=>sum+q.marks,
-              0
-          )
-
-      };
-
-      fetch("{% url 'preparation_result' %}",{
-
-          method:"POST",
-
-          headers:{
-              "Content-Type":"application/json",
-              "X-CSRFToken":"{{ csrf_token }}"
-          },
-
-          body:JSON.stringify(result)
-
-      })
-      .then(r=>r.json())
-      .then(()=>{
-
-          window.location.href="{% url 'preparation_result' %}";
-
-      });
-
-  }
-
-        // ================= Palette =================
-
-        function createPalette() {
-          palette.innerHTML = "";
-
-          questions.forEach((q, index) => {
-            const btn = document.createElement("button");
-
-            btn.innerHTML = index + 1;
-
-            btn.className = "paletteBtn aspect-square rounded-xl border transition";
-
-            btn.onclick = () => {
-              currentQuestion = index;
-
-              renderQuestion();
-            };
-
-            palette.appendChild(btn);
-          });
-        }
-
-        function updatePalette() {
-          const buttons = document.querySelectorAll(".paletteBtn");
-
-          buttons.forEach((btn, index) => {
-            btn.className =
-              "paletteBtn aspect-square rounded-xl border transition-all duration-300";
-
-            if (index === currentQuestion) {
-              btn.classList.add("bg-pink-500", "border-pink-500", "text-white");
-            } else if (questions[index].answer !== null) {
-              btn.classList.add(
-                "bg-green-500/20",
-                "border-green-400",
-                "text-green-300",
-              );
-            } else if (questions[index].visited && questions[index].answer === null) {
-              btn.classList.add(
-                "bg-yellow-500/20",
-                "border-yellow-400",
-                "text-yellow-300",
-              );
-            } else {
-              btn.classList.add("bg-white/5", "border-white/10", "text-gray-400");
-            }
-          });
-        }
-
-        //Timer//
-        const timer = document.getElementById("timer");
-
-      // Total duration from Django
-      let totalTime = {{ assessment.questions }} * 60;
-
-      function updateTimer() {
-
-          const minutes = Math.floor(totalTime / 60);
-          const seconds = totalTime % 60;
-
-          timer.textContent =
-              `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
-
-          if (totalTime <= 0) {
+            //Submit Test Button Function//
+            function submitTest(){
 
               clearInterval(timerInterval);
 
-              submitTest();
+              let score = 0;
 
-              return;
+              let answered = 0;
+
+              let unanswered = 0;
+
+              questions.forEach(q=>{
+
+                  if(q.answer!==null){
+
+                      answered++;
+
+
+
+                      if(q.answer===q.correctAnswer){
+
+                          score += q.marks;
+
+                      }
+
+                  }
+
+                  else{
+
+                      unanswered++;
+
+                  }
+
+              });
+
+              const result={
+
+                  total_questions:questions.length,
+
+                  answered:answered,
+
+                  unanswered:unanswered,
+
+                  score:score,
+
+                  total_marks:questions.reduce(
+                      (sum,q)=>sum+q.marks,
+                      0
+                  )
+
+              };
+
+              fetch("{% url 'preparation_result' %}",{
+
+                  method:"POST",
+
+                  headers:{
+                      "Content-Type":"application/json",
+                      "X-CSRFToken":"{{ csrf_token }}"
+                  },
+
+                  body:JSON.stringify(result)
+
+              })
+              .then(r=>r.json())
+              .then(()=>{
+
+                  window.location.href="{% url 'preparation_result' %}";
+
+              });
+
           }
 
-          totalTime--;
+                // ================= Palette =================
+
+  function createPalette() {
+
+      palette.innerHTML = "";
+
+      const visibleQuestions = expandedPalette
+          ? questions.length
+          : Math.min(35, questions.length);
+
+      for (let index = 0; index < visibleQuestions; index++) {
+
+          const btn = document.createElement("button");
+
+          btn.innerHTML = index + 1;
+
+          btn.className =
+              "paletteBtn aspect-square rounded-xl border transition";
+
+          btn.onclick = () => {
+
+              currentQuestion = index;
+
+              renderQuestion();
+
+          };
+
+          palette.appendChild(btn);
+
       }
 
-      updateTimer();
+      if (questions.length > 35) {
 
-      const timerInterval = setInterval(updateTimer,1000);
+          const toggle = document.createElement("button");
 
-        // ================= Summary =================
+          toggle.className =
+              "col-span-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition";
 
-        function updateSummary() {
-          const answered = questions.filter((q) => q.answer !== null).length;
+          toggle.innerHTML = expandedPalette
+              ? "▲ Show Less"
+              : "▼ More";
 
-          const review = questions.filter(
-            (q) => q.visited && q.answer === null,
-          ).length;
+          toggle.onclick = () => {
 
-          const remaining = questions.filter((q) => !q.visited).length;
+              expandedPalette = !expandedPalette;
 
-          document.getElementById("answeredCount").textContent = answered;
+              createPalette();
 
-          document.getElementById("reviewCount").textContent = review;
+              updatePalette();
 
-          document.getElementById("remainingCount").textContent = remaining;
-        }
+          };
 
-        // ================= Initial =================
+          palette.appendChild(toggle);
 
-        createPalette();
+      }
 
-        renderQuestion();
+  }
+
+                function updatePalette() {
+                  const buttons = document.querySelectorAll(".paletteBtn");
+
+                  buttons.forEach((btn, index) => {
+                    btn.className =
+                      "paletteBtn aspect-square rounded-xl border transition-all duration-300";
+
+                    if (index === currentQuestion) {
+                      btn.classList.add("bg-pink-500", "border-pink-500", "text-white");
+                    } else if (questions[index].answer !== null) {
+                      btn.classList.add(
+                        "bg-green-500/20",
+                        "border-green-400",
+                        "text-green-300",
+                      );
+                    } else if (questions[index].visited && questions[index].answer === null) {
+                      btn.classList.add(
+                        "bg-yellow-500/20",
+                        "border-yellow-400",
+                        "text-yellow-300",
+                      );
+                    } else {
+                      btn.classList.add("bg-white/5", "border-white/10", "text-gray-400");
+                    }
+                  });
+                }
+
+                //Timer//
+                const timer = document.getElementById("timer");
+
+              // Total duration from Django
+              let totalTime = {{ assessment.questions }} * 60;
+
+              function updateTimer() {
+
+                  const minutes = Math.floor(totalTime / 60);
+                  const seconds = totalTime % 60;
+
+                  timer.textContent =
+                      `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+                  if (totalTime <= 0) {
+
+                      clearInterval(timerInterval);
+
+                      submitTest();
+
+                      return;
+                  }
+
+                  totalTime--;
+              }
+
+              updateTimer();
+
+              const timerInterval = setInterval(updateTimer,1000);
+
+                // ================= Summary =================
+
+                function updateSummary() {
+                  const answered = questions.filter((q) => q.answer !== null).length;
+
+                  const review = questions.filter(
+                    (q) => q.visited && q.answer === null,
+                  ).length;
+
+                  const remaining = questions.filter((q) => !q.visited).length;
+
+                  document.getElementById("answeredCount").textContent = answered;
+
+                  document.getElementById("reviewCount").textContent = review;
+
+                  document.getElementById("remainingCount").textContent = remaining;
+                }
+
+                // ================= Initial =================
+
+                createPalette();
+
+                renderQuestion();
 </script>
 
 {% endblock %}
