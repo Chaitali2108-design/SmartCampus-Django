@@ -18,4 +18,9 @@ urlpatterns = [
     path("preparation/", views.preparation, name="preparation"),
     path("preparation/<str:test_type>/<str:page>/",views.preparation_test,name="preparation_test",),
     path("preparation/result/",views.preparation_result,name="preparation_result"),
+    path(
+    "preparation/generate-questions/",
+    views.generate_questions,
+    name="generate_questions",
+),
     ]  
