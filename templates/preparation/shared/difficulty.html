@@ -1,0 +1,95 @@
+{% extends "base.html" %} {% block content %}
+
+<div
+  class="min-h-screen bg-[#140f1f] text-white flex items-center justify-center px-6"
+>
+  <div class="w-full max-w-5xl">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-3">Choose Difficulty</h1>
+
+      <p class="text-gray-400">
+        Select your preferred difficulty level before starting the assessment.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Easy -->
+      <a
+        href="{% url 'preparation_test' test_type 'instructions' %}?difficulty=easy"
+        class="group rounded-3xl border border-green-500/30 bg-[#1b1529] p-8 hover:border-green-500 transition duration-300 hover:-translate-y-2"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center mb-6"
+        >
+          <i data-lucide="leaf" class="w-8 h-8 text-green-400"></i>
+        </div>
+
+        <h2 class="text-2xl font-semibold mb-3">Easy</h2>
+
+        <p class="text-gray-400 mb-6">
+          Basic concepts and beginner-friendly questions.
+        </p>
+
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li>✔ Basic Questions</li>
+          <li>✔ Beginner Level</li>
+          <li>✔ Confidence Building</li>
+        </ul>
+      </a>
+
+      <!-- Medium -->
+      <a
+        href="{% url 'preparation_test' test_type 'instructions' %}?difficulty=medium"
+        class="group rounded-3xl border border-violet-500/30 bg-[#1b1529] p-8 hover:border-violet-500 transition duration-300 hover:-translate-y-2"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl bg-violet-500/20 flex items-center justify-center mb-6"
+        >
+          <i data-lucide="target" class="w-8 h-8 text-violet-400"></i>
+        </div>
+
+        <h2 class="text-2xl font-semibold mb-3">Medium</h2>
+
+        <p class="text-gray-400 mb-6">
+          Balanced questions similar to placement assessments.
+        </p>
+
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li>✔ Moderate Difficulty</li>
+          <li>✔ Placement Pattern</li>
+          <li>✔ Recommended</li>
+        </ul>
+      </a>
+
+      <!-- Hard -->
+      <a
+        href="{% url 'preparation_test' test_type 'instructions' %}?difficulty=hard"
+        class="group rounded-3xl border border-red-500/30 bg-[#1b1529] p-8 hover:border-red-500 transition duration-300 hover:-translate-y-2"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl bg-red-500/20 flex items-center justify-center mb-6"
+        >
+          <i data-lucide="flame" class="w-8 h-8 text-red-400"></i>
+        </div>
+
+        <h2 class="text-2xl font-semibold mb-3">Hard</h2>
+
+        <p class="text-gray-400 mb-6">
+          Challenging questions designed for top companies.
+        </p>
+
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li>✔ Advanced Concepts</li>
+          <li>✔ High Difficulty</li>
+          <li>✔ FAANG Style</li>
+        </ul>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+
+{% endblock %}
