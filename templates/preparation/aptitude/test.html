@@ -206,7 +206,10 @@
         >
           <h2 class="text-xl font-semibold mb-8">Question Palette</h2>
 
-          <div id="questionPalette" class="grid grid-cols-5 gap-3"></div>
+          <div
+            id="questionPalette"
+            class="hide-scrollbar grid grid-cols-5 gap-3 max-h-[460px] overflow-y-auto"
+          ></div>
 
           <div class="mt-10 border-t border-white/10 pt-8">
             <h3 class="text-xl font-semibold mb-6">Test Summary</h3>
@@ -241,6 +244,22 @@
 
 {% csrf_token %}
 
+<style>
+  /* Chrome, Edge, Safari */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Firefox */
+  .hide-scrollbar {
+    scrollbar-width: none;
+  }
+
+  /* IE */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+  }
+</style>
 <script>
 
   const testType="{{ test_type }}";
