@@ -70,3 +70,23 @@ class StudentAnswerAdmin(admin.ModelAdmin):
     list_filter = (
         "marked_for_review",
     )
+
+from .models import CodingQuestion
+
+
+@admin.register(CodingQuestion)
+class CodingQuestionAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "title",
+        "difficulty",
+        "marks",
+    )
+
+    list_filter = (
+        "difficulty",
+    )
+
+    search_fields = (
+        "title",
+    )
