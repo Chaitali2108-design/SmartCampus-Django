@@ -1,0 +1,663 @@
+{% extends "base.html" %} {% block content%}
+{{questions|json_script:"questions-data" }}
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+  <!-- Header -->
+
+  <header
+    class="sticky top-0 z-50 border-b border-white/10 bg-[#140F1F]/90 backdrop-blur-xl"
+  >
+    <div
+      class="max-w-[1700px] mx-auto px-8 py-5 flex items-center justify-between"
+    >
+      <div>
+        <h1 class="text-3xl font-bold">{{ assessment.title }}</h1>
+
+        <p class="text-gray-400 mt-2">{{ assessment.subtitle }}</p>
+      </div>
+
+      <div class="flex items-center gap-8">
+        <div class="text-center">
+          <p class="text-gray-400 text-sm">Candidate</p>
+
+          <h3 class="font-semibold">{{ profile.full_name }}</h3>
+        </div>
+
+        <div
+          class="rounded-2xl bg-pink-500/10 border border-pink-500/20 px-6 py-3"
+        >
+          <p class="text-sm text-gray-300">Time Left</p>
+
+          <h2 id="timer" class="text-2xl font-bold text-pink-400">--</h2>
+        </div>
+
+        <button
+          id="submitBtn"
+          class="px-6 py-3 rounded-2xl bg-red-500 hover:bg-red-400 transition"
+        >
+          Submit Test
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+
+  <div class="max-w-[1700px] mx-auto p-8">
+    <div class="grid grid-cols-12 gap-8 items-stretch">
+      <!-- Left Side -->
+
+      <div class="col-span-8 flex flex-col gap-8">
+        <!-- Progress -->
+
+        <div
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
+        >
+          <div class="flex justify-between items-center">
+            <span
+              id="questionNumber"
+              class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300"
+            >
+            </span>
+
+            <span id="progressText" class="text-gray-400"> </span>
+          </div>
+
+          <div class="h-3 rounded-full bg-white/10 overflow-hidden mt-6">
+            <div
+              id="progressBar"
+              class="h-full bg-gradient-to-r from-pink-500 to-violet-500"
+              style="width: 0%"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Question Card -->
+
+        <div
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
+        >
+          <!-- Question Header -->
+
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-4">
+              <span
+                id="sectionBadge"
+                class="px-4 py-2 rounded-full bg-violet-500/20 border border-violet-400/30 text-violet-300 text-sm font-medium"
+              >
+              </span>
+
+              <span
+                id="marks"
+                class="px-4 py-2 rounded-full bg-pink-500/20 border border-pink-400/30 text-pink-300 text-sm font-medium"
+              >
+              </span>
+            </div>
+          </div>
+
+          <!-- Question -->
+
+          <h2
+            id="questionText"
+            class="text-2xl leading-10 font-semibold text-white mb-8"
+          ></h2>
+
+          <!-- Image -->
+
+          <img
+            id="questionImage"
+            class="hidden rounded-2xl border border-white/10 mb-8 max-h-80 mx-auto"
+          />
+
+          <!-- Code -->
+
+          <pre
+            id="codeSnippet"
+            class="hidden bg-[#0D1117] border border-white/10 rounded-2xl text-sm text-green-300 p-6 overflow-x-auto mb-8"
+          ></pre>
+
+          <!-- Options -->
+
+          <div class="space-y-3">
+            <label
+              class="optionCard group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
+            >
+              <input class="optionInput hidden" type="radio" name="answer" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-lg font-bold"
+              >
+                A
+              </div>
+
+              <span class="optionText text-lg text-gray-200"></span>
+            </label>
+
+            <label
+              class="optionCard group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
+            >
+              <input class="optionInput hidden" type="radio" name="answer" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-lg font-bold"
+              >
+                B
+              </div>
+
+              <span class="optionText text-lg text-gray-200"></span>
+            </label>
+
+            <label
+              class="optionCard group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
+            >
+              <input class="optionInput hidden" type="radio" name="answer" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-lg font-bold"
+              >
+                C
+              </div>
+
+              <span class="optionText text-lg text-gray-200"></span>
+            </label>
+
+            <label
+              class="optionCard group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
+            >
+              <input class="optionInput hidden" type="radio" name="answer" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-lg font-bold"
+              >
+                D
+              </div>
+
+              <span class="optionText text-lg text-gray-200"></span>
+            </label>
+          </div>
+
+          <!-- Navigation -->
+
+          <div
+            class="flex justify-between items-center mt-10 pt-8 border-t border-white/10"
+          >
+            <button
+              id="prevBtn"
+              class="px-7 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+            >
+              ← Previous
+            </button>
+
+            <button
+              id="nextBtn"
+              class="px-8 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-violet-500 hover:scale-105 transition-all duration-300"
+            >
+              Next →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+
+      <div class="col-span-4 flex">
+        <div
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
+        >
+          <h2 class="text-xl font-semibold mb-8">Question Palette</h2>
+
+          <div
+            id="questionPalette"
+            class="hide-scrollbar grid grid-cols-5 gap-3 max-h-[460px] overflow-y-auto"
+          ></div>
+
+          <div class="mt-10 border-t border-white/10 pt-8">
+            <h3 class="text-xl font-semibold mb-6">Test Summary</h3>
+
+            <div class="space-y-4">
+              <div class="flex justify-between">
+                <span class="text-gray-400"> Answered </span>
+
+                <span id="answeredCount" class="text-green-400"> 0 </span>
+              </div>
+
+              <div class="flex justify-between">
+                <span class="text-gray-400"> Review </span>
+
+                <span id="reviewCount" class="text-yellow-400"> 0 </span>
+              </div>
+
+              <div class="flex justify-between">
+                <span class="text-gray-400"> Remaining </span>
+
+                <span id="remainingCount" class="text-red-400">
+                  {{ assessment.questions }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% csrf_token %}
+
+<style>
+  /* Chrome, Edge, Safari */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Firefox */
+  .hide-scrollbar {
+    scrollbar-width: none;
+  }
+
+  /* IE */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+  }
+</style>
+<script>
+
+  const testType="{{ test_type }}";
+
+  const assessmentDuration={{ assessment.questions }};
+</script>
+
+<script>
+                const djangoQuestions = JSON.parse(
+                  document.getElementById("questions-data").textContent,
+                );
+
+                let questions = djangoQuestions.map((q) => ({
+                  id: q.id,
+                  question: q.question,
+                  section: q.section,
+                  marks: q.marks,
+                  image: q.question_image,
+                  code: q.code_snippet,
+
+                  options: [q.option_a, q.option_b, q.option_c, q.option_d],
+
+                  correctAnswer: {
+                    A: 0,
+                    B: 1,
+                    C: 2,
+                    D: 3,
+                  }[q.correct_option],
+
+                  answer: null,
+                  review: false,
+                  visited: false,
+                }));
+
+                let currentQuestion = 0;
+
+                // ================= Elements =================
+
+                const questionText = document.getElementById("questionText");
+                const sectionBadge = document.getElementById("sectionBadge");
+                const marks = document.getElementById("marks");
+
+                const optionCards = document.querySelectorAll(".optionCard");
+                const optionInputs = document.querySelectorAll(".optionInput");
+                const optionTexts = document.querySelectorAll(".optionText");
+
+                const questionNumber = document.getElementById("questionNumber");
+                const progressText = document.getElementById("progressText");
+                const progressBar = document.getElementById("progressBar");
+
+                const image = document.getElementById("questionImage");
+                const code = document.getElementById("codeSnippet");
+
+                const palette = document.getElementById("questionPalette");
+                let expandedPalette = false;
+
+                // ================= Render =================
+
+                function renderQuestion() {
+                  questions[currentQuestion].visited = true;
+                  const q = questions[currentQuestion];
+
+                  q.visited = true;
+
+                  questionText.innerHTML = q.question;
+
+                  sectionBadge.innerHTML = q.section;
+
+                  marks.innerHTML = `Marks : ${q.marks}`;
+
+                  questionNumber.innerHTML = `Question ${currentQuestion + 1} of ${questions.length}`;
+
+                  const percentage = Math.round(
+                    ((currentQuestion + 1) / questions.length) * 100,
+                  );
+
+                  progressText.innerHTML = `${percentage}% Completed`;
+
+                  progressBar.style.width = percentage + "%";
+
+                  optionTexts.forEach((option, index) => {
+                    option.innerHTML = q.options[index];
+
+                    optionInputs[index].checked = q.answer === index;
+                  });
+
+                  if (q.image) {
+                    image.src = "/media/" + q.image;
+
+                    image.classList.remove("hidden");
+                  } else {
+                    image.classList.add("hidden");
+                  }
+
+                  if (q.code) {
+                    code.innerText = q.code;
+
+                    code.classList.remove("hidden");
+                  } else {
+                    code.classList.add("hidden");
+                  }
+
+                  updateOptionStyles();
+
+                  updatePalette();
+
+                  updateSummary();
+                }
+
+                // ================= Options =================
+
+                optionInputs.forEach((input, index) => {
+
+              input.addEventListener("change", () => {
+
+              questions[currentQuestion].answer = index;
+              questions[currentQuestion].review = false;
+
+              updateOptionStyles();
+              updatePalette();
+              updateSummary();
+
+          });
+
+      });
+
+                function updateOptionStyles() {
+
+        optionCards.forEach((card, index) => {
+
+            card.className =
+            "optionCard flex items-center gap-4 p-4 rounded-2xl border transition-all duration-200 cursor-pointer bg-white/5 border-white/10 hover:border-pink-500 hover:bg-pink-500/10";
+
+            if (questions[currentQuestion].answer === index) {
+
+                card.classList.remove(
+                    "hover:border-pink-500",
+                    "hover:bg-pink-500/10"
+                );
+
+                card.classList.remove(
+                    "bg-white/5",
+                    "border-white/10"
+                );
+
+                card.classList.add(
+                    "bg-sky-500/20",
+                    "border-sky-500",
+                    "shadow-lg",
+                    "shadow-blue-500/20"
+                );
+            }
+
+        });
+
+    }
+
+                // ================= Navigation =================
+
+                document.getElementById("nextBtn").onclick = () => {
+                  if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+
+                    renderQuestion();
+                  }
+                };
+
+                document.getElementById("prevBtn").onclick = () => {
+                  if (currentQuestion > 0) {
+                    currentQuestion--;
+
+                    renderQuestion();
+                  }
+                };
+
+                document
+                .getElementById("submitBtn")
+                .addEventListener("click",()=>{
+
+                if(confirm("Are you sure you want to submit the test?")){
+
+                    submitTest();
+
+                }
+
+            });
+
+            //Submit Test Button Function//
+            function submitTest(){
+
+              clearInterval(timerInterval);
+
+              let score = 0;
+
+              let answered = 0;
+
+              let unanswered = 0;
+
+              questions.forEach(q=>{
+
+                  if(q.answer!==null){
+
+                      answered++;
+
+
+
+                      if(q.answer===q.correctAnswer){
+
+                          score += q.marks;
+
+                      }
+
+                  }
+
+                  else{
+
+                      unanswered++;
+
+                  }
+
+              });
+
+              const result={
+
+                  total_questions:questions.length,
+
+                  answered:answered,
+
+                  unanswered:unanswered,
+
+                  score:score,
+
+                  total_marks:questions.reduce(
+                      (sum,q)=>sum+q.marks,
+                      0
+                  )
+
+              };
+
+              fetch("{% url 'preparation_result' %}",{
+
+                  method:"POST",
+
+                  headers:{
+                      "Content-Type":"application/json",
+                      "X-CSRFToken":"{{ csrf_token }}"
+                  },
+
+                  body:JSON.stringify(result)
+
+              })
+              .then(r=>r.json())
+              .then(()=>{
+
+                  window.location.href="{% url 'preparation_result' %}";
+
+              });
+
+          }
+
+                // ================= Palette =================
+
+  function createPalette() {
+
+      palette.innerHTML = "";
+
+      const visibleQuestions = expandedPalette
+          ? questions.length
+          : Math.min(35, questions.length);
+
+      for (let index = 0; index < visibleQuestions; index++) {
+
+          const btn = document.createElement("button");
+
+          btn.innerHTML = index + 1;
+
+          btn.className =
+              "paletteBtn aspect-square rounded-xl border transition";
+
+          btn.onclick = () => {
+
+              currentQuestion = index;
+
+              renderQuestion();
+
+          };
+
+          palette.appendChild(btn);
+
+      }
+
+      if (questions.length > 35) {
+
+          const toggle = document.createElement("button");
+
+          toggle.className =
+              "col-span-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition";
+
+          toggle.innerHTML = expandedPalette
+              ? "▲ Show Less"
+              : "▼ More";
+
+          toggle.onclick = () => {
+
+              expandedPalette = !expandedPalette;
+
+              createPalette();
+
+              updatePalette();
+
+          };
+
+          palette.appendChild(toggle);
+
+      }
+
+  }
+
+                function updatePalette() {
+                  const buttons = document.querySelectorAll(".paletteBtn");
+
+                  buttons.forEach((btn, index) => {
+                    btn.className =
+                      "paletteBtn aspect-square rounded-xl border transition-all duration-300";
+
+                    if (index === currentQuestion) {
+                      btn.classList.add("bg-pink-500", "border-pink-500", "text-white");
+                    } else if (questions[index].answer !== null) {
+                      btn.classList.add(
+                        "bg-green-500/20",
+                        "border-green-400",
+                        "text-green-300",
+                      );
+                    } else if (questions[index].visited && questions[index].answer === null) {
+                      btn.classList.add(
+                        "bg-yellow-500/20",
+                        "border-yellow-400",
+                        "text-yellow-300",
+                      );
+                    } else {
+                      btn.classList.add("bg-white/5", "border-white/10", "text-gray-400");
+                    }
+                  });
+                }
+
+                //Timer//
+                const timer = document.getElementById("timer");
+
+              // Total duration from Django
+              let totalTime = {{ assessment.duration_minutes }} * 60;
+
+              function updateTimer() {
+
+                  const minutes = Math.floor(totalTime / 60);
+                  const seconds = totalTime % 60;
+
+                  timer.textContent =
+                      `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+                  if (totalTime <= 0) {
+
+                      clearInterval(timerInterval);
+
+                      submitTest();
+
+                      return;
+                  }
+
+                  totalTime--;
+              }
+
+              updateTimer();
+
+              const timerInterval = setInterval(updateTimer,1000);
+
+                // ================= Summary =================
+
+                function updateSummary() {
+                  const answered = questions.filter((q) => q.answer !== null).length;
+
+                  const review = questions.filter(
+                    (q) => q.visited && q.answer === null,
+                  ).length;
+
+                  const remaining = questions.filter((q) => !q.visited).length;
+
+                  document.getElementById("answeredCount").textContent = answered;
+
+                  document.getElementById("reviewCount").textContent = review;
+
+                  document.getElementById("remainingCount").textContent = remaining;
+                }
+
+                // ================= Initial =================
+
+                createPalette();
+
+                renderQuestion();
+</script>
+
+{% endblock %}
