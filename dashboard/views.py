@@ -552,6 +552,7 @@ def preparation_test(request, test_type, page):
         "subtitle": "Quantitative Aptitude, Logical Reasoning and Verbal Ability",
         "questions": 70,
         "duration": "70 Minutes",
+        "duration_minutes":70,
         "difficulty": "Medium",
         "passing_score": "40%",
         "marks": 70,
@@ -573,6 +574,7 @@ def preparation_test(request, test_type, page):
         "subtitle": "Computer Science Fundamentals",
         "questions": 50,
         "duration": "60 Minutes",
+        "duration_minutes":60,
         "difficulty": "Medium",
         "passing_score": "40%",
         "marks": 50,
@@ -599,6 +601,7 @@ def preparation_test(request, test_type, page):
         "subtitle": "Programming & Problem Solving",
         "questions": 2,
         "duration": "90 Minutes",
+        "duration_minutes":90,
         "difficulty": "Medium",
         "passing_score": "N/A",
         "marks": 100,
@@ -622,6 +625,7 @@ def preparation_test(request, test_type, page):
         "subtitle": "Written Communication & Email Writing",
         "questions": 5,
         "duration": "30 Minutes",
+        "duration_minutes":30,
         "difficulty": "Easy",
         "passing_score": "N/A",
         "marks": 50,
@@ -645,6 +649,7 @@ def preparation_test(request, test_type, page):
         "subtitle": "Behavioral & Personal Interview",
         "questions": 10,
         "duration": "20 Minutes",
+        "duration_minutes":20,
         "difficulty": "Easy",
         "passing_score": "N/A",
         "marks": 100,
@@ -731,6 +736,23 @@ def preparation_test(request, test_type, page):
 
     
     return render(request, template, context)
+
+#for coding test
+from .models import CodingQuestion
+
+
+@login_required
+def coding_test(request):
+
+    questions = CodingQuestion.objects.all().order_by("id")
+
+    return render(
+        request,
+        "preparation/coding/coding_test.html",
+        {
+            "questions": questions,
+        }
+    )
 
 #for result of test
 import json
