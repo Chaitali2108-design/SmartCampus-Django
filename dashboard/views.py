@@ -719,6 +719,15 @@ def preparation_test(request, test_type, page):
 
     profile = StudentProfile.objects.filter(user=request.user).first()
 
+    coding_question = None
+
+    if test_type == "coding" and page == "test":
+
+        coding_question = Question.objects.filter(
+        test_type="coding",
+        difficulty=difficulty
+        ).order_by("?").first()
+
     context = {
         "test_type": test_type,
         "assessment": assessment,
@@ -726,6 +735,7 @@ def preparation_test(request, test_type, page):
         "assessment_date": date.today(),
         "questions":questions,
         "difficulty":difficulty,
+        "coding_question":coding_question,
     }
     if page=="difficulty":
         template="preparation/shared/difficulty.html"
