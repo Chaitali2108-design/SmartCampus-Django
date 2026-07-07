@@ -350,3 +350,56 @@ class StudentAnswer(models.Model):
 
     class Meta:
         unique_together = ("attempt", "question")
+
+
+#for coding questions
+
+class CodingQuestion(models.Model):
+    DIFFICULTY = [
+        ("easy", "Easy"),
+        ("medium", "Medium"),
+        ("hard", "Hard"),
+    ]
+
+    title = models.CharField(max_length=200)
+
+    difficulty = models.CharField(
+        max_length=20,
+        choices=DIFFICULTY
+    )
+
+    marks = models.IntegerField(default=50)
+
+    statement = models.TextField()
+
+    input_format = models.TextField(blank=True)
+
+    output_format = models.TextField(blank=True)
+
+    constraints = models.TextField(blank=True)
+
+    sample_input = models.TextField(blank=True)
+
+    sample_output = models.TextField(blank=True)
+
+    explanation = models.TextField(blank=True)
+
+    question_image = models.ImageField(
+        upload_to="coding_questions/",
+        blank=True,
+        null=True
+    )
+
+    starter_code = models.TextField(
+        default="""def solve():
+    pass
+
+if __name__ == "__main__":
+    solve()
+"""
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
