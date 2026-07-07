@@ -1,184 +1,103 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="min-h-screen bg-[#140F1F] text-white">
-  <!-- ================= Header ================= -->
+  <!-- Header -->
 
-  <header
-    class="sticky top-0 z-50 border-b border-white/10 bg-[#140F1F]/95 backdrop-blur-xl"
-  >
+  <div class="border-b border-white/10">
     <div
       class="max-w-[1800px] mx-auto px-8 py-5 flex justify-between items-center"
     >
       <div>
         <h1 class="text-3xl font-bold">Coding Assessment</h1>
 
-        <p class="text-gray-400 mt-1">
-          Solve programming problems within the given time.
-        </p>
+        <p class="text-gray-400 mt-2">Solve the problem below.</p>
       </div>
 
-      <div class="flex items-center gap-5">
-        <div class="rounded-xl bg-white/5 border border-white/10 px-5 py-3">
-          <p class="text-xs text-gray-400">Time Left</p>
+      <div class="flex gap-8 items-center">
+        <div>
+          <p class="text-sm text-gray-400">Time Left</p>
 
-          <h2 id="timer" class="text-2xl font-bold text-pink-400">90:00</h2>
+          <h2 id="timer" class="text-2xl font-bold text-pink-400">--</h2>
         </div>
 
-        <select
-          class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none"
-        >
-          <option>Python</option>
-          <option>C++</option>
-          <option>Java</option>
-        </select>
-
         <button
-          class="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-500 transition"
+          id="submitBtn"
+          class="px-7 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400"
         >
-          Submit Code
+          Submit
         </button>
       </div>
     </div>
-  </header>
-
-  <!-- ================= Body ================= -->
+  </div>
 
   <div class="max-w-[1800px] mx-auto p-8">
-    <div class="grid grid-cols-10 gap-6 h-[calc(100vh-140px)]">
-      <!-- ================= Problem ================= -->
+    <div class="grid grid-cols-12 gap-6">
+      <!-- LEFT -->
 
-      <div
-        class="col-span-4 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden flex flex-col"
-      >
-        <div class="border-b border-white/10 px-7 py-5">
-          <div class="flex justify-between">
-            <h2 class="text-2xl font-bold">Two Sum</h2>
+      <div class="col-span-5">
+        <div
+          class="rounded-3xl bg-white/5 border border-white/10 h-[82vh] overflow-y-auto"
+        >
+          <div class="p-8">
+            <h2 class="text-2xl font-bold mb-4">
+              {{ coding_question.question }}
+            </h2>
 
-            <span class="px-4 py-1 rounded-full bg-green-500/20 text-green-300">
-              Easy
-            </span>
-          </div>
-        </div>
+            {% if coding_question.question_image %}
 
-        <div class="hide-scrollbar flex-1 overflow-y-auto p-7 space-y-8">
-          <section>
-            <h3 class="font-semibold text-lg mb-3">Problem Statement</h3>
+            <img
+              src="{{ coding_question.question_image.url }}"
+              class="rounded-xl mb-6"
+            />
 
-            <p class="text-gray-300 leading-8">
-              Given an array of integers and a target value, return the indices
-              of two numbers whose sum equals the target.
-            </p>
-          </section>
+            {% endif %}
 
-          <section>
-            <h3 class="font-semibold text-lg mb-3">Example</h3>
-
-            <div class="bg-[#0D1117] rounded-xl border border-white/10 p-5">
-              <p>Input</p>
-
-              <pre class="text-green-300 mt-2">
-
-nums = [2,7,11,15]
-target = 9
-
-                            </pre
-              >
-
-              <p class="mt-5">Output</p>
-
-              <pre class="text-green-300 mt-2">
-
-[0,1]
-
-                            </pre
-              >
+            <div class="whitespace-pre-line text-gray-300 leading-8">
+              {{ coding_question.description }}
             </div>
-          </section>
 
-          <section>
-            <h3 class="font-semibold text-lg mb-3">Constraints</h3>
+            <div class="mt-10">
+              <h3 class="font-semibold mb-3">Example</h3>
 
-            <ul class="list-disc ml-6 text-gray-300 space-y-2">
-              <li>2 ≤ n ≤ 10⁵</li>
-
-              <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
-
-              <li>Exactly one solution exists.</li>
-            </ul>
-          </section>
+              <div class="bg-[#0D1117] rounded-xl p-5 border border-white/10">
+                <pre>{{ coding_question.example }}</pre>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ================= Editor ================= -->
+      <!-- RIGHT -->
 
-      <div class="col-span-6 flex flex-col gap-6">
-        <!-- Editor -->
-
+      <div class="col-span-7">
         <div
-          class="flex-1 rounded-3xl border border-white/10 bg-white/5 overflow-hidden"
+          class="rounded-3xl bg-white/5 border border-white/10 h-[82vh] flex flex-col"
         >
-          <div class="border-b border-white/10 px-6 py-4 flex justify-between">
-            <span class="font-semibold"> Code Editor </span>
-
-            <span class="text-gray-400"> Python </span>
-          </div>
-
-          <div
-            class="h-full bg-[#0D1117] p-6 font-mono text-green-300 text-sm leading-7"
-          >
-            <pre>
-def solve():
-    pass
-
-
-if __name__ == "__main__":
-    solve()
-</pre
+          <div class="border-b border-white/10 p-4">
+            <select
+              class="bg-white/5 border border-white/10 rounded-xl px-4 py-2"
             >
-          </div>
-        </div>
-
-        <!-- Bottom -->
-
-        <div
-          class="h-56 rounded-3xl border border-white/10 bg-white/5 overflow-hidden"
-        >
-          <div class="border-b border-white/10 px-6 py-4 flex justify-between">
-            <div class="flex gap-8">
-              <button>Console</button>
-
-              <button>Test Cases</button>
-
-              <button>Output</button>
-            </div>
-
-            <button class="px-6 py-2 rounded-xl bg-pink-600 hover:bg-pink-500">
-              Run Code
-            </button>
+              <option>Python</option>
+              <option>C++</option>
+              <option>Java</option>
+            </select>
           </div>
 
-          <div class="p-6 text-gray-400">Output will appear here...</div>
+          <textarea
+            class="flex-1 bg-[#0D1117] p-6 font-mono resize-none outline-none"
+            placeholder="Write your solution..."
+          ></textarea>
+
+          <div class="border-t border-white/10 p-4 flex justify-end gap-4">
+            <button class="px-6 py-3 rounded-xl bg-white/10">Run Code</button>
+
+            <button class="px-6 py-3 rounded-xl bg-pink-500">Submit</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<style>
-  /* Chrome, Edge, Safari */
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Firefox */
-  .hide-scrollbar {
-    scrollbar-width: none;
-  }
-
-  /* IE */
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-  }
-</style>
-
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
 {% endblock %}
