@@ -723,9 +723,9 @@ def preparation_test(request, test_type, page):
 
     if test_type == "coding" and page == "test":
 
-        coding_question = CodingQuestion.objects.filter(
+        coding_questions = CodingQuestion.objects.filter(
         difficulty=difficulty
-        ).order_by("?").first()
+        ).order_by("?")[:2]
 
     context = {
         "test_type": test_type,
@@ -734,7 +734,7 @@ def preparation_test(request, test_type, page):
         "assessment_date": date.today(),
         "questions":questions,
         "difficulty":difficulty,
-        "coding_question":coding_question,
+        "coding_questions":coding_questions,
     }
     if page=="difficulty":
         template="preparation/shared/difficulty.html"
