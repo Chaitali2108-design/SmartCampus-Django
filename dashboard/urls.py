@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.urls import include
 
 urlpatterns = [
     path("", views.landing, name="landing"),
@@ -23,4 +24,11 @@ urlpatterns = [
     views.generate_questions,
     name="generate_questions",
 ),
-    ]  
+
+   #coding api connect url
+   path(
+    "api/",
+    include("dashboard.api.urls")
+),
+]  
+    
