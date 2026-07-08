@@ -1,103 +1,346 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="min-h-screen bg-[#140F1F] text-white">
-  <!-- Header -->
+<div class="min-h-screen bg-[#140F1F] text-white overflow-hidden">
+  <!-- ================= HEADER ================= -->
 
-  <div class="border-b border-white/10">
+  <header
+    class="sticky top-0 z-50 border-b border-white/10 bg-[#140F1F]/95 backdrop-blur-xl"
+  >
     <div
-      class="max-w-[1800px] mx-auto px-8 py-5 flex justify-between items-center"
+      class="max-w-[1850px] mx-auto px-8 h-20 flex items-center justify-between"
     >
       <div>
         <h1 class="text-3xl font-bold">Coding Assessment</h1>
 
-        <p class="text-gray-400 mt-2">Solve the problem below.</p>
+        <p class="text-gray-400 mt-1">Solve the programming challenge.</p>
       </div>
 
-      <div class="flex gap-8 items-center">
-        <div>
-          <p class="text-sm text-gray-400">Time Left</p>
+      <div class="flex items-center gap-8">
+        <div class="text-center">
+          <p class="text-xs uppercase tracking-wider text-gray-500">
+            Difficulty
+          </p>
 
-          <h2 id="timer" class="text-2xl font-bold text-pink-400">--</h2>
+          <span
+            class="inline-flex mt-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-300 font-medium"
+          >
+            {{ coding_question.difficulty|title }}
+          </span>
+        </div>
+
+        <div class="text-center">
+          <p class="text-xs uppercase tracking-wider text-gray-500">Marks</p>
+
+          <span
+            class="inline-flex mt-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-300 font-medium"
+          >
+            {{ coding_question.marks }}
+          </span>
+        </div>
+
+        <div class="text-center">
+          <p class="text-xs uppercase tracking-wider text-gray-500">
+            Time Left
+          </p>
+
+          <h2 id="timer" class="text-2xl font-bold text-pink-400 mt-1">--</h2>
         </div>
 
         <button
           id="submitBtn"
-          class="px-7 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400"
+          class="px-7 py-3 rounded-2xl bg-pink-500 hover:bg-pink-400 transition"
         >
-          Submit
+          Submit Solution
         </button>
       </div>
     </div>
-  </div>
+  </header>
 
-  <div class="max-w-[1800px] mx-auto p-8">
-    <div class="grid grid-cols-12 gap-6">
-      <!-- LEFT -->
+  <!-- ================= MAIN ================= -->
 
-      <div class="col-span-5">
+  <main class="max-w-[1850px] mx-auto p-6">
+    <div class="grid grid-cols-12 gap-6 h-[calc(100vh-128px)]">
+      <!-- ================================= LEFT ================================= -->
+
+      <section class="col-span-5">
         <div
-          class="rounded-3xl bg-white/5 border border-white/10 h-[82vh] overflow-y-auto"
+          class="h-full rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col"
         >
-          <div class="p-8">
-            <h2 class="text-2xl font-bold mb-4">
-              {{ coding_question.question }}
-            </h2>
+          <!-- Tabs -->
+
+          <div class="border-b border-white/10 px-6 h-16 flex items-center">
+            <button class="px-5 py-2 rounded-xl bg-pink-500 text-white">
+              Description
+            </button>
+          </div>
+
+          <!-- Scrollable -->
+
+          <div class="flex-1 overflow-y-auto px-8 py-8 space-y-8 custom-scroll">
+            <!-- Title -->
+
+            <div>
+              <h2 class="text-3xl font-bold">{{ coding_question.title }}</h2>
+            </div>
+
+            <!-- Image -->
 
             {% if coding_question.question_image %}
 
             <img
               src="{{ coding_question.question_image.url }}"
-              class="rounded-xl mb-6"
+              class="rounded-2xl border border-white/10 w-full"
             />
 
             {% endif %}
 
-            <div class="whitespace-pre-line text-gray-300 leading-8">
-              {{ coding_question.description }}
+            <!-- Statement -->
+
+            <div>
+              <h3 class="text-pink-400 font-semibold text-lg mb-3">
+                Problem Statement
+              </h3>
+
+              <div class="text-gray-300 whitespace-pre-line leading-8">
+                {{ coding_question.statement }}
+              </div>
             </div>
 
-            <div class="mt-10">
-              <h3 class="font-semibold mb-3">Example</h3>
+            <!-- Input -->
 
-              <div class="bg-[#0D1117] rounded-xl p-5 border border-white/10">
-                <pre>{{ coding_question.example }}</pre>
+            <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
+              <h3 class="font-semibold text-pink-400 mb-4">Input Format</h3>
+
+              <div class="whitespace-pre-line leading-8 text-gray-300">
+                {{ coding_question.input_format }}
+              </div>
+            </div>
+
+            <!-- Output -->
+
+            <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
+              <h3 class="font-semibold text-pink-400 mb-4">Output Format</h3>
+
+              <div class="whitespace-pre-line leading-8 text-gray-300">
+                {{ coding_question.output_format }}
+              </div>
+            </div>
+
+            <!-- Constraints -->
+
+            <div class="rounded-2xl bg-[#0D1117] border border-white/10 p-6">
+              <h3 class="font-semibold text-pink-400 mb-4">Constraints</h3>
+
+              <pre class="whitespace-pre-wrap leading-8 text-gray-300">
+{{ coding_question.constraints }}</pre
+              >
+            </div>
+
+            <!-- Examples -->
+
+            <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
+              <h3 class="font-semibold text-pink-400 text-lg mb-6">Example</h3>
+
+              <div class="space-y-6">
+                <div>
+                  <p class="text-sm text-gray-400 mb-2">Sample Input</p>
+
+                  <pre
+                    class="rounded-xl bg-[#0D1117] border border-white/10 p-5 overflow-x-auto"
+                  >
+{{ coding_question.sample_input }}</pre
+                  >
+                </div>
+
+                <div>
+                  <p class="text-sm text-gray-400 mb-2">Sample Output</p>
+
+                  <pre
+                    class="rounded-xl bg-[#0D1117] border border-white/10 p-5 overflow-x-auto"
+                  >
+{{ coding_question.sample_output }}</pre
+                  >
+                </div>
+
+                <div>
+                  <p class="text-sm text-gray-400 mb-2">Explanation</p>
+
+                  <pre
+                    class="rounded-xl bg-[#0D1117] border border-white/10 p-5 whitespace-pre-wrap"
+                  >
+{{ coding_question.explanation }}</pre
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- RIGHT -->
+      <!-- ================= RIGHT PANEL STARTS HERE ================= -->
 
-      <div class="col-span-7">
+      <section class="col-span-7">
         <div
-          class="rounded-3xl bg-white/5 border border-white/10 h-[82vh] flex flex-col"
+          class="h-full rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col"
         >
-          <div class="border-b border-white/10 p-4">
-            <select
-              class="bg-white/5 border border-white/10 rounded-xl px-4 py-2"
-            >
-              <option>Python</option>
-              <option>C++</option>
-              <option>Java</option>
-            </select>
+          <!-- Editor Toolbar -->
+
+          <div
+            class="h-16 border-b border-white/10 px-6 flex items-center justify-between"
+          >
+            <div class="flex items-center gap-4">
+              <select
+                id="languageSelector"
+                class="bg-[#1C1A2E] border border-white/10 rounded-xl px-5 py-2 text-white outline-none focus:border-pink-500"
+              >
+                <option value="python" class="bg-[#1C1A2E]">Python</option>
+
+                <option value="cpp" class="bg-[#1C1A2E]">C++</option>
+
+                <option value="java" class="bg-[#1C1A2E]">Java</option>
+              </select>
+
+              <button
+                id="resetCode"
+                class="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition"
+              >
+                Reset Code
+              </button>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button
+                id="runCode"
+                class="px-6 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition"
+              >
+                ▶ Run Code
+              </button>
+
+              <button
+                id="submitSolution"
+                class="px-6 py-2 rounded-xl bg-pink-500 hover:bg-pink-400 transition"
+              >
+                Submit
+              </button>
+            </div>
           </div>
 
-          <textarea
-            class="flex-1 bg-[#0D1117] p-6 font-mono resize-none outline-none"
-            placeholder="Write your solution..."
-          ></textarea>
+          <!-- Monaco -->
 
-          <div class="border-t border-white/10 p-4 flex justify-end gap-4">
-            <button class="px-6 py-3 rounded-xl bg-white/10">Run Code</button>
+          <div id="editor" class="flex-1"></div>
 
-            <button class="px-6 py-3 rounded-xl bg-pink-500">Submit</button>
+          <!-- Console -->
+
+          <div class="h-60 border-t border-white/10 bg-[#0D1117] flex flex-col">
+            <div
+              class="h-12 border-b border-white/10 px-5 flex items-center justify-between"
+            >
+              <h3 class="font-semibold">Console</h3>
+
+              <span class="text-xs text-gray-500"> Output </span>
+            </div>
+
+            <pre
+              id="consoleOutput"
+              class="flex-1 overflow-auto p-5 text-sm text-green-400 whitespace-pre-wrap"
+            ></pre>
           </div>
         </div>
-      </div>
+      </section>
     </div>
-  </div>
+  </main>
 </div>
 
+<style>
+  .custom-scroll {
+    scrollbar-width: thin;
+
+    scrollbar-color: #3a314f transparent;
+  }
+
+  .custom-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background: #3a314f;
+
+    border-radius: 20px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #544870;
+  }
+</style>
+
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
+
+<script>
+  require.config({
+    paths: {
+      vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs",
+    },
+  });
+
+  const starterCode = {
+    python: `{{ coding_question.starter_code|escapejs }}`,
+
+    cpp: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+    return 0;
+}
+`,
+
+    java: `public class Main {
+
+    public static void main(String[] args) {
+
+    }
+
+}
+`,
+  };
+
+  require(["vs/editor/editor.main"], function () {
+    window.editor = monaco.editor.create(document.getElementById("editor"), {
+      value: starterCode.python,
+      language: "python",
+      theme: "vs-dark",
+      automaticLayout: true,
+      fontSize: 16,
+      lineHeight: 28,
+      fontLigatures: true,
+      cursorBlinking: "smooth",
+      cursorSmoothCaretAnimation: "on",
+      minimap: {
+        enabled: false,
+      },
+      roundedSelection: true,
+      scrollBeyondLastLine: false,
+      wordWrap: "on",
+      padding: {
+        top: 20,
+        bottom: 20,
+      },
+    });
+
+    document
+      .getElementById("languageSelector")
+      .addEventListener("change", function () {
+        const lang = this.value;
+
+        monaco.editor.setModelLanguage(editor.getModel(), lang);
+
+        editor.setValue(starterCode[lang]);
+      });
+  });
+</script>
+
 {% endblock %}
