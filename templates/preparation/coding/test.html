@@ -59,79 +59,12 @@
   <!-- ================= MAIN ================= -->
 
   <main
-    class="flex-1 max-w-[1850px] w-full mx-auto p-6 overflow-hidden min-h-0 flex flex-col gap-6"
+    class="flex-1 max-w-[1850px] w-full mx-auto p-6 overflow-hidden min-h-0"
   >
-    <!-- ================= Question Navigator ================= -->
-
-    <div class="flex-none rounded-3xl bg-white/5 border border-white/10 p-5">
-      <h2 class="text-lg font-semibold mb-3">Assessment</h2>
-
-      <!-- Progress -->
-
-      <div class="mb-4">
-        <div class="flex justify-between text-sm mb-2">
-          <span class="text-gray-400"> Progress </span>
-
-          <span class="font-semibold"> 1 / 2 </span>
-        </div>
-
-        <div class="w-full h-3 rounded-full bg-white/10 overflow-hidden">
-          <div class="h-full w-1/2 rounded-full bg-pink-500"></div>
-        </div>
-      </div>
-
-      <!-- Questions -->
-
-      <div class="grid grid-cols-2 gap-4">
-        <h3 class="text-gray-400 uppercase text-xs tracking-widest">
-          Questions
-        </h3>
-
-        {% for question in coding_questions %}
-
-        <button
-          class="w-full rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition px-4 py-3 text-left"
-        >
-          <div class="flex justify-between items-center">
-            <span class="font-semibold"> Question {{ forloop.counter }} </span>
-
-            {% if forloop.first %}
-
-            <span class="w-3 h-3 rounded-full bg-green-400"> </span>
-
-            {% else %}
-
-            <span class="w-3 h-3 rounded-full bg-gray-500"> </span>
-
-            {% endif %}
-          </div>
-
-          <p class="mt-2 font-medium text-white">{{ question.title }}</p>
-
-          <div class="flex gap-2 mt-3">
-            <span
-              class="text-xs px-3 py-1 rounded-full bg-pink-500/10 text-pink-300"
-            >
-              {{ question.difficulty }}
-            </span>
-
-            <span
-              class="text-xs px-3 py-1 rounded-full bg-violet-500/10 text-violet-300"
-            >
-              {{ question.marks }} Marks
-            </span>
-          </div>
-        </button>
-
-        {% endfor %}
-      </div>
-    </div>
-
-    <!--Grid-->
-    <div class="grid grid-cols-12 gap-6 flex-1 min-h-0">
+    <div class="grid grid-cols-12 gap-6 h-full min-h-0">
       <!-- ================= LEFT PANEL ================= -->
 
-      <section class="col-span-5 h-full min-h-0">
+      <section class="col-span-6 h-full min-h-0 flex gap-5">
         <div
           class="flex-1 h-full min-h-0 rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col"
         >
@@ -160,67 +93,60 @@
           <!-- Scroll Area -->
 
           <div class="flex-1 overflow-y-auto custom-scroll px-8 py-8 space-y-8">
-            <!-- Title -->
+            {% with question=coding_questions.0 %}
 
+            <!-- Title -->
             <div>
-              <h2 class="text-3xl font-bold">{{ coding_question.title }}</h2>
+              <h2 class="text-3xl font-bold">{{ question.title }}</h2>
             </div>
 
             <!-- Image -->
-
-            {% if coding_question.question_image %}
-
+            {% if question.question_image %}
             <img
-              src="{{ coding_question.question_image.url }}"
+              src="{{ question.question_image.url }}"
               class="rounded-2xl border border-white/10 w-full"
             />
-
             {% endif %}
 
-            <!-- Statement -->
-
+            <!-- Problem Statement -->
             <div>
               <h3 class="text-pink-400 font-semibold text-lg mb-4">
                 Problem Statement
               </h3>
 
               <div class="leading-8 whitespace-pre-line text-gray-300">
-                {{ coding_question.statement }}
+                {{ question.statement }}
               </div>
             </div>
 
             <!-- Input -->
-
             <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
               <h3 class="text-pink-400 font-semibold mb-4">Input Format</h3>
 
               <div class="leading-8 whitespace-pre-line text-gray-300">
-                {{ coding_question.input_format }}
+                {{ question.input_format }}
               </div>
             </div>
 
             <!-- Output -->
-
             <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
               <h3 class="text-pink-400 font-semibold mb-4">Output Format</h3>
 
               <div class="leading-8 whitespace-pre-line text-gray-300">
-                {{ coding_question.output_format }}
+                {{ question.output_format }}
               </div>
             </div>
 
             <!-- Constraints -->
-
             <div class="rounded-2xl bg-[#0D1117] border border-white/10 p-6">
               <h3 class="text-pink-400 font-semibold mb-4">Constraints</h3>
 
               <pre class="whitespace-pre-wrap leading-8 text-gray-300">
-         {{ coding_question.constraints }}</pre
+{{ question.constraints }}</pre
               >
             </div>
 
-            <!-- Sample -->
-
+            <!-- Example -->
             <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
               <h3 class="text-lg font-semibold text-pink-400 mb-6">Example</h3>
 
@@ -233,7 +159,7 @@
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 overflow-x-auto"
                   >
-         {{ coding_question.sample_input }}</pre
+{{ question.sample_input }}</pre
                   >
                 </div>
 
@@ -245,7 +171,7 @@
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 overflow-x-auto"
                   >
-         {{ coding_question.sample_output }}</pre
+{{ question.sample_output }}</pre
                   >
                 </div>
 
@@ -257,17 +183,19 @@
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 whitespace-pre-wrap"
                   >
-     {{ coding_question.explanation }}</pre
+{{ question.explanation }}</pre
                   >
                 </div>
               </div>
             </div>
+
+            {% endwith %}
           </div>
         </div>
       </section>
       <!-- ================= RIGHT PANEL ================= -->
 
-      <section class="col-span-7 h-full min-h-0">
+      <section class="col-span-6 h-full min-h-0">
         <div
           class="h-full min-h-0 rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col"
         >
