@@ -723,8 +723,7 @@ def preparation_test(request, test_type, page):
 
     if test_type == "coding" and page == "test":
 
-        coding_question = Question.objects.filter(
-        test_type="coding",
+        coding_question = CodingQuestion.objects.filter(
         difficulty=difficulty
         ).order_by("?").first()
 
