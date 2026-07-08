@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="min-h-screen bg-[#140F1F] text-white overflow-hidden">
+<div class="h-screen bg-[#140F1F] text-white flex flex-col overflow-hidden">
   <!-- ================= HEADER ================= -->
 
   <header
@@ -58,25 +58,39 @@
 
   <!-- ================= MAIN ================= -->
 
-  <main class="max-w-[1850px] mx-auto p-6">
-    <div class="grid grid-cols-12 gap-6 h-[calc(100vh-128px)]">
-      <!-- ================================= LEFT ================================= -->
+  <main class="flex-1 max-w-[1850px] w-full mx-auto p-6 overflow-hidden">
+    <div class="grid grid-cols-12 gap-6 h-full">
+      <!-- ================= LEFT PANEL ================= -->
 
-      <section class="col-span-5">
+      <section class="col-span-5 h-full">
         <div
           class="h-full rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col"
         >
           <!-- Tabs -->
 
-          <div class="border-b border-white/10 px-6 h-16 flex items-center">
-            <button class="px-5 py-2 rounded-xl bg-pink-500 text-white">
+          <div
+            class="border-b border-white/10 h-16 flex items-center px-6 gap-3"
+          >
+            <button class="px-5 py-2 rounded-xl bg-pink-500 font-medium">
               Description
+            </button>
+
+            <button
+              class="px-5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 transition"
+            >
+              Editorial
+            </button>
+
+            <button
+              class="px-5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 transition"
+            >
+              Submissions
             </button>
           </div>
 
-          <!-- Scrollable -->
+          <!-- Scroll Area -->
 
-          <div class="flex-1 overflow-y-auto px-8 py-8 space-y-8 custom-scroll">
+          <div class="flex-1 overflow-y-auto custom-scroll px-8 py-8 space-y-8">
             <!-- Title -->
 
             <div>
@@ -97,11 +111,11 @@
             <!-- Statement -->
 
             <div>
-              <h3 class="text-pink-400 font-semibold text-lg mb-3">
+              <h3 class="text-pink-400 font-semibold text-lg mb-4">
                 Problem Statement
               </h3>
 
-              <div class="text-gray-300 whitespace-pre-line leading-8">
+              <div class="leading-8 whitespace-pre-line text-gray-300">
                 {{ coding_question.statement }}
               </div>
             </div>
@@ -109,9 +123,9 @@
             <!-- Input -->
 
             <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
-              <h3 class="font-semibold text-pink-400 mb-4">Input Format</h3>
+              <h3 class="text-pink-400 font-semibold mb-4">Input Format</h3>
 
-              <div class="whitespace-pre-line leading-8 text-gray-300">
+              <div class="leading-8 whitespace-pre-line text-gray-300">
                 {{ coding_question.input_format }}
               </div>
             </div>
@@ -119,9 +133,9 @@
             <!-- Output -->
 
             <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
-              <h3 class="font-semibold text-pink-400 mb-4">Output Format</h3>
+              <h3 class="text-pink-400 font-semibold mb-4">Output Format</h3>
 
-              <div class="whitespace-pre-line leading-8 text-gray-300">
+              <div class="leading-8 whitespace-pre-line text-gray-300">
                 {{ coding_question.output_format }}
               </div>
             </div>
@@ -129,46 +143,52 @@
             <!-- Constraints -->
 
             <div class="rounded-2xl bg-[#0D1117] border border-white/10 p-6">
-              <h3 class="font-semibold text-pink-400 mb-4">Constraints</h3>
+              <h3 class="text-pink-400 font-semibold mb-4">Constraints</h3>
 
               <pre class="whitespace-pre-wrap leading-8 text-gray-300">
-{{ coding_question.constraints }}</pre
+     {{ coding_question.constraints }}</pre
               >
             </div>
 
-            <!-- Examples -->
+            <!-- Sample -->
 
             <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
-              <h3 class="font-semibold text-pink-400 text-lg mb-6">Example</h3>
+              <h3 class="text-lg font-semibold text-pink-400 mb-6">Example</h3>
 
               <div class="space-y-6">
                 <div>
-                  <p class="text-sm text-gray-400 mb-2">Sample Input</p>
+                  <p class="text-xs uppercase tracking-wide text-gray-500 mb-3">
+                    Sample Input
+                  </p>
 
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 overflow-x-auto"
                   >
-{{ coding_question.sample_input }}</pre
+       {{ coding_question.sample_input }}</pre
                   >
                 </div>
 
                 <div>
-                  <p class="text-sm text-gray-400 mb-2">Sample Output</p>
+                  <p class="text-xs uppercase tracking-wide text-gray-500 mb-3">
+                    Sample Output
+                  </p>
 
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 overflow-x-auto"
                   >
-{{ coding_question.sample_output }}</pre
+     {{ coding_question.sample_output }}</pre
                   >
                 </div>
 
                 <div>
-                  <p class="text-sm text-gray-400 mb-2">Explanation</p>
+                  <p class="text-xs uppercase tracking-wide text-gray-500 mb-3">
+                    Explanation
+                  </p>
 
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 whitespace-pre-wrap"
                   >
-{{ coding_question.explanation }}</pre
+     {{ coding_question.explanation }}</pre
                   >
                 </div>
               </div>
@@ -176,14 +196,13 @@
           </div>
         </div>
       </section>
+      <!-- ================= RIGHT PANEL ================= -->
 
-      <!-- ================= RIGHT PANEL STARTS HERE ================= -->
-
-      <section class="col-span-7">
+      <section class="col-span-7 h-full">
         <div
           class="h-full rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col"
         >
-          <!-- Editor Toolbar -->
+          <!-- ================= Toolbar ================= -->
 
           <div
             class="h-16 border-b border-white/10 px-6 flex items-center justify-between"
@@ -193,11 +212,11 @@
                 id="languageSelector"
                 class="bg-[#1C1A2E] border border-white/10 rounded-xl px-5 py-2 text-white outline-none focus:border-pink-500"
               >
-                <option value="python" class="bg-[#1C1A2E]">Python</option>
+                <option value="python">Python</option>
 
-                <option value="cpp" class="bg-[#1C1A2E]">C++</option>
+                <option value="cpp">C++</option>
 
-                <option value="java" class="bg-[#1C1A2E]">Java</option>
+                <option value="java">Java</option>
               </select>
 
               <button
@@ -211,7 +230,7 @@
             <div class="flex items-center gap-3">
               <button
                 id="runCode"
-                class="px-6 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition"
+                class="px-6 py-2 rounded-xl bg-[#24203A] hover:bg-[#312C49] transition"
               >
                 ▶ Run Code
               </button>
@@ -225,25 +244,70 @@
             </div>
           </div>
 
-          <!-- Monaco -->
+          <!-- ================= Editor ================= -->
 
-          <div id="editor" class="flex-1"></div>
-
-          <!-- Console -->
-
-          <div class="h-60 border-t border-white/10 bg-[#0D1117] flex flex-col">
-            <div
-              class="h-12 border-b border-white/10 px-5 flex items-center justify-between"
-            >
-              <h3 class="font-semibold">Console</h3>
-
-              <span class="text-xs text-gray-500"> Output </span>
+          <div class="flex-1 relative">
+            <div class="absolute right-4 top-4 z-10 flex gap-2">
+              <span
+                class="px-3 py-1 rounded-lg bg-[#232033] border border-white/10 text-xs text-gray-300"
+              >
+                Python 3
+              </span>
             </div>
 
-            <pre
-              id="consoleOutput"
-              class="flex-1 overflow-auto p-5 text-sm text-green-400 whitespace-pre-wrap"
-            ></pre>
+            <div id="editor" class="h-full"></div>
+          </div>
+
+          <!-- ================= Console ================= -->
+
+          <div class="h-64 border-t border-white/10 bg-[#0D1117] flex flex-col">
+            <div
+              class="h-12 border-b border-white/10 px-6 flex items-center justify-between"
+            >
+              <div class="flex gap-6">
+                <button class="text-pink-400 font-medium">Console</button>
+
+                <button class="text-gray-500 hover:text-white">
+                  Test Cases
+                </button>
+              </div>
+
+              <button
+                id="clearConsole"
+                class="text-sm text-gray-400 hover:text-white"
+              >
+                Clear
+              </button>
+            </div>
+
+            <div class="grid grid-cols-2 flex-1">
+              <!-- Custom Input -->
+
+              <div class="border-r border-white/10 p-5">
+                <p class="text-xs uppercase tracking-wide text-gray-500 mb-3">
+                  Custom Input
+                </p>
+
+                <textarea
+                  id="customInput"
+                  class="w-full h-full resize-none bg-transparent outline-none text-sm text-white"
+                  placeholder="Enter custom input..."
+                ></textarea>
+              </div>
+
+              <!-- Output -->
+
+              <div class="p-5">
+                <p class="text-xs uppercase tracking-wide text-gray-500 mb-3">
+                  Output
+                </p>
+
+                <pre
+                  id="consoleOutput"
+                  class="text-sm text-green-400 whitespace-pre-wrap"
+                ></pre>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -252,14 +316,19 @@
 </div>
 
 <style>
+  html,
+  body {
+    overflow: hidden;
+  }
+
   .custom-scroll {
     scrollbar-width: thin;
-
-    scrollbar-color: #3a314f transparent;
+    scrollbar-color: #4b5563 transparent;
   }
 
   .custom-scroll::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
   }
 
   .custom-scroll::-webkit-scrollbar-track {
@@ -267,13 +336,61 @@
   }
 
   .custom-scroll::-webkit-scrollbar-thumb {
-    background: #3a314f;
-
-    border-radius: 20px;
+    background: #35324b;
+    border-radius: 999px;
   }
 
   .custom-scroll::-webkit-scrollbar-thumb:hover {
-    background: #544870;
+    background: #4b4766;
+  }
+
+  #editor {
+    width: 100%;
+    height: 100%;
+  }
+
+  pre {
+    font-family: Consolas, Monaco, monospace;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  textarea {
+    font-family: Consolas, Monaco, monospace;
+  }
+
+  textarea::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  textarea::-webkit-scrollbar-thumb {
+    background: #35324b;
+    border-radius: 999px;
+  }
+
+  #consoleOutput {
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  #consoleOutput::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #consoleOutput::-webkit-scrollbar-thumb {
+    background: #35324b;
+    border-radius: 999px;
+  }
+
+  .monaco-editor,
+  .monaco-editor-background,
+  .monaco-editor .margin {
+    background: #0d1117 !important;
+  }
+
+  .monaco-editor .current-line {
+    border: none !important;
+    background: rgba(255, 255, 255, 0.03);
   }
 </style>
 
@@ -287,7 +404,7 @@
   });
 
   const starterCode = {
-    python: `{{ coding_question.starter_code|escapejs }}`,
+    python: `{{ coding_question.starter_code|default:''|escapejs }}`,
 
     cpp: `#include <bits/stdc++.h>
 using namespace std;
@@ -295,6 +412,7 @@ using namespace std;
 int main() {
 
     return 0;
+
 }
 `,
 
@@ -308,23 +426,60 @@ int main() {
 `,
   };
 
+  let editor;
+
   require(["vs/editor/editor.main"], function () {
-    window.editor = monaco.editor.create(document.getElementById("editor"), {
-      value: starterCode.python,
+    editor = monaco.editor.create(document.getElementById("editor"), {
+      value:
+        starterCode.python ||
+        `def solve():
+    pass
+
+if __name__ == "__main__":
+    solve()
+`,
+
       language: "python",
+
       theme: "vs-dark",
+
       automaticLayout: true,
+
       fontSize: 16,
+
       lineHeight: 28,
+
       fontLigatures: true,
-      cursorBlinking: "smooth",
-      cursorSmoothCaretAnimation: "on",
+
       minimap: {
         enabled: false,
       },
+
       roundedSelection: true,
+
+      smoothScrolling: true,
+
+      mouseWheelZoom: true,
+
       scrollBeyondLastLine: false,
+
       wordWrap: "on",
+
+      cursorBlinking: "smooth",
+
+      cursorSmoothCaretAnimation: "on",
+
+      renderLineHighlight: "all",
+
+      bracketPairColorization: {
+        enabled: true,
+      },
+
+      scrollbar: {
+        verticalScrollbarSize: 10,
+        horizontalScrollbarSize: 10,
+      },
+
       padding: {
         top: 20,
         bottom: 20,
@@ -341,6 +496,101 @@ int main() {
         editor.setValue(starterCode[lang]);
       });
   });
+</script>
+
+<script>
+  /* =========================
+   RESET CODE
+========================= */
+
+  document.getElementById("resetCode").addEventListener("click", () => {
+    const lang = document.getElementById("languageSelector").value;
+
+    editor.setValue(starterCode[lang]);
+
+    document.getElementById("consoleOutput").textContent = "";
+
+    document.getElementById("customInput").value = "";
+  });
+
+  /* =========================
+   RUN CODE (Frontend Placeholder)
+========================= */
+
+  document.getElementById("runCode").addEventListener("click", () => {
+    const language = document.getElementById("languageSelector").value;
+
+    const code = editor.getValue();
+
+    const input = document.getElementById("customInput").value;
+
+    const consoleOutput = document.getElementById("consoleOutput");
+
+    consoleOutput.textContent = `Running ${language}...
+
+Input:
+${input || "(No Input)"}
+
+----------------------------
+
+Your backend compiler is not connected yet.
+
+Code Length : ${code.length} characters`;
+  });
+
+  /* =========================
+   CLEAR CONSOLE
+========================= */
+
+  document.getElementById("clearConsole").addEventListener("click", () => {
+    document.getElementById("consoleOutput").textContent = "";
+  });
+
+  /* =========================
+   SUBMIT BUTTON
+========================= */
+
+  document.getElementById("submitSolution").addEventListener("click", () => {
+    alert("Submission API will be connected later.");
+  });
+
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    document.getElementById("submitSolution").click();
+  });
+
+  /* =========================
+   TIMER
+========================= */
+
+  let totalSeconds = 90 * 60;
+
+  const timer = document.getElementById("timer");
+
+  function updateTimer() {
+    const hrs = Math.floor(totalSeconds / 3600);
+
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+
+    const secs = totalSeconds % 60;
+
+    timer.textContent =
+      (hrs > 0 ? String(hrs).padStart(2, "0") + ":" : "") +
+      String(mins).padStart(2, "0") +
+      ":" +
+      String(secs).padStart(2, "0");
+
+    if (totalSeconds > 0) {
+      totalSeconds--;
+    } else {
+      clearInterval(timerInterval);
+
+      timer.textContent = "Time Over";
+    }
+  }
+
+  updateTimer();
+
+  const timerInterval = setInterval(updateTimer, 1000);
 </script>
 
 {% endblock %}
