@@ -568,9 +568,55 @@ if __name__ == "__main__":
    SUBMIT BUTTON
 ========================= */
 
-  document.getElementById("submitSolution").addEventListener("click", () => {
-    alert("Submission API will be connected later.");
-  });
+  async function submitSolution() {
+    const language = document.getElementById("languageSelector").value;
+
+    const code = editor.getValue();
+
+    const output = document.getElementById("consoleOutput");
+
+    output.textContent = "Submitting...";
+
+    try {
+      const response = await fetch("/api/submit-code/", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          question_id: QUESTION_ID,
+
+          language: language,
+
+          code: code,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        output.textContent = `✅ ${data.verdict}
+
+Marks : ${data.marks}/${data.total_marks}`;
+      } else {
+        output.textContent = `❌ ${data.verdict}
+
+Expected:
+${data.expected}
+
+Your Output:
+${data.received}`;
+      }
+    } catch (err) {
+      output.textContent = err.message;
+    }
+  }
+
+  document
+    .getElementById("submitSolution")
+    .addEventListener("click", submitSolution);
 
   document.getElementById("submitBtn").addEventListener("click", () => {
     document.getElementById("submitSolution").click();
