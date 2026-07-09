@@ -540,7 +540,11 @@ if __name__ == "__main__":
 
       const data = await response.json();
 
-      output.textContent = JSON.stringify(data, null, 2);
+      if (data.success) {
+        output.textContent = data.output || "Program finished successfully.";
+      } else {
+        output.textContent = data.error || "Execution failed.";
+      }
     } catch (error) {
       output.textContent = error.message;
     }
