@@ -727,6 +727,8 @@ def preparation_test(request, test_type, page):
         difficulty=difficulty
         ).order_by("?")[:2]
 
+        coding_question = coding_questions.first()
+
     context = {
         "test_type": test_type,
         "assessment": assessment,
@@ -735,6 +737,7 @@ def preparation_test(request, test_type, page):
         "questions":questions,
         "difficulty":difficulty,
         "coding_questions":coding_questions,
+        "coding_question": coding_question,
     }
     if page=="difficulty":
         template="preparation/shared/difficulty.html"
