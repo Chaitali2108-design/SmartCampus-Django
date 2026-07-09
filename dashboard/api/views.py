@@ -2,35 +2,42 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+from .executor import CodeExecutor
+
 
 @csrf_exempt
 def run_code_api(request):
 
     if request.method != "POST":
         return JsonResponse(
-            {
-                "message": "Only POST request allowed"
-            },
+            {"error": "Only POST requests are allowed."},
             status=405
         )
 
+    try:
+        data = json.loads(request.body)
 
-    data = json.loads(request.body)
+        language = data.get("language")
+        code = data.get("code")
+        custom_input = data.get("input", "")
 
-    return JsonResponse({
+        result = CodeExecutor.execute(
+            language=language,
+            code=code,
+            custom_input=custom_input
+        )
 
-        "status": "received",
+        return JsonResponse(result)
 
-        "language": data.get("language"),
-
-        "code": data.get("code"),
-
-        "input": data.get("input", ""),
-
-        "message": "Run Code API working"
-
-    })
-
+    except Exception as e:
+        return JsonResponse(
+            {
+                "success": False,
+                "output": "",
+                "error": str(e)
+            },
+            status=500
+        )
 
 
 @csrf_exempt
@@ -38,24 +45,13 @@ def submit_code_api(request):
 
     if request.method != "POST":
         return JsonResponse(
-            {
-                "message": "Only POST request allowed"
-            },
+            {"error": "Only POST requests are allowed."},
             status=405
         )
 
-
     data = json.loads(request.body)
 
-
     return JsonResponse({
-
-        "status": "received",
-
-        "question_id": data.get("question_id"),
-
-        "language": data.get("language"),
-
-        "message": "Submit API working"
-
+        "success": True,
+        "message": "Submit API will be implemented in the next stage."
     })
