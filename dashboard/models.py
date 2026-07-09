@@ -368,6 +368,8 @@ class CodingQuestion(models.Model):
         choices=DIFFICULTY
     )
 
+
+
     marks = models.IntegerField(default=50)
 
     statement = models.TextField()
@@ -383,6 +385,16 @@ class CodingQuestion(models.Model):
     sample_output = models.TextField(blank=True)
 
     explanation = models.TextField(blank=True)
+
+    official_input = models.TextField(
+    blank=True,
+    help_text="Input used during submission evaluation"
+)
+
+    expected_output = models.TextField(
+    blank=True,
+    help_text="Expected output for the official input"
+)
 
     question_image = models.ImageField(
         upload_to="coding_questions/",
