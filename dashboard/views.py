@@ -719,7 +719,7 @@ def preparation_test(request, test_type, page):
 
     profile = StudentProfile.objects.filter(user=request.user).first()
 
-    coding_question = None
+    coding_questions = None
 
     if test_type == "coding" and page == "test":
 
