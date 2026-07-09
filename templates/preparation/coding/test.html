@@ -202,7 +202,7 @@
           <!-- ================= Toolbar ================= -->
 
           <div
-            class="h-16 border-b border-white/10 px-6 flex items-center justify-between"
+            class="relative z-20 h-16 border-b border-white/10 px-6 flex items-center justify-between bg-[#140F1F]"
           >
             <div class="flex items-center gap-4">
               <select
@@ -243,7 +243,7 @@
 
           <!-- ================= Editor ================= -->
 
-          <div class="flex-1 relative min-h-0">
+          <div class="flex-1 relative min-h-0 overflow-hidden">
             <div class="absolute right-4 top-4 z-10 flex gap-2">
               <span
                 class="px-3 py-1 rounded-lg bg-[#232033] border border-white/10 text-xs text-gray-300"
@@ -252,7 +252,7 @@
               </span>
             </div>
 
-            <div id="editor" class="h-full"></div>
+            <div id="editor" class="h-full relative z-0"></div>
           </div>
 
           <!-- ================= Console ================= -->
@@ -389,6 +389,7 @@
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
 
 <script>
+  console.log("Second script started");
   require.config({
     paths: {
       vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs",
@@ -505,30 +506,47 @@ if __name__ == "__main__":
     document.getElementById("customInput").value = "";
   });
 
+  function getCSRFToken() {
+    return document.querySelector("[name=csrfmiddlewaretoken]")?.value || "";
+  }
+
   /* =========================
    RUN CODE (Frontend Placeholder)
 ========================= */
 
-  document.getElementById("runCode").addEventListener("click", () => {
+  async function runCode() {
     const language = document.getElementById("languageSelector").value;
 
     const code = editor.getValue();
 
     const input = document.getElementById("customInput").value;
 
-    const consoleOutput = document.getElementById("consoleOutput");
+    const output = document.getElementById("consoleOutput");
 
-    consoleOutput.textContent = `Running ${language}...
+    output.textContent = "Running...";
 
-Input:
-${input || "(No Input)"}
+    try {
+      const response = await fetch("/api/run-code/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: language,
+          code: code,
+          input: input,
+        }),
+      });
 
-----------------------------
+      const data = await response.json();
 
-Your backend compiler is not connected yet.
+      output.textContent = JSON.stringify(data, null, 2);
+    } catch (error) {
+      output.textContent = error.message;
+    }
+  }
 
-Code Length : ${code.length} characters`;
-  });
+  document.getElementById("runCode").addEventListener("click", runCode);
 
   /* =========================
    CLEAR CONSOLE
