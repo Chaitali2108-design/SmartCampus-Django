@@ -93,17 +93,15 @@
           <!-- Scroll Area -->
 
           <div class="flex-1 overflow-y-auto custom-scroll px-8 py-8 space-y-8">
-            {% with question=coding_questions.0 %}
-
             <!-- Title -->
             <div>
-              <h2 class="text-3xl font-bold">{{ question.title }}</h2>
+              <h2 class="text-3xl font-bold">{{ coding_question.title }}</h2>
             </div>
 
             <!-- Image -->
-            {% if question.question_image %}
+            {% if coding_question.question_image %}
             <img
-              src="{{ question.question_image.url }}"
+              src="{{ coding_question.question_image.url }}"
               class="rounded-2xl border border-white/10 w-full"
             />
             {% endif %}
@@ -115,7 +113,7 @@
               </h3>
 
               <div class="leading-8 whitespace-pre-line text-gray-300">
-                {{ question.statement }}
+                {{ coding_question.statement }}
               </div>
             </div>
 
@@ -124,7 +122,7 @@
               <h3 class="text-pink-400 font-semibold mb-4">Input Format</h3>
 
               <div class="leading-8 whitespace-pre-line text-gray-300">
-                {{ question.input_format }}
+                {{ coding_question.input_format }}
               </div>
             </div>
 
@@ -133,7 +131,7 @@
               <h3 class="text-pink-400 font-semibold mb-4">Output Format</h3>
 
               <div class="leading-8 whitespace-pre-line text-gray-300">
-                {{ question.output_format }}
+                {{ coding_question.output_format }}
               </div>
             </div>
 
@@ -142,7 +140,7 @@
               <h3 class="text-pink-400 font-semibold mb-4">Constraints</h3>
 
               <pre class="whitespace-pre-wrap leading-8 text-gray-300">
-{{ question.constraints }}</pre
+{{ coding_question.constraints }}</pre
               >
             </div>
 
@@ -159,7 +157,7 @@
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 overflow-x-auto"
                   >
-{{ question.sample_input }}</pre
+{{ coding_question.sample_input }}</pre
                   >
                 </div>
 
@@ -171,7 +169,7 @@
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 overflow-x-auto"
                   >
-{{ question.sample_output }}</pre
+{{ coding_question.sample_output }}</pre
                   >
                 </div>
 
@@ -183,13 +181,11 @@
                   <pre
                     class="rounded-xl bg-[#0D1117] border border-white/10 p-5 whitespace-pre-wrap"
                   >
-{{ question.explanation }}</pre
+{{ coding_question.explanation }}</pre
                   >
                 </div>
               </div>
             </div>
-
-            {% endwith %}
           </div>
         </div>
       </section>
