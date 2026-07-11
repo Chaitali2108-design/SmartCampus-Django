@@ -442,6 +442,8 @@
   let currentQuestion = 0;
 
   let QUESTION_ID = codingQuestions[0].id;
+
+  const results = [];
 </script>
 
 <script>
@@ -547,170 +549,236 @@ if __name__ == "__main__":
 </script>
 
 <script>
-  /* =========================
-   RESET CODE
-========================= */
+      /* =========================
+       RESET CODE
+    ========================= */
 
-  document.getElementById("resetCode").addEventListener("click", () => {
-    const lang = document.getElementById("languageSelector").value;
+      document.getElementById("resetCode").addEventListener("click", () => {
+        const lang = document.getElementById("languageSelector").value;
 
-    editor.setValue(starterCode[lang]);
+        editor.setValue(starterCode[lang]);
 
-    document.getElementById("consoleOutput").textContent = "";
+        document.getElementById("consoleOutput").textContent = "";
 
-    document.getElementById("customInput").value = "";
-  });
-
-  function getCSRFToken() {
-    return document.querySelector("[name=csrfmiddlewaretoken]")?.value || "";
-  }
-
-  /* =========================
-   RUN CODE (Frontend Placeholder)
-========================= */
-
-  async function runCode() {
-    const language = document.getElementById("languageSelector").value;
-
-    const code = editor.getValue();
-
-    const input = document.getElementById("customInput").value;
-
-    const output = document.getElementById("consoleOutput");
-
-    output.textContent = "Running...";
-
-    try {
-      const response = await fetch("/api/run-code/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          language: language,
-          code: code,
-          input: input,
-        }),
+        document.getElementById("customInput").value = "";
       });
 
-      const data = await response.json();
-
-      if (data.success) {
-        output.textContent = data.output || "Program finished successfully.";
-      } else {
-        output.textContent = data.error || "Execution failed.";
+      function getCSRFToken() {
+        return document.querySelector("[name=csrfmiddlewaretoken]")?.value || "";
       }
-    } catch (error) {
-      output.textContent = error.message;
-    }
-  }
 
-  document.getElementById("runCode").addEventListener("click", runCode);
+      /* =========================
+       RUN CODE (Frontend Placeholder)
+    ========================= */
 
-  /* =========================
-   CLEAR CONSOLE
-========================= */
+      async function runCode() {
+        const language = document.getElementById("languageSelector").value;
 
-  document.getElementById("clearConsole").addEventListener("click", () => {
-    document.getElementById("consoleOutput").textContent = "";
-  });
+        const code = editor.getValue();
 
-  /* =========================
-   SUBMIT BUTTON
-========================= */
+        const input = document.getElementById("customInput").value;
 
-  async function submitSolution() {
-    const language = document.getElementById("languageSelector").value;
+        const output = document.getElementById("consoleOutput");
 
-    const code = editor.getValue();
+        output.textContent = "Running...";
 
-    const output = document.getElementById("consoleOutput");
+        try {
+          const response = await fetch("/api/run-code/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              language: language,
+              code: code,
+              input: input,
+            }),
+          });
 
-    output.textContent = "Submitting...";
+          const data = await response.json();
 
-    try {
-      const response = await fetch("/api/submit-code/", {
-        method: "POST",
+          if (data.success) {
+            output.textContent = data.output || "Program finished successfully.";
+          } else {
+            output.textContent = data.error || "Execution failed.";
+          }
+        } catch (error) {
+          output.textContent = error.message;
+        }
+      }
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+      document.getElementById("runCode").addEventListener("click", runCode);
 
-        body: JSON.stringify({
-          question_id: QUESTION_ID,
+      /* =========================
+       CLEAR CONSOLE
+    ========================= */
 
-          language: language,
-
-          code: code,
-        }),
+      document.getElementById("clearConsole").addEventListener("click", () => {
+        document.getElementById("consoleOutput").textContent = "";
       });
 
-      const data = await response.json();
+      /* load question */
+      function loadQuestion(index) {
+        const q = codingQuestions[index];
 
-      if (data.success) {
-        output.textContent = `✅ ${data.verdict}
+        QUESTION_ID = q.id;
 
-Marks : ${data.marks}/${data.total_marks}
+        document.getElementById("questionTitle").textContent = q.title;
 
-Time Complexity:
-${data.complexity}
+        document.getElementById("questionDifficulty").textContent =
+          q.difficulty.charAt(0).toUpperCase() + q.difficulty.slice(1);
 
-Feedback:
-${data.feedback}`;
-      } else {
-        output.textContent = `❌ ${data.verdict}
+        document.getElementById("questionMarks").textContent = q.marks;
 
-Marks : ${data.marks || 0}/${data.total_marks || 0}
+        document.getElementById("questionStatement").textContent = q.statement;
 
-Feedback:
-${data.feedback}`;
+        document.getElementById("inputFormat").textContent = q.input_format;
+
+        document.getElementById("outputFormat").textContent = q.output_format;
+
+        document.getElementById("constraints").textContent = q.constraints;
+
+        document.getElementById("sampleInput").textContent = q.sample_input;
+
+        document.getElementById("sampleOutput").textContent = q.sample_output;
+
+        document.getElementById("explanation").textContent = q.explanation;
+
+        editor.setValue(q.starter_code);
+
+        document.getElementById("consoleOutput").textContent = "";
+
+        document.getElementById("customInput").value = "";
       }
-    } catch (err) {
-      output.textContent = err.message;
+
+      /* =========================
+       SUBMIT BUTTON
+    ========================= */
+
+      async function submitSolution() {
+        const language = document.getElementById("languageSelector").value;
+
+        const code = editor.getValue();
+
+        const output = document.getElementById("consoleOutput");
+
+        output.textContent = "Submitting...";
+
+        try {
+          const response = await fetch("/api/submit-code/", {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+              question_id: QUESTION_ID,
+
+              language: language,
+
+              code: code,
+            }),
+          });
+
+          const data = await response.json();
+
+          results.push(data);
+
+    if (currentQuestion === 0) {
+
+        if (data.success) {
+
+            output.textContent =
+    `✅ ${data.verdict}
+
+    Marks : ${data.marks}/${data.total_marks}
+
+    Time Complexity:
+    ${data.complexity}
+
+    Feedback:
+    ${data.feedback}`;
+
+        } else {
+
+            output.textContent =
+    `❌ ${data.verdict}
+
+    Marks : ${data.marks || 0}/${data.total_marks || 0}
+
+    Feedback:
+    ${data.feedback}`;
+
+        }
+
+        setTimeout(() => {
+
+            if (confirm("Question 1 completed.\n\nAre you ready for Question 2?")) {
+
+                currentQuestion = 1;
+
+                loadQuestion(1);
+
+            }
+
+        },800);
+
+        return;
     }
+
+    if (currentQuestion === 1) {
+
+      sessionStorage.setItem(
+          "codingResults",
+          JSON.stringify(results)
+      );
+
+      window.location.href="/preparation/result/";
   }
+      }
 
-  document
-    .getElementById("submitSolution")
-    .addEventListener("click", submitSolution);
+      document
+        .getElementById("submitSolution")
+        .addEventListener("click", submitSolution);
 
-  document.getElementById("submitBtn").addEventListener("click", () => {
-    document.getElementById("submitSolution").click();
-  });
+      document.getElementById("submitBtn").addEventListener("click", () => {
+        document.getElementById("submitSolution").click();
+      });
 
-  /* =========================
-   TIMER
-========================= */
+      /* =========================
+       TIMER
+    ========================= */
 
-  let totalSeconds = 90 * 60;
+      let totalSeconds = 90 * 60;
 
-  const timer = document.getElementById("timer");
+      const timer = document.getElementById("timer");
 
-  function updateTimer() {
-    const hrs = Math.floor(totalSeconds / 3600);
+      function updateTimer() {
+        const hrs = Math.floor(totalSeconds / 3600);
 
-    const mins = Math.floor((totalSeconds % 3600) / 60);
+        const mins = Math.floor((totalSeconds % 3600) / 60);
 
-    const secs = totalSeconds % 60;
+        const secs = totalSeconds % 60;
 
-    timer.textContent =
-      (hrs > 0 ? String(hrs).padStart(2, "0") + ":" : "") +
-      String(mins).padStart(2, "0") +
-      ":" +
-      String(secs).padStart(2, "0");
+        timer.textContent =
+          (hrs > 0 ? String(hrs).padStart(2, "0") + ":" : "") +
+          String(mins).padStart(2, "0") +
+          ":" +
+          String(secs).padStart(2, "0");
 
-    if (totalSeconds > 0) {
-      totalSeconds--;
-    } else {
-      clearInterval(timerInterval);
+        if (totalSeconds > 0) {
+          totalSeconds--;
+        } else {
+          clearInterval(timerInterval);
 
-      timer.textContent = "Time Over";
-    }
-  }
+          timer.textContent = "Time Over";
+        }
+      }
 
-  updateTimer();
+      updateTimer();
 
-  const timerInterval = setInterval(updateTimer, 1000);
+      const timerInterval = setInterval(updateTimer, 1000);
 </script>
 
 {% endblock %}
