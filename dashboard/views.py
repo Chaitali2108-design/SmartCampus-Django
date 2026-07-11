@@ -728,7 +728,7 @@ def preparation_test(request, test_type, page):
             CodingQuestion.objects.filter(
                 difficulty=difficulty
             ).order_by("?")[:2]
-)
+        )
 
         coding_question = coding_questions[0] if coding_questions else None
 
@@ -780,15 +780,17 @@ def preparation_result(request):
         data = json.loads(request.body)
 
         request.session["result"] = data
+        request.session["test_type"] = data.get("test_type", "")
 
         return JsonResponse({"success":True})
-
+    
     return render(
         request,
         "preparation/result/result.html",
         {
-            "result":request.session.get("result",{})
-        }
+            "result":request.session.get("result",{}),
+            "test_type": request.session.get("test_type", ""),
+        },
     )
 
 
