@@ -549,236 +549,244 @@ if __name__ == "__main__":
 </script>
 
 <script>
-      /* =========================
-       RESET CODE
-    ========================= */
+  /* =========================
+         RESET CODE
+      ========================= */
 
-      document.getElementById("resetCode").addEventListener("click", () => {
-        const lang = document.getElementById("languageSelector").value;
+  document.getElementById("resetCode").addEventListener("click", () => {
+    const lang = document.getElementById("languageSelector").value;
 
-        editor.setValue(starterCode[lang]);
+    editor.setValue(starterCode[lang]);
 
-        document.getElementById("consoleOutput").textContent = "";
+    document.getElementById("consoleOutput").textContent = "";
 
-        document.getElementById("customInput").value = "";
+    document.getElementById("customInput").value = "";
+  });
+
+  function getCSRFToken() {
+    return document.querySelector("[name=csrfmiddlewaretoken]")?.value || "";
+  }
+
+  /* =========================
+         RUN CODE (Frontend Placeholder)
+      ========================= */
+
+  async function runCode() {
+    const language = document.getElementById("languageSelector").value;
+
+    const code = editor.getValue();
+
+    const input = document.getElementById("customInput").value;
+
+    const output = document.getElementById("consoleOutput");
+
+    output.textContent = "Running...";
+
+    try {
+      const response = await fetch("/api/run-code/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: language,
+          code: code,
+          input: input,
+        }),
       });
 
-      function getCSRFToken() {
-        return document.querySelector("[name=csrfmiddlewaretoken]")?.value || "";
+      const data = await response.json();
+
+      if (data.success) {
+        output.textContent = data.output || "Program finished successfully.";
+      } else {
+        output.textContent = data.error || "Execution failed.";
       }
+    } catch (error) {
+      output.textContent = error.message;
+    }
+  }
 
-      /* =========================
-       RUN CODE (Frontend Placeholder)
-    ========================= */
+  document.getElementById("runCode").addEventListener("click", runCode);
 
-      async function runCode() {
-        const language = document.getElementById("languageSelector").value;
+  /* =========================
+         CLEAR CONSOLE
+      ========================= */
 
-        const code = editor.getValue();
+  document.getElementById("clearConsole").addEventListener("click", () => {
+    document.getElementById("consoleOutput").textContent = "";
+  });
 
-        const input = document.getElementById("customInput").value;
+  /* load question */
+  function loadQuestion(index) {
+    const q = codingQuestions[index];
 
-        const output = document.getElementById("consoleOutput");
+    QUESTION_ID = q.id;
 
-        output.textContent = "Running...";
+    document.getElementById("questionTitle").textContent = q.title;
 
-        try {
-          const response = await fetch("/api/run-code/", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              language: language,
-              code: code,
-              input: input,
-            }),
-          });
+    document.getElementById("questionDifficulty").textContent =
+      q.difficulty.charAt(0).toUpperCase() + q.difficulty.slice(1);
 
-          const data = await response.json();
+    document.getElementById("questionMarks").textContent = q.marks;
 
-          if (data.success) {
-            output.textContent = data.output || "Program finished successfully.";
-          } else {
-            output.textContent = data.error || "Execution failed.";
-          }
-        } catch (error) {
-          output.textContent = error.message;
-        }
-      }
+    document.getElementById("questionStatement").textContent = q.statement;
 
-      document.getElementById("runCode").addEventListener("click", runCode);
+    document.getElementById("inputFormat").textContent = q.input_format;
 
-      /* =========================
-       CLEAR CONSOLE
-    ========================= */
+    document.getElementById("outputFormat").textContent = q.output_format;
 
-      document.getElementById("clearConsole").addEventListener("click", () => {
-        document.getElementById("consoleOutput").textContent = "";
+    document.getElementById("constraints").textContent = q.constraints;
+
+    document.getElementById("sampleInput").textContent = q.sample_input;
+
+    document.getElementById("sampleOutput").textContent = q.sample_output;
+
+    document.getElementById("explanation").textContent = q.explanation;
+
+    editor.setValue(q.starter_code);
+
+    document.getElementById("consoleOutput").textContent = "";
+
+    document.getElementById("customInput").value = "";
+  }
+
+  /* =========================
+         SUBMIT BUTTON
+      ========================= */
+
+  let codingResults = [];
+  let totalCodingMarks = 0;
+
+  async function submitSolution() {
+    const language = document.getElementById("languageSelector").value;
+
+    const code = editor.getValue();
+
+    const output = document.getElementById("consoleOutput");
+
+    output.textContent = "Submitting...";
+
+    try {
+      const response = await fetch("/api/submit-code/", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          question_id: QUESTION_ID,
+
+          language: language,
+
+          code: code,
+        }),
       });
 
-      /* load question */
-      function loadQuestion(index) {
-        const q = codingQuestions[index];
+      const data = await response.json();
 
-        QUESTION_ID = q.id;
+      codingResults.push(data);
 
-        document.getElementById("questionTitle").textContent = q.title;
-
-        document.getElementById("questionDifficulty").textContent =
-          q.difficulty.charAt(0).toUpperCase() + q.difficulty.slice(1);
-
-        document.getElementById("questionMarks").textContent = q.marks;
-
-        document.getElementById("questionStatement").textContent = q.statement;
-
-        document.getElementById("inputFormat").textContent = q.input_format;
-
-        document.getElementById("outputFormat").textContent = q.output_format;
-
-        document.getElementById("constraints").textContent = q.constraints;
-
-        document.getElementById("sampleInput").textContent = q.sample_input;
-
-        document.getElementById("sampleOutput").textContent = q.sample_output;
-
-        document.getElementById("explanation").textContent = q.explanation;
-
-        editor.setValue(q.starter_code);
-
-        document.getElementById("consoleOutput").textContent = "";
-
-        document.getElementById("customInput").value = "";
-      }
-
-      /* =========================
-       SUBMIT BUTTON
-    ========================= */
-
-      async function submitSolution() {
-        const language = document.getElementById("languageSelector").value;
-
-        const code = editor.getValue();
-
-        const output = document.getElementById("consoleOutput");
-
-        output.textContent = "Submitting...";
-
-        try {
-          const response = await fetch("/api/submit-code/", {
-            method: "POST",
-
-            headers: {
-              "Content-Type": "application/json",
-            },
-
-            body: JSON.stringify({
-              question_id: QUESTION_ID,
-
-              language: language,
-
-              code: code,
-            }),
-          });
-
-          const data = await response.json();
-
-          results.push(data);
-
-    if (currentQuestion === 0) {
-
+      if (currentQuestion === 0) {
         if (data.success) {
+          output.textContent = `✅ ${data.verdict}
 
-            output.textContent =
-    `✅ ${data.verdict}
+      Marks : ${data.marks}/${data.total_marks}
 
-    Marks : ${data.marks}/${data.total_marks}
+      Time Complexity:
+      ${data.complexity}
 
-    Time Complexity:
-    ${data.complexity}
-
-    Feedback:
-    ${data.feedback}`;
-
+      Feedback:
+      ${data.feedback}`;
         } else {
+          output.textContent = `❌ ${data.verdict}
 
-            output.textContent =
-    `❌ ${data.verdict}
+      Marks : ${data.marks || 0}/${data.total_marks || 0}
 
-    Marks : ${data.marks || 0}/${data.total_marks || 0}
-
-    Feedback:
-    ${data.feedback}`;
-
+      Feedback:
+      ${data.feedback}`;
         }
 
         setTimeout(() => {
+          if (
+            confirm("Question 1 completed.\n\nAre you ready for Question 2?")
+          ) {
+            currentQuestion = 1;
 
-            if (confirm("Question 1 completed.\n\nAre you ready for Question 2?")) {
-
-                currentQuestion = 1;
-
-                loadQuestion(1);
-
-            }
-
-        },800);
+            loadQuestion(1);
+          }
+        }, 800);
 
         return;
+      }
+
+      if (currentQuestion === 1) {
+        sessionStorage.setItem("codingResults", JSON.stringify(codingResults));
+
+        await fetch("/preparation/result/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            test_type: "coding",
+            score: codingResults.reduce((sum, q) => sum + (q.marks || 0), 0),
+            total_marks: 100,
+            answered: 2,
+            unanswered: 0,
+            total_questions: 2,
+          }),
+        });
+
+        window.location.href = "/preparation/result/";
+      }
+    } catch (err) {
+      output.textContent = err.message;
     }
-
-    if (currentQuestion === 1) {
-
-      sessionStorage.setItem(
-          "codingResults",
-          JSON.stringify(results)
-      );
-
-      window.location.href="/preparation/result/";
   }
-      }
 
-      document
-        .getElementById("submitSolution")
-        .addEventListener("click", submitSolution);
+  document
+    .getElementById("submitSolution")
+    .addEventListener("click", submitSolution);
 
-      document.getElementById("submitBtn").addEventListener("click", () => {
-        document.getElementById("submitSolution").click();
-      });
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    document.getElementById("submitSolution").click();
+  });
 
-      /* =========================
-       TIMER
-    ========================= */
+  /* =========================
+         TIMER
+      ========================= */
 
-      let totalSeconds = 90 * 60;
+  let totalSeconds = 90 * 60;
 
-      const timer = document.getElementById("timer");
+  const timer = document.getElementById("timer");
 
-      function updateTimer() {
-        const hrs = Math.floor(totalSeconds / 3600);
+  function updateTimer() {
+    const hrs = Math.floor(totalSeconds / 3600);
 
-        const mins = Math.floor((totalSeconds % 3600) / 60);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
 
-        const secs = totalSeconds % 60;
+    const secs = totalSeconds % 60;
 
-        timer.textContent =
-          (hrs > 0 ? String(hrs).padStart(2, "0") + ":" : "") +
-          String(mins).padStart(2, "0") +
-          ":" +
-          String(secs).padStart(2, "0");
+    timer.textContent =
+      (hrs > 0 ? String(hrs).padStart(2, "0") + ":" : "") +
+      String(mins).padStart(2, "0") +
+      ":" +
+      String(secs).padStart(2, "0");
 
-        if (totalSeconds > 0) {
-          totalSeconds--;
-        } else {
-          clearInterval(timerInterval);
+    if (totalSeconds > 0) {
+      totalSeconds--;
+    } else {
+      clearInterval(timerInterval);
 
-          timer.textContent = "Time Over";
-        }
-      }
+      timer.textContent = "Time Over";
+    }
+  }
 
-      updateTimer();
+  updateTimer();
 
-      const timerInterval = setInterval(updateTimer, 1000);
+  const timerInterval = setInterval(updateTimer, 1000);
 </script>
 
 {% endblock %}
