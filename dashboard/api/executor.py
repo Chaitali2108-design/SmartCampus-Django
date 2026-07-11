@@ -31,8 +31,11 @@ class CodeExecutor:
 
         file_path = os.path.join(temp_dir, "main.py")
 
+
+
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(code)
+
 
         try:
 
@@ -49,6 +52,7 @@ class CodeExecutor:
                 timeout=5
 
             )
+
 
             return {
 
