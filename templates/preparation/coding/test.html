@@ -273,31 +273,30 @@
               </button>
             </div>
 
-            <div class="grid grid-cols-2 flex-1">
+            <div class="grid grid-cols-2 flex-1 min-h-0">
               <!-- Custom Input -->
 
-              <div class="border-r border-white/10 p-5">
+              <div class="border-r border-white/10 p-5 flex flex-col min-h-0">
                 <p class="text-xs uppercase tracking-wide text-gray-500 mb-3">
                   Custom Input
                 </p>
 
                 <textarea
                   id="customInput"
-                  class="w-full h-full resize-none bg-transparent outline-none text-sm text-white"
+                  class="flex-1 min-h-0 resize-none bg-transparent outline-none text-sm text-white overflow-y-auto"
                   placeholder="Enter custom input..."
                 ></textarea>
               </div>
-
               <!-- Output -->
 
-              <div class="p-5">
+              <div class="p-5 flex flex-col min-h-0">
                 <p class="text-xs uppercase tracking-wide text-gray-500 mb-3">
                   Output
                 </p>
 
                 <pre
                   id="consoleOutput"
-                  class="text-sm text-green-400 whitespace-pre-wrap"
+                  class="flex-1 min-h-0 overflow-y-auto whitespace-pre-wrap text-sm text-green-400"
                 ></pre>
               </div>
             </div>
@@ -357,12 +356,20 @@
   }
 
   #consoleOutput {
-    overflow-y: auto;
+    min-height: 0;
     height: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding-right: 8px;
   }
 
   #consoleOutput::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
+  }
+
+  #consoleOutput::-webkit-scrollbar-track {
+    background: transparent;
   }
 
   #consoleOutput::-webkit-scrollbar-thumb {
@@ -370,6 +377,9 @@
     border-radius: 999px;
   }
 
+  #consoleOutput::-webkit-scrollbar-thumb:hover {
+    background: #4b4766;
+  }
   .monaco-editor,
   .monaco-editor-background,
   .monaco-editor .margin {
@@ -595,15 +605,20 @@ if __name__ == "__main__":
       if (data.success) {
         output.textContent = `✅ ${data.verdict}
 
-Marks : ${data.marks}/${data.total_marks}`;
+Marks : ${data.marks}/${data.total_marks}
+
+Time Complexity:
+${data.complexity}
+
+Feedback:
+${data.feedback}`;
       } else {
         output.textContent = `❌ ${data.verdict}
 
-Expected:
-${data.expected}
+Marks : ${data.marks || 0}/${data.total_marks || 0}
 
-Your Output:
-${data.received}`;
+Feedback:
+${data.feedback}`;
       }
     } catch (err) {
       output.textContent = err.message;
