@@ -121,6 +121,15 @@
         </div>
       </div>
 
+      {% if test_type == "coding" %}
+
+      <div
+        id="codingResultSection"
+        class="mt-10 rounded-[32px] border border-white/10 bg-white/5 p-8"
+      ></div>
+
+      {% endif %}
+
       <div
         class="rounded-[32px] border border-white/10 bg-white/5 p-8 flex flex-col justify-center"
       >
@@ -155,7 +164,41 @@
 <script>
   const results = JSON.parse(sessionStorage.getItem("codingResults")) || [];
 
-  console.log(results);
+  if (results.length > 0) {
+    const section = document.getElementById("codingResultSection");
+
+    if (section) {
+      let html = `
+            <h2 class="text-2xl font-bold mb-8">
+                Coding Question Results
+            </h2>
+        `;
+
+      results.forEach((r, index) => {
+        html += `
+                <div class="mb-8 rounded-2xl border border-white/10 p-6">
+
+                    <h3 class="text-xl font-semibold mb-4">
+                        Question ${index + 1}
+                    </h3>
+
+                    <p><b>Verdict:</b> ${r.verdict}</p>
+
+                    <p><b>Marks:</b> ${r.marks}/${r.total_marks}</p>
+
+                    <p><b>Time Complexity:</b> ${r.complexity}</p>
+
+                    <p class="mt-3 whitespace-pre-wrap">
+                        ${r.feedback}
+                    </p>
+
+                </div>
+            `;
+      });
+
+      section.innerHTML = html;
+    }
+  }
 </script>
 
 {% endblock %}
