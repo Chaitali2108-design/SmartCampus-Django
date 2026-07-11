@@ -724,11 +724,13 @@ def preparation_test(request, test_type, page):
 
     if test_type == "coding" and page == "test":
 
-        coding_questions = CodingQuestion.objects.filter(
-        difficulty=difficulty
-        ).order_by("?")[:2]
+        coding_questions = list(
+            CodingQuestion.objects.filter(
+                difficulty=difficulty
+            ).order_by("?")[:2]
+)
 
-        coding_question = coding_questions.first()
+        coding_question = coding_questions[0] if coding_questions else None
 
     context = {
         "test_type": test_type,
