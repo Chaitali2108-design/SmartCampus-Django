@@ -396,11 +396,33 @@
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
 
 <script>
-  const QUESTION_ID = {{ coding_question.id }};
+  const codingQuestions = [
+  {% for q in coding_questions %}
+  {
+      id: {{ q.id }},
+      title: `{{ q.title|escapejs }}`,
+      difficulty: `{{ q.difficulty }}`,
+      marks: {{ q.marks }},
+
+      statement: `{{ q.statement|escapejs }}`,
+      input_format: `{{ q.input_format|escapejs }}`,
+      output_format: `{{ q.output_format|escapejs }}`,
+      constraints: `{{ q.constraints|escapejs }}`,
+      sample_input: `{{ q.sample_input|escapejs }}`,
+      sample_output: `{{ q.sample_output|escapejs }}`,
+      explanation: `{{ q.explanation|escapejs }}`,
+
+      starter_code: `{{ q.starter_code|escapejs }}`
+  },
+  {% endfor %}
+  ];
+
+  let currentQuestion = 0;
+
+  let QUESTION_ID = codingQuestions[0].id;
 </script>
 
 <script>
-  console.log("Second script started");
   require.config({
     paths: {
       vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs",
