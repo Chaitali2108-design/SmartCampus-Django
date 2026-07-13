@@ -1,0 +1,168 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+  <div class="max-w-7xl mx-auto px-8 py-12">
+    <div class="text-center mb-12">
+      <div
+        class="w-24 h-24 mx-auto rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center mb-6"
+      >
+        <span class="text-5xl">🏆</span>
+      </div>
+
+      <h1 class="text-5xl font-bold">Coding Assessment Completed</h1>
+
+      <p class="text-gray-400 mt-4 text-lg">Here is your coding performance.</p>
+    </div>
+
+    <!-- Summary Cards -->
+
+    <div id="summaryCards" class="grid md:grid-cols-4 gap-6 mb-10"></div>
+
+    <!-- Question Results -->
+
+    <div id="questionResults" class="space-y-8"></div>
+
+    <!-- Buttons -->
+
+    <div class="flex justify-center gap-5 mt-12">
+      <a
+        href="{% url 'preparation' %}"
+        class="px-8 py-4 rounded-2xl bg-pink-500 hover:bg-pink-400"
+      >
+        Back to Preparation
+      </a>
+
+      <a
+        href="{% url 'dashboard' %}"
+        class="px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/20"
+      >
+        Dashboard
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const results = JSON.parse(sessionStorage.getItem("codingResults")) || [];
+
+  console.log(results);
+
+  const summaryCards = document.getElementById("summaryCards");
+  const questionResults = document.getElementById("questionResults");
+
+  let totalScore = 0;
+  let totalMarks = 0;
+
+  results.forEach((result) => {
+    totalScore += result.marks || 0;
+    totalMarks += result.total_marks || 0;
+  });
+
+  summaryCards.innerHTML = `
+<div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+    <p class="text-gray-400">Score</p>
+    <h2 class="text-4xl font-bold text-green-400 mt-3">
+        ${totalScore}
+    </h2>
+</div>
+
+<div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+    <p class="text-gray-400">Total Marks</p>
+    <h2 class="text-4xl font-bold text-pink-400 mt-3">
+        ${totalMarks}
+    </h2>
+</div>
+
+<div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+    <p class="text-gray-400">Questions</p>
+    <h2 class="text-4xl font-bold text-sky-400 mt-3">
+        ${results.length}
+    </h2>
+</div>
+
+<div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+    <p class="text-gray-400">Percentage</p>
+    <h2 class="text-4xl font-bold text-yellow-400 mt-3">
+        ${totalMarks ? Math.round((totalScore / totalMarks) * 100) : 0}%
+    </h2>
+</div>
+`;
+
+  results.forEach((result, index) => {
+    questionResults.innerHTML += `
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-8">
+
+        <div class="flex justify-between items-center mb-8">
+
+            <h2 class="text-2xl font-bold">
+                Question ${index + 1}
+            </h2>
+
+            <span class="${
+              result.success
+                ? "text-green-400 bg-green-500/10"
+                : "text-red-400 bg-red-500/10"
+            } px-5 py-2 rounded-full">
+
+                ${result.verdict}
+
+            </span>
+
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+
+            <div>
+
+                <p class="text-gray-400 mb-2">
+                    Marks
+                </p>
+
+                <p class="text-3xl font-bold text-pink-400">
+
+                    ${result.marks}/${result.total_marks}
+
+                </p>
+
+            </div>
+
+            <div>
+
+                <p class="text-gray-400 mb-2">
+                    Time Complexity
+                </p>
+
+                <p class="text-2xl font-semibold text-sky-400">
+
+                    ${result.complexity}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="mt-8">
+
+            <h3 class="text-pink-400 font-semibold mb-3">
+
+                AI Feedback
+
+            </h3>
+
+            <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6 leading-8 text-gray-300">
+
+                ${result.feedback}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+  });
+</script>
+
+{% endblock %}
