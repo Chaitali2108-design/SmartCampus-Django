@@ -794,6 +794,15 @@ def preparation_result(request):
     )
 
 
+@login_required
+def coding_result(request):
+
+    return render(
+        request,
+        "preparation/coding/coding_result.html"
+    )
+
+
 import json
 from django.contrib import messages
 from .models import Question
