@@ -30,5 +30,12 @@ urlpatterns = [
     "api/",
     include("dashboard.api.urls")
 ),
+
+
+path(
+    "preparation/coding/result/",
+    views.coding_result,
+    name="coding_result",
+),
 ]  
     
