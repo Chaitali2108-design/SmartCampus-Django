@@ -809,7 +809,11 @@ from .models import CommunicationQuestion
 
 def communication_test(request):
 
-    questions = CommunicationQuestion.objects.all()
+    difficulty = request.GET.get("difficulty", "easy")
+
+    questions = CommunicationQuestion.objects.filter(
+        difficulty=difficulty
+    )
 
     context = {
         "questions": questions
