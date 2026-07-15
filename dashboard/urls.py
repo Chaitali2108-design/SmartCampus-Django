@@ -31,12 +31,15 @@ urlpatterns = [
     include("dashboard.api.urls")
 ),
  #for communication page
- path(
-    "preparation/communication/",
-    views.communication_test,
-    name="communication_test"
+
+
+path(
+    "preparation/communication/result/",
+    views.communication_result,
+    name="communication_result"
 ),
 
+#for coding result
 path(
     "preparation/coding/result/",
     views.coding_result,
