@@ -5,7 +5,7 @@ from .models import InternshipOpportunity, InternshipApplication
 
 from .models import CommunicationQuestion
 
-admin.site.register(CommunicationQuestion)
+
 
 admin.site.register(Internship)
 admin.site.register(PlacementDrive)
@@ -91,4 +91,19 @@ class CodingQuestionAdmin(admin.ModelAdmin):
 
     search_fields = (
         "title",
+    )
+
+@admin.register(CommunicationQuestion)
+class CommunicationQuestionAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "title",
+        "question_type",
+        "difficulty",
+        "marks",
+    )
+
+    list_filter = (
+        "question_type",
+        "difficulty",
     )
