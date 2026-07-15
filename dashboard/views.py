@@ -803,6 +803,25 @@ def coding_result(request):
     )
 
 
+#for communication test
+from .models import CommunicationQuestion
+
+
+def communication_test(request):
+
+    questions = CommunicationQuestion.objects.all()
+
+    context = {
+        "questions": questions
+    }
+
+    return render(
+        request,
+        "preparation/communication/communication_test.html",
+        context
+    )
+
+
 import json
 from django.contrib import messages
 from .models import Question
