@@ -53,38 +53,44 @@
 <script>
 
 
-  const questions = [
+    const questions = [
 
-  {% for q in questions %}
+    {% for q in questions %}
 
-  {
+    {
 
-  id: {{q.id}},
+    id: {{q.id}},
 
-  type:"{{q.question_type}}",
+    type:"{{q.question_type}}",
 
-  title:"{{q.title|escapejs}}",
+    title:"{{q.title|escapejs}}",
 
-  question:`{{q.question|escapejs}}`,
+    question:`{{q.question|escapejs}}`,
 
-  marks:{{q.marks}},
+    marks:{{q.marks}},
 
-  option_a:`{{q.option_a|escapejs}}`,
+    option_a:`{{q.option_a|escapejs}}`,
 
-  option_b:`{{q.option_b|escapejs}}`,
+    option_b:`{{q.option_b|escapejs}}`,
 
-  option_c:`{{q.option_c|escapejs}}`,
+    option_c:`{{q.option_c|escapejs}}`,
 
-  option_d:`{{q.option_d|escapejs}}`
+    option_d:`{{q.option_d|escapejs}}`
 
-  },
+    },
 
-  {% endfor %}
+    {% endfor %}
 
-  ];
+    ];
 
 
-  console.log(questions);
+    console.log(questions);
+
+    let currentQuestion = 0;
+
+  let answers = [];
+
+  let selectedAnswer = null;
 </script>
 
 {% endblock %}
