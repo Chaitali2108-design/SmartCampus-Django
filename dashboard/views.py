@@ -17,6 +17,7 @@ from .models import InternshipApplication
 from .models import InternshipOpportunity
 from django.db.models import Count
 from datetime import date
+from .models import CommunicationQuestion
 
 
 
@@ -621,28 +622,29 @@ def preparation_test(request, test_type, page):
     },
 
     "communication": {
-        "title": "Communication Assessment",
-        "subtitle": "Written Communication & Email Writing",
-        "questions": 5,
-        "duration": "30 Minutes",
-        "duration_minutes":30,
-        "difficulty": "Easy",
-        "passing_score": "N/A",
-        "marks": 50,
-        "negative_marking": "No",
-        "color": "from-orange-500 to-amber-500",
-        "icon": "users",
-        "category": "Communication Skills",
-        "type": "Written",
+    "title": "Communication Assessment",
+    "subtitle": "English Communication & Professional Skills",
+    "questions": 26,
+    "duration": "30 Minutes",
+    "duration_minutes":30,
+    "difficulty": "Easy",
+    "passing_score": "N/A",
+    "marks": 100,
+    "negative_marking": "No",
+    "color": "from-orange-500 to-amber-500",
+    "icon": "users",
+    "category": "Communication Skills",
+    "type": "Mixed",
 
-        "sections": [
-            "Email Writing",
-            "Grammar",
-            "Professional Writing",
-            "Situation-Based Responses",
-            "Comprehension",
-        ],
-    },
+    "sections": [
+        "Grammar MCQ",
+        "Listening",
+        "Grammar Situation",
+        "Email Writing",
+        "Thought Expression",
+    ],
+},
+     
 
     "hr": {
         "title": "HR Interview",
@@ -686,9 +688,7 @@ def preparation_test(request, test_type, page):
          
     )
 )
-       print(test_type)
-       print(difficulty)
-       print(len(all_questions))
+
 
        question_count = ASSESSMENTS[test_type]["questions"]
 
@@ -731,6 +731,57 @@ def preparation_test(request, test_type, page):
         )
 
         coding_question = coding_questions[0] if coding_questions else None
+
+    if test_type == "communication":
+
+        communication_questions = []
+
+        types = [
+        ("grammar",10),
+        ("listening",2),
+        ("grammar_situation",10),
+        ("email",2),
+        ("expression",2),
+        ]
+
+
+        for q_type, count in types:
+
+            qs = list(
+            CommunicationQuestion.objects.filter(
+                difficulty=difficulty,
+                question_type=q_type
+            ).order_by("?")[:count]
+        )
+
+            communication_questions.extend(qs)
+
+
+        questions = []
+
+
+        for q in communication_questions:
+
+            questions.append({
+
+            "id": q.id,
+            "question_type": q.question_type,
+            "title": q.title,
+            "question": q.question,
+            "marks": q.marks,
+
+            "option_a": q.option_a,
+            "option_b": q.option_b,
+            "option_c": q.option_c,
+            "option_d": q.option_d,
+
+            "correct_option": q.correct_option,
+
+            "audio": q.audio.url if q.audio else "",
+
+            "expected_answer": q.expected_answer,
+
+        })
 
     context = {
         "test_type": test_type,
@@ -804,25 +855,14 @@ def coding_result(request):
 
 
 #for communication test
-from .models import CommunicationQuestion
 
 
-def communication_test(request):
 
-    difficulty = request.GET.get("difficulty", "easy")
-
-    questions = CommunicationQuestion.objects.filter(
-        difficulty=difficulty
-    )
-
-    context = {
-        "questions": questions
-    }
+def communication_result(request):
 
     return render(
         request,
-        "preparation/communication/communication_test.html",
-        context
+        "preparation/communication/result.html"
     )
 
 
