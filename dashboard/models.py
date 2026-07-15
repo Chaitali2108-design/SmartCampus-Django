@@ -439,10 +439,10 @@ class CommunicationQuestion(models.Model):
     marks = models.IntegerField(default=2)
 
     # ---------- MCQ ----------
-    option1 = models.CharField(max_length=255, blank=True)
-    option2 = models.CharField(max_length=255, blank=True)
-    option3 = models.CharField(max_length=255, blank=True)
-    option4 = models.CharField(max_length=255, blank=True)
+    option_a = models.CharField(max_length=255, blank=True)
+    option_b = models.CharField(max_length=255, blank=True)
+    option_c = models.CharField(max_length=255, blank=True)
+    option_d = models.CharField(max_length=255, blank=True)
 
     correct_option = models.CharField(
         max_length=1,
@@ -463,6 +463,9 @@ class CommunicationQuestion(models.Model):
     sample_answer = models.TextField(blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["id"]
 
     def __str__(self):
         return f"{self.question_type} - {self.title}"
