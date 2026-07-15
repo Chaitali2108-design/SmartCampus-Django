@@ -415,3 +415,54 @@ if __name__ == "__main__":
 
     def __str__(self):
         return self.title
+    
+#for communication test 
+class CommunicationQuestion(models.Model):
+
+    QUESTION_TYPES = [
+        ("grammar", "Grammar MCQ"),
+        ("listening", "Listening"),
+        ("grammar_situation", "Grammar Situation"),
+        ("email", "Email Writing"),
+        ("expression", "Thought Expression"),
+    ]
+
+    question_type = models.CharField(
+        max_length=30,
+        choices=QUESTION_TYPES
+    )
+
+    title = models.CharField(max_length=255)
+
+    question = models.TextField()
+
+    marks = models.IntegerField(default=2)
+
+    # ---------- MCQ ----------
+    option1 = models.CharField(max_length=255, blank=True)
+    option2 = models.CharField(max_length=255, blank=True)
+    option3 = models.CharField(max_length=255, blank=True)
+    option4 = models.CharField(max_length=255, blank=True)
+
+    correct_option = models.CharField(
+        max_length=1,
+        blank=True,
+        help_text="A/B/C/D"
+    )
+
+    # ---------- Listening ----------
+    audio = models.FileField(
+        upload_to="communication_audio/",
+        blank=True,
+        null=True
+    )
+
+    expected_answer = models.TextField(blank=True)
+
+    # ---------- Writing ----------
+    sample_answer = models.TextField(blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.question_type} - {self.title}"
