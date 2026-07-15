@@ -30,7 +30,12 @@ urlpatterns = [
     "api/",
     include("dashboard.api.urls")
 ),
-
+ #for communication page
+ path(
+    "preparation/communication/",
+    views.communication_test,
+    name="communication_test"
+),
 
 path(
     "preparation/coding/result/",
