@@ -3,7 +3,9 @@ from .models import Internship, PlacementDrive
 from .models import Application
 from .models import InternshipOpportunity, InternshipApplication
 
+from .models import CommunicationQuestion
 
+admin.site.register(CommunicationQuestion)
 
 admin.site.register(Internship)
 admin.site.register(PlacementDrive)
