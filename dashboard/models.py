@@ -432,6 +432,18 @@ class CommunicationQuestion(models.Model):
         choices=QUESTION_TYPES
     )
 
+    DIFFICULTY_CHOICES = [
+        ("easy", "Easy"),
+        ("medium", "Medium"),
+        ("hard", "Hard"),
+    ]
+
+    difficulty = models.CharField(
+        max_length=20,
+        choices=DIFFICULTY_CHOICES,
+        default="easy"
+    )
+
     title = models.CharField(max_length=255)
 
     question = models.TextField()
