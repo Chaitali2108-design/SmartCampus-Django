@@ -550,8 +550,19 @@
 }
 
 .option-card.selected{
-    background:rgba(236,72,153,.18);
-    border-color:rgb(236 72 153);
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(14,165,233,0.25),
+        rgba(56,189,248,0.10)
+    )!important;
+
+    border-color:#38bdf8!important;
+
+    box-shadow:
+    0 8px 25px rgba(14,165,233,0.25);
+
 }
 
 /* Current Question */
@@ -722,16 +733,50 @@ function updatePalette(){
 
     paletteButtons.forEach((btn,index)=>{
 
-        btn.classList.remove("palette-current");
 
-        if(index===currentQuestion){
+        btn.classList.remove(
+            "palette-current",
+            "palette-answered",
+            "palette-review",
+            "palette-unvisited"
+        );
+
+
+        if(index === currentQuestion){
 
             btn.classList.add("palette-current");
 
         }
 
+
+        else if(
+            cards[index].querySelector("input[type='radio']:checked") ||
+            [...cards[index].querySelectorAll("textarea")]
+            .some(t => t.value.trim() !== "")
+        ){
+
+            btn.classList.add("palette-answered");
+
+        }
+
+
+        else if(index < currentQuestion){
+
+            btn.classList.add("palette-review");
+
+        }
+
+
+        else{
+
+            btn.classList.add("palette-unvisited");
+
+        }
+
+
     });
-  }
+
+}
 
 
 document.querySelectorAll(".next-btn").forEach(btn=>{
