@@ -580,7 +580,6 @@ const answeredCount=document.getElementById("answeredCount");
 
 const remainingCount=document.getElementById("remainingCount");
 
-const currentCount=document.getElementById("currentCount");
 
 const questionNumber=document.getElementById("questionNumber");
 
@@ -605,21 +604,18 @@ function showQuestion(index){
 
 }
 
-function updateProgress(){
+function updateProgress() {
 
-    questionNumber.innerHTML=
-        `Question ${currentQuestion+1} of ${cards.length}`;
+    questionNumber.textContent =
+        `Question ${currentQuestion + 1} of ${cards.length}`;
 
-    currentCount.innerHTML=currentQuestion+1;
+    const percent =
+        ((currentQuestion + 1) / cards.length) * 100;
 
-    const percent=Math.round(
-        ((currentQuestion+1)/cards.length)*100
-    );
+    progressText.textContent =
+        `${Math.round(percent)}% Completed`;
 
-    progressText.innerHTML=`${percent}% Completed`;
-
-    progressBar.style.width=percent+"%";
-
+    progressBar.style.width = percent + "%";
 }
 
 function markAnswered(index){
