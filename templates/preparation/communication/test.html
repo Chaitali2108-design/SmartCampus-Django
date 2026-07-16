@@ -65,16 +65,8 @@
     <!-- Main Layout -->
 
     <div class="max-w-[1700px] mx-auto p-8">
-
-        <div class="grid grid-cols-12 gap-8 items-stretch">
-
-            <!-- LEFT PANEL -->
-
-            <div class="col-span-8 flex flex-col gap-8">
-
-                <!-- Progress Card -->
-
-                <div class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8">
+              <!-- Progress Card -->
+                      <div class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 mb-4">
 
                     <div class="flex justify-between items-center">
 
@@ -105,6 +97,16 @@
                     </div>
 
                 </div>
+
+        <div class="grid grid-cols-12 gap-8 items-stretch">
+
+            <!-- LEFT PANEL -->
+
+            <div class="col-span-8 flex flex-col gap-8">
+
+                
+
+
 
                 <!-- Question Form -->
 
@@ -398,107 +400,136 @@
 <!-- ================= RIGHT PANEL ================= -->
 
 <div class="col-span-4 flex">
+  <div
+    class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
+  >
+    <h2 class="text-xl font-semibold mb-8">Question Palette</h2>
 
-    <div
-        class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
-    >
+    <!-- Grammar -->
+    <div class="mb-7">
+      <h3 class="text-sm font-semibold text-pink-300 mb-3">Grammar</h3>
 
-        <h2 class="text-xl font-semibold mb-8">
-            Question Palette
-        </h2>
-
-        <div
-            id="questionPalette"
-            class="hide-scrollbar grid grid-cols-5 gap-3 max-h-[460px] overflow-y-auto"
-        >
-
-            {% for q in questions %}
-
+      <div class="grid grid-cols-5 gap-3">
+        {% for q in questions %}
+          {% if q.question_type == "grammar" %}
             <button
-                type="button"
-                class="palette-btn aspect-square rounded-xl border border-white/10 bg-white/5 hover:bg-pink-500/20 transition"
-                data-index="{{ forloop.counter0 }}"
+              type="button"
+              class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+              data-index="{{ forloop.counter0 }}"
             >
-                {{ forloop.counter }}
+              {{ forloop.counter }}
             </button>
-
-            {% endfor %}
-
-        </div>
-
-        <!-- Summary -->
-
-        <div class="mt-10 border-t border-white/10 pt-8">
-
-            <h3 class="text-xl font-semibold mb-6">
-                Test Summary
-            </h3>
-
-            <div class="space-y-4">
-
-                <div class="flex justify-between">
-
-                    <span class="text-gray-400">
-                        Answered
-                    </span>
-
-                    <span
-                        id="answeredCount"
-                        class="text-green-400 font-semibold"
-                    >
-                        0
-                    </span>
-
-                </div>
-
-                <div class="flex justify-between">
-
-                    <span class="text-gray-400">
-                        Current Question
-                    </span>
-
-                    <span
-                        id="currentCount"
-                        class="text-pink-400 font-semibold"
-                    >
-                        1
-                    </span>
-
-                </div>
-
-                <div class="flex justify-between">
-
-                    <span class="text-gray-400">
-                        Remaining
-                    </span>
-
-                    <span
-                        id="remainingCount"
-                        class="text-red-400 font-semibold"
-                    >
-                        {{ questions|length }}
-                    </span>
-
-                </div>
-
-                <div class="flex justify-between">
-
-                    <span class="text-gray-400">
-                        Total Questions
-                    </span>
-
-                    <span class="text-violet-400 font-semibold">
-                        {{ questions|length }}
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
 
+    <!-- Listening -->
+    <div class="mb-7">
+      <h3 class="text-sm font-semibold text-blue-300 mb-3">Listening</h3>
+
+      <div class="grid grid-cols-5 gap-3">
+        {% for q in questions %}
+          {% if q.question_type == "listening" %}
+            <button
+              type="button"
+              class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+              data-index="{{ forloop.counter0 }}"
+            >
+              {{ forloop.counter }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Grammar Situation -->
+    <div class="mb-7">
+      <h3 class="text-sm font-semibold text-yellow-300 mb-3">
+        Grammar Situation
+      </h3>
+
+      <div class="grid grid-cols-5 gap-3">
+        {% for q in questions %}
+          {% if q.question_type == "grammar_situation" %}
+            <button
+              type="button"
+              class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+              data-index="{{ forloop.counter0 }}"
+            >
+              {{ forloop.counter }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-7">
+      <h3 class="text-sm font-semibold text-green-300 mb-3">
+        Email Writing
+      </h3>
+
+      <div class="grid grid-cols-5 gap-3">
+        {% for q in questions %}
+          {% if q.question_type == "email" %}
+            <button
+              type="button"
+              class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+              data-index="{{ forloop.counter0 }}"
+            >
+              {{ forloop.counter }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Thought Expression -->
+    <div>
+      <h3 class="text-sm font-semibold text-purple-300 mb-3">
+        Thought Expression
+      </h3>
+
+      <div class="grid grid-cols-5 gap-3">
+        {% for q in questions %}
+          {% if q.question_type == "expression" %}
+            <button
+              type="button"
+              class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+              data-index="{{ forloop.counter0 }}"
+            >
+              {{ forloop.counter }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="mt-8 pt-6 border-t border-white/10">
+      <h3 class="text-lg font-semibold mb-4">Summary</h3>
+
+      <div class="space-y-3">
+        <div class="flex justify-between">
+          <span class="text-gray-400">Answered</span>
+          <span id="answeredCount" class="text-green-400">0</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="text-gray-400">Visited</span>
+          <span id="visitedCount" class="text-yellow-400">1</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="text-gray-400">Remaining</span>
+          <span id="remainingCount" class="text-red-400">
+            {{ questions|length }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 </div>
@@ -627,36 +658,26 @@ function markAnswered(index){
 
 }
 
-function updateSummary(){
+function updateSummary() {
+  const answered = document.querySelectorAll(
+    'input[type="radio"]:checked'
+  ).length;
 
-    let answered=0;
+  let textAnswered = 0;
 
-    cards.forEach((card,index)=>{
+  document.querySelectorAll("textarea").forEach((t) => {
+    if (t.value.trim() !== "") {
+      textAnswered++;
+    }
+  });
 
-        let done=false;
+  document.getElementById("answeredCount").textContent =
+    answered + textAnswered;
 
-        if(card.querySelector("input[type='radio']:checked")){
-            done=true;
-        }
+  document.getElementById("visitedCount").textContent = currentQuestion + 1;
 
-        card.querySelectorAll("textarea").forEach(area=>{
-
-            if(area.value.trim()!==""){
-                done=true;
-            }
-
-        });
-
-        if(done){
-            answered++;
-        }
-
-    });
-
-    answeredCount.innerHTML=answered;
-
-    remainingCount.innerHTML=cards.length-answered;
-
+  document.getElementById("remainingCount").textContent =
+    cards.length - (answered + textAnswered);
 }
 
 function updatePalette(){
