@@ -2,49 +2,56 @@
 
 {% block content %}
 
-<div class="min-h-screen bg-[#140f1f] text-white px-6 py-8">
+<div class="min-h-screen bg-[#140F1F] text-white">
 
     <!-- Header -->
-    <div class="max-w-7xl mx-auto mb-8">
 
-        <div class="bg-[#1d162b] border border-white/10 rounded-2xl p-5 flex justify-between items-center shadow-xl">
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-[#140F1F]/90 backdrop-blur-xl">
+
+        <div class="max-w-[1700px] mx-auto px-8 py-5 flex items-center justify-between">
 
             <div>
-                <h1 class="text-2xl font-bold">
+
+                <h1 class="text-3xl font-bold">
                     Communication Assessment
                 </h1>
 
-                <p class="text-gray-400 mt-1">
+                <p class="text-gray-400 mt-2">
                     Placement Preparation Round
                 </p>
+
             </div>
 
-            <div class="flex items-center gap-5">
+            <div class="flex items-center gap-8">
 
-                <div class="bg-white/5 border border-white/10 rounded-xl px-4 py-2">
-                    <p class="text-xs text-gray-400">
+                <div class="text-center">
+
+                    <p class="text-gray-400 text-sm">
                         Difficulty
                     </p>
 
-                    <p class="font-semibold capitalize">
+                    <h3 class="font-semibold capitalize">
                         {{ difficulty }}
-                    </p>
+                    </h3>
+
                 </div>
 
-                <div class="bg-white/5 border border-white/10 rounded-xl px-4 py-2">
-                    <p class="text-xs text-gray-400">
-                        Time Remaining
+                <div class="rounded-2xl bg-pink-500/10 border border-pink-500/20 px-6 py-3">
+
+                    <p class="text-sm text-gray-300">
+                        Time Left
                     </p>
 
-                    <p id="timer" class="text-lg font-bold">
+                    <h2 id="timer" class="text-2xl font-bold text-pink-400">
                         30:00
-                    </p>
+                    </h2>
+
                 </div>
 
                 <button
                     type="button"
                     onclick="submitTest()"
-                    class="bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition"
+                    class="px-6 py-3 rounded-2xl bg-red-500 hover:bg-red-400 transition"
                 >
                     Submit Test
                 </button>
@@ -53,355 +60,438 @@
 
         </div>
 
-    </div>
+    </header>
 
-    <!-- Main Grid -->
+    <!-- Main Layout -->
 
-    <div class="max-w-7xl mx-auto grid grid-cols-12 gap-6">
+    <div class="max-w-[1700px] mx-auto p-8">
 
-        <!-- LEFT PANEL -->
+        <div class="grid grid-cols-12 gap-8 items-stretch">
 
-        <div class="col-span-9">
+            <!-- LEFT PANEL -->
 
-            <form id="communicationForm" method="POST">
+            <div class="col-span-8 flex flex-col gap-8">
 
-                {% csrf_token %}
+                <!-- Progress Card -->
 
-                {% for q in questions %}
+                <div class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8">
 
-                <div
-                    class="question-card bg-[#1d162b] rounded-2xl border border-white/10 shadow-xl p-7 {% if not forloop.first %}hidden{% endif %}"
-                    data-index="{{ forloop.counter0 }}"
-                >
+                    <div class="flex justify-between items-center">
 
-                    <!-- Header -->
+                        <span
+                            id="questionNumber"
+                            class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300"
+                        >
+                            Question 1
+                        </span>
 
-                    <div class="flex justify-between items-center mb-6">
-
-                        <div>
-
-                            <p class="text-sm text-gray-400">
-                                Question {{ forloop.counter }} of {{ questions|length }}
-                            </p>
-
-                            <h2 class="text-xl font-bold mt-2">
-                                {{ q.title }}
-                            </h2>
-
-                        </div>
-
-                        <span class="bg-white/10 px-4 py-2 rounded-xl">
-
-                            {{ q.marks }} Marks
-
+                        <span
+                            id="progressText"
+                            class="text-gray-400"
+                        >
+                            0% Completed
                         </span>
 
                     </div>
 
-                    <!-- Question -->
+                    <div class="h-3 rounded-full bg-white/10 overflow-hidden mt-6">
 
-                    <p class="text-gray-300 leading-7 mb-8">
-
-                        {{ q.question }}
-
-                    </p>
-
-                    <!-- Grammar -->
-
-                    {% if q.question_type == "grammar" %}
-
-                    <div class="space-y-4">
-
-                        {% if q.option_a %}
-                        <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 cursor-pointer">
-                            <input type="radio" name="question_{{ q.id }}" value="A" class="accent-white">
-                            <span>A. {{ q.option_a }}</span>
-                        </label>
-                        {% endif %}
-
-                        {% if q.option_b %}
-                        <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 cursor-pointer">
-                            <input type="radio" name="question_{{ q.id }}" value="B" class="accent-white">
-                            <span>B. {{ q.option_b }}</span>
-                        </label>
-                        {% endif %}
-
-                        {% if q.option_c %}
-                        <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 cursor-pointer">
-                            <input type="radio" name="question_{{ q.id }}" value="C" class="accent-white">
-                            <span>C. {{ q.option_c }}</span>
-                        </label>
-                        {% endif %}
-
-                        {% if q.option_d %}
-                        <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 cursor-pointer">
-                            <input type="radio" name="question_{{ q.id }}" value="D" class="accent-white">
-                            <span>D. {{ q.option_d }}</span>
-                        </label>
-                        {% endif %}
-
-                    </div>
-
-                    {% endif %}
-
-                    <!-- Grammar Situation -->
-
-                    {% if q.question_type == "grammar_situation" %}
-
-                    <div class="space-y-4">
-
-                        {% if q.option_a %}
-                        <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 cursor-pointer">
-                            <input type="radio" name="question_{{ q.id }}" value="A" class="accent-white">
-                            <span>A. {{ q.option_a }}</span>
-                        </label>
-                        {% endif %}
-
-                        {% if q.option_b %}
-                        <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 cursor-pointer">
-                            <input type="radio" name="question_{{ q.id }}" value="B" class="accent-white">
-                            <span>B. {{ q.option_b }}</span>
-                        </label>
-                        {% endif %}
-
-                        {% if q.option_c %}
-                        <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 cursor-pointer">
-                            <input type="radio" name="question_{{ q.id }}" value="C" class="accent-white">
-                            <span>C. {{ q.option_c }}</span>
-                        </label>
-                        {% endif %}
-
-                        {% if q.option_d %}
-                        <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 cursor-pointer">
-                            <input type="radio" name="question_{{ q.id }}" value="D" class="accent-white">
-                            <span>D. {{ q.option_d }}</span>
-                        </label>
-                        {% endif %}
-
-                    </div>
-
-                    {% endif %}
-
-                    <!-- Listening -->
-
-                    {% if q.question_type == "listening" %}
-
-                        {% if q.audio %}
-
-                        <audio controls class="w-full mb-6">
-                            <source src="{{ q.audio }}">
-                        </audio>
-
-                        {% endif %}
-
-                        <textarea
-                            name="question_{{ q.id }}"
-                            rows="6"
-                            placeholder="Write what you heard..."
-                            class="w-full bg-black/20 border border-white/10 rounded-xl p-4"
-                        ></textarea>
-
-                    {% endif %}
-
-                    <!-- Email -->
-
-                    {% if q.question_type == "email" %}
-
-                    <textarea
-                        name="question_{{ q.id }}"
-                        rows="10"
-                        placeholder="Write your professional email..."
-                        class="w-full bg-black/20 border border-white/10 rounded-xl p-4"
-                    ></textarea>
-
-                    {% endif %}
-
-                    <!-- Thought Expression -->
-
-                    {% if q.question_type == "expression" %}
-
-                    <textarea
-                        name="question_{{ q.id }}"
-                        rows="8"
-                        placeholder="Express your thoughts..."
-                        class="w-full bg-black/20 border border-white/10 rounded-xl p-4"
-                    ></textarea>
-
-                    {% endif %}
-
-                    <!-- Navigation -->
-
-                    <div class="flex justify-between mt-10">
-
-                        <button
-                            type="button"
-                            class="prev-btn px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20"
-                        >
-                            Previous
-                        </button>
-
-                        <button
-                            type="button"
-                            class="next-btn px-5 py-3 rounded-xl bg-white text-black font-semibold"
-                        >
-                            Save & Next
-                        </button>
+                        <div
+                            id="progressBar"
+                            class="h-full bg-gradient-to-r from-pink-500 to-violet-500"
+                            style="width:0%"
+                        ></div>
 
                     </div>
 
                 </div>
 
-                {% endfor %}
+                <!-- Question Form -->
 
-            </form>
+                <form
+                    id="communicationForm"
+                    method="POST"
+                >
 
+                    {% csrf_token %}
+
+                    {% for q in questions %}
+
+                    <div
+                        class="question-card rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 {% if not forloop.first %}hidden{% endif %}"
+                        data-index="{{ forloop.counter0 }}"
+                    >
+
+                        <!-- Header -->
+
+                        <div class="flex justify-between items-center mb-8">
+
+                            <div class="flex items-center gap-4">
+
+                                <span class="px-4 py-2 rounded-full bg-violet-500/20 border border-violet-400/30 text-violet-300 text-sm">
+
+                                    {{ q.question_type|title }}
+
+                                </span>
+
+                                <span class="px-4 py-2 rounded-full bg-pink-500/20 border border-pink-400/30 text-pink-300 text-sm">
+
+                                    {{ q.marks }} Marks
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Title -->
+
+                        <h2 class="text-2xl font-semibold mb-4">
+
+                            {{ q.title }}
+
+                        </h2>
+
+                        <!-- Question -->
+
+                        <p class="text-lg text-gray-300 leading-8 mb-8">
+
+                            {{ q.question }}
+
+                        </p>
+
+                        <!-- ================= Grammar ================= -->
+
+{% if q.question_type == "grammar" %}
+
+<div class="space-y-4">
+
+    {% if q.option_a %}
+    <label class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10">
+
+        <input
+            type="radio"
+            name="question_{{ q.id }}"
+            value="A"
+            class="hidden option-input"
+        >
+
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center font-bold">
+            A
         </div>
 
-        <!-- RIGHT PANEL -->
+        <span class="text-lg">
+            {{ q.option_a }}
+        </span>
 
-<div class="col-span-3">
+    </label>
+    {% endif %}
 
-    <div class="sticky top-24 bg-[#1d162b] border border-white/10 rounded-2xl shadow-xl p-5">
+    {% if q.option_b %}
+    <label class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10">
 
-        <h2 class="text-xl font-bold mb-6">
+        <input
+            type="radio"
+            name="question_{{ q.id }}"
+            value="B"
+            class="hidden option-input"
+        >
+
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center font-bold">
+            B
+        </div>
+
+        <span class="text-lg">
+            {{ q.option_b }}
+        </span>
+
+    </label>
+    {% endif %}
+
+    {% if q.option_c %}
+    <label class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10">
+
+        <input
+            type="radio"
+            name="question_{{ q.id }}"
+            value="C"
+            class="hidden option-input"
+        >
+
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center font-bold">
+            C
+        </div>
+
+        <span class="text-lg">
+            {{ q.option_c }}
+        </span>
+
+    </label>
+    {% endif %}
+
+    {% if q.option_d %}
+    <label class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10">
+
+        <input
+            type="radio"
+            name="question_{{ q.id }}"
+            value="D"
+            class="hidden option-input"
+        >
+
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center font-bold">
+            D
+        </div>
+
+        <span class="text-lg">
+            {{ q.option_d }}
+        </span>
+
+    </label>
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+<!-- ================= Grammar Situation ================= -->
+
+{% if q.question_type == "grammar_situation" %}
+
+<div class="space-y-4">
+
+    {% if q.option_a %}
+    <label class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10">
+
+        <input type="radio" name="question_{{ q.id }}" value="A" class="hidden option-input">
+
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center font-bold">
+            A
+        </div>
+
+        <span class="text-lg">{{ q.option_a }}</span>
+
+    </label>
+    {% endif %}
+
+    {% if q.option_b %}
+    <label class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10">
+
+        <input type="radio" name="question_{{ q.id }}" value="B" class="hidden option-input">
+
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center font-bold">
+            B
+        </div>
+
+        <span class="text-lg">{{ q.option_b }}</span>
+
+    </label>
+    {% endif %}
+
+    {% if q.option_c %}
+    <label class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10">
+
+        <input type="radio" name="question_{{ q.id }}" value="C" class="hidden option-input">
+
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center font-bold">
+            C
+        </div>
+
+        <span class="text-lg">{{ q.option_c }}</span>
+
+    </label>
+    {% endif %}
+
+    {% if q.option_d %}
+    <label class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10">
+
+        <input type="radio" name="question_{{ q.id }}" value="D" class="hidden option-input">
+
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center font-bold">
+            D
+        </div>
+
+        <span class="text-lg">{{ q.option_d }}</span>
+
+    </label>
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+<!-- ================= Listening ================= -->
+
+{% if q.question_type == "listening" %}
+
+    {% if q.audio %}
+
+    <audio controls class="w-full mb-6">
+        <source src="{{ q.audio }}">
+    </audio>
+
+    {% endif %}
+
+    <textarea
+        name="question_{{ q.id }}"
+        rows="6"
+        placeholder="Write what you heard..."
+        class="w-full rounded-2xl bg-black/20 border border-white/10 p-5 outline-none"
+    ></textarea>
+
+{% endif %}
+
+<!-- ================= Email ================= -->
+
+{% if q.question_type == "email" %}
+
+<textarea
+    name="question_{{ q.id }}"
+    rows="10"
+    placeholder="Write your professional email..."
+    class="w-full rounded-2xl bg-black/20 border border-white/10 p-5 outline-none"
+></textarea>
+
+{% endif %}
+
+<!-- ================= Thought Expression ================= -->
+
+{% if q.question_type == "expression" %}
+
+<textarea
+    name="question_{{ q.id }}"
+    rows="8"
+    placeholder="Express your thoughts..."
+    class="w-full rounded-2xl bg-black/20 border border-white/10 p-5 outline-none"
+></textarea>
+
+{% endif %}
+
+<!-- Navigation -->
+
+<div class="flex justify-between items-center mt-10 pt-8 border-t border-white/10">
+
+    <button
+        type="button"
+        class="prev-btn px-7 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+    >
+        ← Previous
+    </button>
+
+    <button
+        type="button"
+        class="next-btn px-8 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-violet-500 hover:scale-105 transition-all"
+    >
+        Save & Next →
+    </button>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</form>
+
+</div>
+
+<!-- ================= RIGHT PANEL ================= -->
+
+<div class="col-span-4 flex">
+
+    <div
+        class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
+    >
+
+        <h2 class="text-xl font-semibold mb-8">
             Question Palette
         </h2>
 
-        <!-- Grammar -->
+        <div
+            id="questionPalette"
+            class="hide-scrollbar grid grid-cols-5 gap-3 max-h-[460px] overflow-y-auto"
+        >
 
-        <div class="mb-6">
+            {% for q in questions %}
 
-            <h3 class="text-sm font-semibold text-gray-400 mb-3">
-                Grammar
-            </h3>
+            <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border border-white/10 bg-white/5 hover:bg-pink-500/20 transition"
+                data-index="{{ forloop.counter0 }}"
+            >
+                {{ forloop.counter }}
+            </button>
 
-            <div class="grid grid-cols-5 gap-2">
-
-                {% for q in questions %}
-                    {% if q.question_type == "grammar" %}
-
-                        <button
-                            type="button"
-                            class="palette-btn h-10 rounded-lg bg-white/10 hover:bg-purple-600 transition"
-                            data-index="{{ forloop.counter0 }}"
-                        >
-                            {{ forloop.counter }}
-                        </button>
-
-                    {% endif %}
-                {% endfor %}
-
-            </div>
+            {% endfor %}
 
         </div>
 
-        <!-- Listening -->
+        <!-- Summary -->
 
-        <div class="mb-6">
+        <div class="mt-10 border-t border-white/10 pt-8">
 
-            <h3 class="text-sm font-semibold text-gray-400 mb-3">
-                Listening
+            <h3 class="text-xl font-semibold mb-6">
+                Test Summary
             </h3>
 
-            <div class="grid grid-cols-5 gap-2">
+            <div class="space-y-4">
 
-                {% for q in questions %}
-                    {% if q.question_type == "listening" %}
+                <div class="flex justify-between">
 
-                        <button
-                            type="button"
-                            class="palette-btn h-10 rounded-lg bg-white/10 hover:bg-purple-600 transition"
-                            data-index="{{ forloop.counter0 }}"
-                        >
-                            {{ forloop.counter }}
-                        </button>
+                    <span class="text-gray-400">
+                        Answered
+                    </span>
 
-                    {% endif %}
-                {% endfor %}
+                    <span
+                        id="answeredCount"
+                        class="text-green-400 font-semibold"
+                    >
+                        0
+                    </span>
 
-            </div>
+                </div>
 
-        </div>
+                <div class="flex justify-between">
 
-        <!-- Grammar Situation -->
+                    <span class="text-gray-400">
+                        Current Question
+                    </span>
 
-        <div class="mb-6">
+                    <span
+                        id="currentCount"
+                        class="text-pink-400 font-semibold"
+                    >
+                        1
+                    </span>
 
-            <h3 class="text-sm font-semibold text-gray-400 mb-3">
-                Grammar Situation
-            </h3>
+                </div>
 
-            <div class="grid grid-cols-5 gap-2">
+                <div class="flex justify-between">
 
-                {% for q in questions %}
-                    {% if q.question_type == "grammar_situation" %}
+                    <span class="text-gray-400">
+                        Remaining
+                    </span>
 
-                        <button
-                            type="button"
-                            class="palette-btn h-10 rounded-lg bg-white/10 hover:bg-purple-600 transition"
-                            data-index="{{ forloop.counter0 }}"
-                        >
-                            {{ forloop.counter }}
-                        </button>
+                    <span
+                        id="remainingCount"
+                        class="text-red-400 font-semibold"
+                    >
+                        {{ questions|length }}
+                    </span>
 
-                    {% endif %}
-                {% endfor %}
+                </div>
 
-            </div>
+                <div class="flex justify-between">
 
-        </div>
+                    <span class="text-gray-400">
+                        Total Questions
+                    </span>
 
-        <!-- Email -->
+                    <span class="text-violet-400 font-semibold">
+                        {{ questions|length }}
+                    </span>
 
-        <div class="mb-6">
-
-            <h3 class="text-sm font-semibold text-gray-400 mb-3">
-                Email Writing
-            </h3>
-
-            <div class="grid grid-cols-5 gap-2">
-
-                {% for q in questions %}
-                    {% if q.question_type == "email" %}
-
-                        <button
-                            type="button"
-                            class="palette-btn h-10 rounded-lg bg-white/10 hover:bg-purple-600 transition"
-                            data-index="{{ forloop.counter0 }}"
-                        >
-                            {{ forloop.counter }}
-                        </button>
-
-                    {% endif %}
-                {% endfor %}
-
-            </div>
-
-        </div>
-
-        <!-- Thought Expression -->
-
-        <div>
-
-            <h3 class="text-sm font-semibold text-gray-400 mb-3">
-                Thought Expression
-            </h3>
-
-            <div class="grid grid-cols-5 gap-2">
-
-                {% for q in questions %}
-                    {% if q.question_type == "expression" %}
-
-                        <button
-                            type="button"
-                            class="palette-btn h-10 rounded-lg bg-white/10 hover:bg-purple-600 transition"
-                            data-index="{{ forloop.counter0 }}"
-                        >
-                            {{ forloop.counter }}
-                        </button>
-
-                    {% endif %}
-                {% endfor %}
+                </div>
 
             </div>
 
@@ -415,114 +505,241 @@
 
 </div>
 
+</div>
+
+<style>
+
+.hide-scrollbar::-webkit-scrollbar{
+    display:none;
+}
+
+.hide-scrollbar{
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+.option-card.selected{
+    background:rgba(236,72,153,.18);
+    border-color:rgb(236 72 153);
+}
+
+.palette-current{
+    background:#ec4899!important;
+    color:white!important;
+    border-color:#ec4899!important;
+}
+
+.palette-answered{
+    background:#16a34a!important;
+    color:white!important;
+    border-color:#16a34a!important;
+}
+
+</style>
+
 <script>
-let currentQuestion = 0;
 
-const cards = document.querySelectorAll(".question-card");
-const paletteButtons = document.querySelectorAll(".palette-btn");
+let currentQuestion=0;
 
-function showQuestion(index) {
-    if (index < 0 || index >= cards.length) return;
+const cards=document.querySelectorAll(".question-card");
 
-    cards.forEach(card => {
-        card.classList.add("hidden");
-    });
+const paletteButtons=document.querySelectorAll(".palette-btn");
+
+const answeredCount=document.getElementById("answeredCount");
+
+const remainingCount=document.getElementById("remainingCount");
+
+const currentCount=document.getElementById("currentCount");
+
+const questionNumber=document.getElementById("questionNumber");
+
+const progressText=document.getElementById("progressText");
+
+const progressBar=document.getElementById("progressBar");
+
+
+function showQuestion(index){
+
+    if(index<0 || index>=cards.length) return;
+
+    cards.forEach(card=>card.classList.add("hidden"));
 
     cards[index].classList.remove("hidden");
 
-    paletteButtons.forEach(btn => {
-        btn.classList.remove("bg-purple-600", "text-white");
-        btn.classList.add("bg-white/10");
-    });
+    currentQuestion=index;
 
-    paletteButtons.forEach(btn => {
-        if (parseInt(btn.dataset.index) === index) {
-            btn.classList.remove("bg-white/10");
-            btn.classList.add("bg-purple-600", "text-white");
-        }
-    });
+    updateProgress();
 
-    currentQuestion = index;
+    updatePalette();
+
 }
 
-showQuestion(0);
+function updateProgress(){
 
-// Next Button
-document.querySelectorAll(".next-btn").forEach(btn => {
-    btn.addEventListener("click", function () {
+    questionNumber.innerHTML=
+        `Question ${currentQuestion+1} of ${cards.length}`;
 
-        markAnswered(currentQuestion);
+    currentCount.innerHTML=currentQuestion+1;
 
-        if (currentQuestion < cards.length - 1) {
-            showQuestion(currentQuestion + 1);
-        }
-    });
-});
+    const percent=Math.round(
+        ((currentQuestion+1)/cards.length)*100
+    );
 
-// Previous Button
-document.querySelectorAll(".prev-btn").forEach(btn => {
-    btn.addEventListener("click", function () {
+    progressText.innerHTML=`${percent}% Completed`;
 
-        if (currentQuestion > 0) {
-            showQuestion(currentQuestion - 1);
-        }
+    progressBar.style.width=percent+"%";
 
-    });
-});
+}
 
-// Palette Click
-paletteButtons.forEach(btn => {
+function markAnswered(index){
 
-    btn.addEventListener("click", function () {
+    const card=cards[index];
 
-        showQuestion(parseInt(this.dataset.index));
+    let answered=false;
 
-    });
+    const radio=card.querySelector("input[type='radio']:checked");
 
-});
-
-// Mark Answered
-function markAnswered(index) {
-
-    const card = cards[index];
-
-    let answered = false;
-
-    const radio = card.querySelector("input[type=radio]:checked");
-
-    if (radio) {
-        answered = true;
+    if(radio){
+        answered=true;
     }
 
-    card.querySelectorAll("textarea").forEach(t => {
+    card.querySelectorAll("textarea").forEach(area=>{
 
-        if (t.value.trim() !== "") {
-            answered = true;
+        if(area.value.trim()!==""){
+            answered=true;
         }
 
     });
 
-    if (answered) {
+    if(answered){
 
-        paletteButtons.forEach(btn => {
+        paletteButtons[index].classList.remove(
+            "palette-current"
+        );
 
-            if (parseInt(btn.dataset.index) === index) {
+        paletteButtons[index].classList.add(
+            "palette-answered"
+        );
 
-                btn.classList.remove("bg-white/10");
-                btn.classList.remove("bg-purple-600");
+    }
 
-                btn.classList.add("bg-green-600");
-                btn.classList.add("text-white");
+    updateSummary();
 
+}
+
+function updateSummary(){
+
+    let answered=0;
+
+    cards.forEach((card,index)=>{
+
+        let done=false;
+
+        if(card.querySelector("input[type='radio']:checked")){
+            done=true;
+        }
+
+        card.querySelectorAll("textarea").forEach(area=>{
+
+            if(area.value.trim()!==""){
+                done=true;
             }
 
         });
 
-    }
+        if(done){
+            answered++;
+        }
+
+    });
+
+    answeredCount.innerHTML=answered;
+
+    remainingCount.innerHTML=cards.length-answered;
 
 }
 
-// Timer
+function updatePalette(){
+
+    paletteButtons.forEach((btn,index)=>{
+
+        btn.classList.remove("palette-current");
+
+        if(index===currentQuestion){
+
+            btn.classList.add("palette-current");
+
+        }
+
+    });
+
+}
+
+document.querySelectorAll(".next-btn").forEach(btn=>{
+
+    btn.onclick=function(){
+
+        markAnswered(currentQuestion);
+
+        if(currentQuestion<cards.length-1){
+
+            showQuestion(currentQuestion+1);
+
+        }
+
+    };
+
+});
+
+document.querySelectorAll(".prev-btn").forEach(btn=>{
+
+    btn.onclick=function(){
+
+        if(currentQuestion>0){
+
+            showQuestion(currentQuestion-1);
+
+        }
+
+    };
+
+});
+
+paletteButtons.forEach(btn=>{
+
+    btn.onclick=function(){
+
+        markAnswered(currentQuestion);
+
+        showQuestion(parseInt(this.dataset.index));
+
+    };
+
+});
+
+document.querySelectorAll(".option-card").forEach(label=>{
+
+    label.addEventListener("click",function(){
+
+        const parent=this.closest(".question-card");
+
+        parent.querySelectorAll(".option-card").forEach(card=>{
+
+            card.classList.remove("selected");
+
+        });
+
+        this.classList.add("selected");
+
+    });
+
+});
+
+showQuestion(0);
+
+updateSummary();
+
+// ================= TIMER =================
 
 let totalSeconds = 30 * 60;
 
@@ -530,41 +747,51 @@ const timer = document.getElementById("timer");
 
 const countdown = setInterval(function () {
 
-    let minutes = Math.floor(totalSeconds / 60);
+    const minutes = Math.floor(totalSeconds / 60);
 
-    let seconds = totalSeconds % 60;
+    const seconds = totalSeconds % 60;
 
-    if (seconds < 10) {
-        seconds = "0" + seconds;
-    }
+    timer.innerHTML =
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
 
-    timer.innerHTML = minutes + ":" + seconds;
-
-    totalSeconds--;
-
-    if (totalSeconds < 0) {
+    if (totalSeconds <= 0) {
 
         clearInterval(countdown);
 
         submitTest();
 
+        return;
+
     }
+
+    totalSeconds--;
 
 }, 1000);
 
-// Submit
+// ================= SUBMIT =================
 
 function submitTest() {
 
+    markAnswered(currentQuestion);
+
     clearInterval(countdown);
 
-    if (confirm("Are you sure you want to submit the Communication Assessment?")) {
+    const confirmSubmit = confirm(
+        "Are you sure you want to submit the Communication Assessment?"
+    );
 
-        document.getElementById("communicationForm").submit();
+    if (!confirmSubmit) {
+
+        return;
 
     }
 
+    document.getElementById("communicationForm").submit();
+
 }
+
 </script>
 
 {% endblock %}
