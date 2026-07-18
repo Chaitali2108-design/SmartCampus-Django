@@ -881,27 +881,72 @@ const countdown = setInterval(function () {
 
 function submitTest() {
 
-    // Mark current question before submitting
     markAnswered(currentQuestion);
 
-    const answered =
-        document.querySelectorAll('input[type="radio"]:checked').length +
-        [...document.querySelectorAll("textarea")]
-            .filter(t => t.value.trim() !== "").length;
-
-    const total = cards.length;
+    clearInterval(countdown);
 
     const confirmSubmit = confirm(
-        `You have answered ${answered} out of ${total} questions.\n\nAre you sure you want to submit the Communication Assessment?`
+        "Are you sure you want to submit the Communication Assessment?"
     );
 
     if (!confirmSubmit) {
         return;
     }
 
-    clearInterval(countdown);
 
-    document.getElementById("communicationForm").submit();
+    let communicationResults = [];
+
+    cards.forEach((card,index)=>{
+
+        let answer = "";
+
+        const selected = card.querySelector(
+            "input[type='radio']:checked"
+        );
+
+        if(selected){
+            answer = selected.value;
+        }
+
+
+        const textarea = card.querySelector("textarea");
+
+        if(textarea && textarea.value.trim() !== ""){
+            answer = textarea.value;
+        }
+
+
+        communicationResults.push({
+
+            question:index + 1,
+
+            answer:answer,
+
+            type:card.querySelector(
+                ".text-violet-300"
+            )?.innerText || "Communication",
+
+            marks:
+            card.querySelector(
+                ".text-pink-300"
+            )?.innerText || "0 Marks"
+
+        });
+
+
+    });
+
+
+    sessionStorage.setItem(
+        "communicationResults",
+        JSON.stringify(communicationResults)
+    );
+
+
+    window.location.href =
+    "{% url 'communication_result' %}";
+
+
 }
 
 </script>
