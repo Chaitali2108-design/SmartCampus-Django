@@ -26,7 +26,7 @@
 
     <!-- Summary Cards -->
 
-    <div class="grid md:grid-cols-4 gap-6 mb-10">
+    <div id="summaryCards" class="grid md:grid-cols-4 gap-6 mb-10">
       <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
         <p class="text-gray-400">Total Questions</p>
 
@@ -107,7 +107,7 @@
     <div class="rounded-3xl bg-white/5 border border-white/10 p-8">
       <h2 class="text-2xl font-bold mb-6">Response Summary</h2>
 
-      <div class="space-y-4">
+      <div id="questionResults" class="space-y-4">
         {% for answer in answers %}
 
         <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
@@ -151,5 +151,140 @@
     </div>
   </div>
 </div>
+
+<script>
+  const results =
+    JSON.parse(sessionStorage.getItem("communicationResults")) || [];
+
+  const summaryCards = document.getElementById("summaryCards");
+
+  const questionResults = document.getElementById("questionResults");
+
+  let answered = results.filter((r) => r.answer !== "").length;
+
+  let skipped = results.length - answered;
+
+  let percentage = results.length
+    ? Math.round((answered / results.length) * 100)
+    : 0;
+
+  summaryCards.innerHTML = `
+
+
+<div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+
+<p class="text-gray-400">
+Total Questions
+</p>
+
+<h2 class="text-4xl font-bold text-sky-400 mt-3">
+${results.length}
+</h2>
+
+</div>
+
+
+
+<div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+
+<p class="text-gray-400">
+Answered
+</p>
+
+<h2 class="text-4xl font-bold text-green-400 mt-3">
+${answered}
+</h2>
+
+</div>
+
+
+
+<div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+
+<p class="text-gray-400">
+Skipped
+</p>
+
+<h2 class="text-4xl font-bold text-red-400 mt-3">
+${skipped}
+</h2>
+
+</div>
+
+
+
+<div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+
+<p class="text-gray-400">
+Completion
+</p>
+
+<h2 class="text-4xl font-bold text-yellow-400 mt-3">
+${percentage}%
+</h2>
+
+</div>
+
+
+`;
+
+  results.forEach((item, index) => {
+    questionResults.innerHTML += `
+
+
+<div class="rounded-3xl bg-white/5 border border-white/10 p-8">
+
+
+<div class="flex justify-between mb-6">
+
+
+<h2 class="text-2xl font-bold">
+Question ${index + 1}
+</h2>
+
+
+
+<span class="
+px-5 py-2 rounded-full
+
+${item.answer ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}
+
+">
+
+${item.status}
+
+</span>
+
+
+</div>
+
+
+
+<div>
+
+
+<p class="text-gray-400 mb-2">
+Your Answer
+</p>
+
+
+<div class="rounded-2xl bg-[#1C1A2D] p-5 text-gray-300">
+
+
+${item.answer || "Not Answered"}
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+`;
+  });
+</script>
 
 {% endblock %}
