@@ -1,0 +1,113 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+  <div class="max-w-6xl mx-auto px-8 py-16">
+    <!-- Success Card -->
+
+    <div
+      class="rounded-[36px] bg-white/5 border border-white/10 backdrop-blur-xl p-12 text-center"
+    >
+      <div
+        class="mx-auto w-28 h-28 rounded-full bg-green-500/20 border border-green-400 flex items-center justify-center"
+      >
+        <svg
+          class="w-14 h-14 text-green-400"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+      </div>
+
+      <h1 class="text-4xl font-bold mt-8">
+        Communication Assessment Submitted
+      </h1>
+
+      <p class="text-gray-400 mt-4 text-lg">
+        Your responses have been submitted successfully.
+      </p>
+
+      <div
+        class="inline-flex mt-8 px-5 py-2 rounded-full bg-yellow-500/20 border border-yellow-400 text-yellow-300 font-medium"
+      >
+        Under Evaluation
+      </div>
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="grid grid-cols-4 gap-6 mt-10">
+      <div class="rounded-3xl bg-white/5 border border-white/10 p-8">
+        <p class="text-gray-400 text-sm">Questions Answered</p>
+
+        <h2 class="text-4xl font-bold mt-3">{{ answered }}</h2>
+      </div>
+
+      <div class="rounded-3xl bg-white/5 border border-white/10 p-8">
+        <p class="text-gray-400 text-sm">Questions Skipped</p>
+
+        <h2 class="text-4xl font-bold mt-3">{{ skipped }}</h2>
+      </div>
+
+      <div class="rounded-3xl bg-white/5 border border-white/10 p-8">
+        <p class="text-gray-400 text-sm">Time Used</p>
+
+        <h2 class="text-4xl font-bold mt-3">{{ duration }}</h2>
+      </div>
+
+      <div class="rounded-3xl bg-white/5 border border-white/10 p-8">
+        <p class="text-gray-400 text-sm">Evaluation</p>
+
+        <h2 class="text-2xl font-bold mt-4 text-yellow-300">Pending</h2>
+      </div>
+    </div>
+
+    <!-- Information -->
+
+    <div
+      class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-10 mt-10"
+    >
+      <h2 class="text-2xl font-semibold mb-6">What Happens Next?</h2>
+
+      <div class="space-y-5 text-gray-300 leading-8">
+        <p>• Your grammar answers will be reviewed automatically.</p>
+
+        <p>
+          • Email writing, listening and thought expression responses will be
+          evaluated by the placement team.
+        </p>
+
+        <p>
+          • Your communication score will be added to your placement preparation
+          profile after evaluation.
+        </p>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+
+    <div class="flex justify-center gap-6 mt-12">
+      <a
+        href="{% url 'dashboard' %}"
+        class="px-8 py-4 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/20 transition"
+      >
+        Back to Dashboard
+      </a>
+
+      <a
+        href="{% url 'preparation_home' %}"
+        class="px-8 py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-violet-500"
+      >
+        Placement Preparation
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
