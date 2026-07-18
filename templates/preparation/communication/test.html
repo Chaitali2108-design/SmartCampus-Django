@@ -881,22 +881,27 @@ const countdown = setInterval(function () {
 
 function submitTest() {
 
+    // Mark current question before submitting
     markAnswered(currentQuestion);
 
-    clearInterval(countdown);
+    const answered =
+        document.querySelectorAll('input[type="radio"]:checked').length +
+        [...document.querySelectorAll("textarea")]
+            .filter(t => t.value.trim() !== "").length;
+
+    const total = cards.length;
 
     const confirmSubmit = confirm(
-        "Are you sure you want to submit the Communication Assessment?"
+        `You have answered ${answered} out of ${total} questions.\n\nAre you sure you want to submit the Communication Assessment?`
     );
 
     if (!confirmSubmit) {
-
         return;
-
     }
 
-    document.getElementById("communicationForm").submit();
+    clearInterval(countdown);
 
+    document.getElementById("communicationForm").submit();
 }
 
 </script>
