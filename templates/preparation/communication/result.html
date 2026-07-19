@@ -26,33 +26,7 @@
 
     <!-- Summary Cards -->
 
-    <div id="summaryCards" class="grid md:grid-cols-4 gap-6 mb-10">
-      <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
-        <p class="text-gray-400">Total Questions</p>
-
-        <h2 class="text-4xl font-bold text-sky-400 mt-3">
-          {{ total_questions }}
-        </h2>
-      </div>
-
-      <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
-        <p class="text-gray-400">Answered</p>
-
-        <h2 class="text-4xl font-bold text-green-400 mt-3">{{ answered }}</h2>
-      </div>
-
-      <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
-        <p class="text-gray-400">Skipped</p>
-
-        <h2 class="text-4xl font-bold text-red-400 mt-3">{{ skipped }}</h2>
-      </div>
-
-      <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
-        <p class="text-gray-400">Status</p>
-
-        <h2 class="text-2xl font-bold text-yellow-400 mt-4">Submitted</h2>
-      </div>
-    </div>
+    <div id="summaryCards" class="grid md:grid-cols-4 gap-6 mb-10"></div>
 
     <!-- Section Performance -->
 
@@ -102,36 +76,6 @@
       </div>
     </div>
 
-    <!-- Response Summary -->
-
-    <div class="rounded-3xl bg-white/5 border border-white/10 p-8">
-      <h2 class="text-2xl font-bold mb-6">Response Summary</h2>
-
-      <div id="questionResults" class="space-y-4">
-        {% for answer in answers %}
-
-        <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
-          <div class="flex justify-between items-center">
-            <h3 class="font-semibold text-lg">
-              Question {{ forloop.counter }}
-            </h3>
-
-            <span
-              class="px-4 py-2 rounded-full {% if answer.answer %} bg-green-500/20 text-green-300 {% else %} bg-red-500/20 text-red-300 {% endif %}"
-            >
-              {% if answer.answer %} Answered {% else %} Skipped {% endif %}
-            </span>
-          </div>
-
-          <p class="text-gray-400 mt-4">
-            {{ answer.answer|default:"No response provided" }}
-          </p>
-        </div>
-
-        {% endfor %}
-      </div>
-    </div>
-
     <!-- Buttons -->
 
     <div class="flex justify-center gap-5 mt-12">
@@ -168,63 +112,41 @@
     ? Math.round((answered / results.length) * 100)
     : 0;
 
+  let totalQuestions = results.length;
+
+  // Temporary values until evaluation logic is added
+  let correctAnswered = 0;
+  let marksObtained = 0;
+
   summaryCards.innerHTML = `
 
-
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
-
-<p class="text-gray-400">
-Total Questions
-</p>
-
-<h2 class="text-4xl font-bold text-sky-400 mt-3">
-${results.length}
-</h2>
-
+    <p class="text-gray-400">Total Questions</p>
+    <h2 class="text-4xl font-bold text-sky-400 mt-3">
+        ${totalQuestions}
+    </h2>
 </div>
 
-
-
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
-
-<p class="text-gray-400">
-Answered
-</p>
-
-<h2 class="text-4xl font-bold text-green-400 mt-3">
-${answered}
-</h2>
-
+    <p class="text-gray-400">Answered</p>
+    <h2 class="text-4xl font-bold text-green-400 mt-3">
+        ${answered}
+    </h2>
 </div>
 
-
-
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
-
-<p class="text-gray-400">
-Skipped
-</p>
-
-<h2 class="text-4xl font-bold text-red-400 mt-3">
-${skipped}
-</h2>
-
+    <p class="text-gray-400">Correct Answered</p>
+    <h2 class="text-4xl font-bold text-emerald-400 mt-3">
+        ${correctAnswered}
+    </h2>
 </div>
 
-
-
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
-
-<p class="text-gray-400">
-Completion
-</p>
-
-<h2 class="text-4xl font-bold text-yellow-400 mt-3">
-${percentage}%
-</h2>
-
+    <p class="text-gray-400">Marks Obtained</p>
+    <h2 class="text-4xl font-bold text-yellow-400 mt-3">
+        ${marksObtained}
+    </h2>
 </div>
-
 
 `;
 
