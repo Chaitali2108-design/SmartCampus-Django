@@ -321,13 +321,37 @@
           ← Back
         </a>
 
+        {% if test_type == "coding" %}
+
         <a
-          id="startBtn"
-          href="{% url 'preparation_test' test_type 'test' %}?difficulty={{difficulty}}"
+          href="{% url 'coding_test' %}?difficulty={{ difficulty }}"
           class="px-8 py-3 rounded-2xl bg-pink-500 opacity-50 pointer-events-none"
+          id="startBtn"
         >
-          Start Test →
+          Start Test
         </a>
+
+        {% elif test_type == "communication" %}
+
+        <a
+          href="{% url 'communication_test' %}?difficulty={{ difficulty }}"
+          class="px-8 py-3 rounded-2xl bg-pink-500 opacity-50 pointer-events-none"
+          id="startBtn"
+        >
+          Start Test
+        </a>
+
+        {% else %}
+
+        <a
+          href="{% url 'preparation_test' test_type 'test' %}?difficulty={{ difficulty }}"
+          class="px-8 py-3 rounded-2xl bg-pink-500 opacity-50 pointer-events-none"
+          id="startBtn"
+        >
+          Start Test
+        </a>
+
+        {% endif %}
       </div>
     </div>
   </div>
