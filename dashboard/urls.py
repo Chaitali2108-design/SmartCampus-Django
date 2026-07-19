@@ -17,6 +17,17 @@ urlpatterns = [
 
     #for job preparation page
     path("preparation/", views.preparation, name="preparation"),
+    path(
+    "preparation/coding/test/",
+    views.coding_test,
+    name="coding_test",
+),
+
+path(
+    "preparation/communication/test/",
+    views.communication_test,
+    name="communication_test",
+),
     path("preparation/<str:test_type>/<str:page>/",views.preparation_test,name="preparation_test",),
     path("preparation/result/",views.preparation_result,name="preparation_result"),
     path(
@@ -33,10 +44,18 @@ urlpatterns = [
  #for communication page
 
 
+
+
+path(
+    "preparation/communication/submit/",
+    views.submit_communication_test,
+    name="submit_communication_test",
+),
+
 path(
     "preparation/communication/result/",
     views.communication_result,
-    name="communication_result"
+    name="communication_result",
 ),
 
 #for coding result
