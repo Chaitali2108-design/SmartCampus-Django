@@ -719,69 +719,9 @@ def preparation_test(request, test_type, page):
 
     profile = StudentProfile.objects.filter(user=request.user).first()
 
-    coding_questions = None
-    coding_question = None
+    
 
-    if test_type == "coding" and page == "test":
-
-        coding_questions = list(
-            CodingQuestion.objects.filter(
-                difficulty=difficulty
-            ).order_by("?")[:2]
-        )
-
-        coding_question = coding_questions[0] if coding_questions else None
-
-    if test_type == "communication":
-
-        communication_questions = []
-
-        types = [
-        ("grammar",10),
-        ("listening",2),
-        ("grammar_situation",10),
-        ("email",2),
-        ("expression",2),
-        ]
-
-
-        for q_type, count in types:
-
-            qs = list(
-            CommunicationQuestion.objects.filter(
-                difficulty=difficulty,
-                question_type=q_type
-            ).order_by("?")[:count]
-        )
-
-            communication_questions.extend(qs)
-
-
-        questions = []
-
-
-        for q in communication_questions:
-
-            questions.append({
-
-            "id": q.id,
-            "question_type": q.question_type,
-            "title": q.title,
-            "question": q.question,
-            "marks": q.marks,
-
-            "option_a": q.option_a,
-            "option_b": q.option_b,
-            "option_c": q.option_c,
-            "option_d": q.option_d,
-
-            "correct_option": q.correct_option,
-
-            "audio": q.audio.url if q.audio else "",
-
-            "expected_answer": q.expected_answer,
-
-        })
+    
 
     context = {
         "test_type": test_type,
@@ -790,8 +730,7 @@ def preparation_test(request, test_type, page):
         "assessment_date": date.today(),
         "questions":questions,
         "difficulty":difficulty,
-        "coding_questions":coding_questions,
-        "coding_question": coding_question,
+        
     }
     if page=="difficulty":
         template="preparation/shared/difficulty.html"
@@ -810,14 +749,24 @@ from .models import CodingQuestion
 @login_required
 def coding_test(request):
 
-    questions = CodingQuestion.objects.all().order_by("id")
+    difficulty = request.GET.get("difficulty", "easy").lower()
+
+    coding_questions = list(
+        CodingQuestion.objects.filter(
+            difficulty=difficulty
+        ).order_by("?")[:2]
+    )
+
+    coding_question = coding_questions[0] if coding_questions else None
 
     return render(
         request,
-        "preparation/coding/coding_test.html",
+        "preparation/coding/test.html",
         {
-            "questions": questions,
-        }
+            "coding_questions": coding_questions,
+            "coding_question": coding_question,
+            "difficulty": difficulty,
+        },
     )
 
 #for result of test
@@ -856,13 +805,132 @@ def coding_result(request):
 
 #for communication test
 
+from random import sample
+from .models import CommunicationQuestion
 
 
-def communication_result(request):
+from random import sample
+
+@login_required
+def communication_test(request):
+
+    difficulty = request.GET.get("difficulty", "easy").lower()
+
+    question_types = [
+        ("grammar", 10),
+        ("listening", 2),
+        ("grammar_situation", 10),
+        ("email", 2),
+        ("expression", 2),
+    ]
+
+    questions = []
+
+    for q_type, count in question_types:
+
+        qs = list(
+            CommunicationQuestion.objects.filter(
+                difficulty=difficulty,
+                question_type=q_type
+            )
+        )
+
+        questions.extend(
+            sample(qs, min(count, len(qs)))
+        )
 
     return render(
         request,
-        "preparation/communication/result.html"
+        "preparation/communication/test.html",
+        {
+            "questions": questions,
+            "difficulty": difficulty,
+        },
+    )
+
+@login_required
+def submit_communication_test(request):
+
+    if request.method != "POST":
+        return redirect("communication_test")   # replace with your test url name
+
+    questions = CommunicationQuestion.objects.all()
+
+    total_questions = questions.count()
+
+    answered = 0
+    correct_answered = 0
+    marks_obtained = 0
+
+    grammar_count = 0
+    listening_count = 0
+    situation_count = 0
+    email_count = 0
+    expression_count = 0
+
+    for question in questions:
+
+        answer = request.POST.get(f"question_{question.id}", "").strip()
+
+        if question.question_type == "grammar":
+            grammar_count += 1
+
+        elif question.question_type == "listening":
+            listening_count += 1
+
+        elif question.question_type == "grammar_situation":
+            situation_count += 1
+
+        elif question.question_type == "email":
+            email_count += 1
+
+        elif question.question_type == "expression":
+            expression_count += 1
+
+        if answer:
+            answered += 1
+
+        if question.question_type in ["grammar", "grammar_situation"]:
+
+            if answer == question.correct_option:
+
+                correct_answered += 1
+
+                marks_obtained += question.marks
+
+    request.session["communication_result"] = {
+
+        "total_questions": total_questions,
+
+        "answered": answered,
+
+        "correct_answered": correct_answered,
+
+        "marks_obtained": marks_obtained,
+
+        "grammar_count": grammar_count,
+
+        "listening_count": listening_count,
+
+        "situation_count": situation_count,
+
+        "email_count": email_count,
+
+        "expression_count": expression_count,
+    }
+
+    return redirect("communication_result")
+
+
+@login_required
+def communication_result(request):
+
+    result = request.session.get("communication_result", {})
+
+    return render(
+        request,
+        "preparation/communication/result.html",
+        result,
     )
 
 
