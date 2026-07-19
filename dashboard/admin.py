@@ -101,6 +101,7 @@ class CommunicationQuestionAdmin(admin.ModelAdmin):
         "question_type",
         "difficulty",
         "marks",
+        "correct_option",
     )
 
     list_filter = (
