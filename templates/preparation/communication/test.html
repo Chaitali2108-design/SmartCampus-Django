@@ -74,7 +74,11 @@
 
         <!-- Question Form -->
 
-        <form id="communicationForm" method="POST">
+        <form
+    id="communicationForm"
+    method="POST"
+    action="{% url 'submit_communication_test' %}"
+>
           {% csrf_token %} {% for q in questions %}
 
           <div
