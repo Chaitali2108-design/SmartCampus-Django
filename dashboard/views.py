@@ -890,13 +890,18 @@ def submit_communication_test(request):
         if answer:
             answered += 1
 
-        if question.question_type in ["grammar", "grammar_situation"]:
+        if answer:
 
             if answer == question.correct_option:
-
                 correct_answered += 1
-
                 marks_obtained += question.marks
+
+        percentage = 0
+
+        if total_questions > 0:
+            percentage = round(
+                (marks_obtained / sum(q.marks for q in questions)) * 100
+        )
 
     request.session["communication_result"] = {
 
@@ -907,6 +912,8 @@ def submit_communication_test(request):
         "correct_answered": correct_answered,
 
         "marks_obtained": marks_obtained,
+
+        "percentage": percentage,
 
         "grammar_count": grammar_count,
 
@@ -919,13 +926,23 @@ def submit_communication_test(request):
         "expression_count": expression_count,
     }
 
+    print("RESULT SAVED")
+    print(request.session["communication_result"])
+
+    print("COMMUNICATION RESULT:", request.session["communication_result"])
+
     return redirect("communication_result")
 
 
 @login_required
 def communication_result(request):
 
+    print("========== COMMUNICATION RESULT VIEW CALLED ==========")
+
     result = request.session.get("communication_result", {})
+
+    print("SESSION DATA:")
+    print(result)
 
     return render(
         request,
