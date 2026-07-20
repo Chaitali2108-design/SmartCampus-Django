@@ -296,7 +296,8 @@
             {% if q.audio %}
 
             <audio controls class="w-full mb-6">
-              <source src="{{ q.audio }}" />
+              <source src="{{ q.audio.url }}" type="audio/mpeg">
+                Your browser does not support audio.
             </audio>
 
             {% endif %}
