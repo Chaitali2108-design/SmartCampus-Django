@@ -848,106 +848,92 @@ def communication_test(request):
         },
     )
 
+import json
+from django.http import JsonResponse
+from .models import CommunicationQuestion
+
 @login_required
 def submit_communication_test(request):
 
-    if request.method != "POST":
-        return redirect("communication_test")   # replace with your test url name
+    if request.method == "POST":
 
-    questions = CommunicationQuestion.objects.all()
+        data=json.loads(request.body)
 
-    total_questions = questions.count()
+        results=data["results"]
 
-    answered = 0
-    correct_answered = 0
-    marks_obtained = 0
+        correct=0
+        marks=0
+        total=0
+        attempted = 0
 
-    grammar_count = 0
-    listening_count = 0
-    situation_count = 0
-    email_count = 0
-    expression_count = 0
 
-    for question in questions:
+        for item in results:
 
-        answer = request.POST.get(f"question_{question.id}", "").strip()
+            question=CommunicationQuestion.objects.get(
+                id=item["question_id"]
+            )
 
-        if question.question_type == "grammar":
-            grammar_count += 1
 
-        elif question.question_type == "listening":
-            listening_count += 1
+            total += question.marks
 
-        elif question.question_type == "grammar_situation":
-            situation_count += 1
+            if item["answer"]:
+                attempted += 1
 
-        elif question.question_type == "email":
-            email_count += 1
 
-        elif question.question_type == "expression":
-            expression_count += 1
+            if question.question_type in [
+                "grammar",
+                "grammar_situation"
+            ]:
 
-        if answer:
-            answered += 1
+                if item["answer"] == question.correct_option:
 
-        if answer:
+                    correct += 1
+                    marks += question.marks
 
-            if answer == question.correct_option:
-                correct_answered += 1
-                marks_obtained += question.marks
 
-        percentage = 0
+        request.session["communication_score"]={
+            "total_questions":len(results),
+            "attempted":attempted,
+            "correct_answered":correct,
+            "marks_obtained":marks,
+            
+        }
 
-        if total_questions > 0:
-            percentage = round(
-                (marks_obtained / sum(q.marks for q in questions)) * 100
-        )
 
-    request.session["communication_result"] = {
-
-        "total_questions": total_questions,
-
-        "answered": answered,
-
-        "correct_answered": correct_answered,
-
-        "marks_obtained": marks_obtained,
-
-        "percentage": percentage,
-
-        "grammar_count": grammar_count,
-
-        "listening_count": listening_count,
-
-        "situation_count": situation_count,
-
-        "email_count": email_count,
-
-        "expression_count": expression_count,
-    }
-
-    print("RESULT SAVED")
-    print(request.session["communication_result"])
-
-    print("COMMUNICATION RESULT:", request.session["communication_result"])
-
-    return redirect("communication_result")
+        return JsonResponse({
+            "success":True
+        })
 
 
 @login_required
 def communication_result(request):
 
-    print("========== COMMUNICATION RESULT VIEW CALLED ==========")
+    result=request.session.get(
+        "communication_score",
+        {}
+    )
 
-    result = request.session.get("communication_result", {})
-
-    print("SESSION DATA:")
-    print(result)
 
     return render(
         request,
         "preparation/communication/result.html",
-        result,
+        {
+
+        "total_questions":
+            result.get("total_questions",0),
+
+        "attempted":
+            result.get("attempted",0),
+
+        "correct_answered":
+            result.get("correct_answered",0),
+
+        "marks_obtained":
+            result.get("marks_obtained",0),
+
+        
+
+        }
     )
 
 
