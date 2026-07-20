@@ -75,11 +75,12 @@
         <!-- Question Form -->
 
         <form
-    id="communicationForm"
-    method="POST"
-    action="{% url 'submit_communication_test' %}"
->
-          {% csrf_token %} {% for q in questions %}
+          id="communicationForm"
+          method="POST"
+          action="{% url 'submit_communication_test' %}"
+        >
+          {% csrf_token %} 
+          {% for q in questions %}
 
           <div
             class="question-card rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 {% if not forloop.first %}hidden{% endif %}"
@@ -155,8 +156,8 @@
 
                 <span class="text-lg"> {{ q.option_b }} </span>
               </label>
-              {% endif %}
-               {% if q.option_c %}
+              {% endif %} 
+              {% if q.option_c %}
               <label
                 class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
               >
@@ -175,8 +176,8 @@
 
                 <span class="text-lg"> {{ q.option_c }} </span>
               </label>
-              {% endif %} 
-              {% if q.option_d %}
+              {% endif %}
+               {% if q.option_d %}
               <label
                 class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
               >
@@ -244,8 +245,8 @@
 
                 <span class="text-lg">{{ q.option_b }}</span>
               </label>
-              {% endif %}
-               {% if q.option_c %}
+              {% endif %} 
+              {% if q.option_c %}
               <label
                 class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
               >
@@ -264,8 +265,8 @@
 
                 <span class="text-lg">{{ q.option_c }}</span>
               </label>
-              {% endif %} 
-              {% if q.option_d %}
+              {% endif %}
+               {% if q.option_d %}
               <label
                 class="option-card flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/10"
               >
@@ -291,7 +292,8 @@
 
             <!-- ================= Listening ================= -->
 
-            {% if q.question_type == "listening" %} {% if q.audio %}
+            {% if q.question_type == "listening" %} 
+            {% if q.audio %}
 
             <audio controls class="w-full mb-6">
               <source src="{{ q.audio }}" />
@@ -381,7 +383,8 @@
               >
                 {{ forloop.counter }}
               </button>
-              {% endif %} {% endfor %}
+              {% endif %} 
+              {% endfor %}
             </div>
           </div>
 
@@ -399,7 +402,8 @@
               >
                 {{ forloop.counter }}
               </button>
-              {% endif %} {% endfor %}
+              {% endif %} 
+              {% endfor %}
             </div>
           </div>
 
@@ -410,8 +414,8 @@
             </h3>
 
             <div class="grid grid-cols-5 gap-3">
-              {% for q in questions %}
-               {% if q.question_type == "grammar_situation" %}
+              {% for q in questions %} 
+              {% if q.question_type == "grammar_situation" %}
               <button
                 type="button"
                 class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
@@ -419,8 +423,8 @@
               >
                 {{ forloop.counter }}
               </button>
-              {% endif %}
-               {% endfor %}
+              {% endif %} 
+              {% endfor %}
             </div>
           </div>
 
@@ -440,8 +444,8 @@
               >
                 {{ forloop.counter }}
               </button>
-              {% endif %} 
-              {% endfor %}
+              {% endif %}
+               {% endfor %}
             </div>
           </div>
 
@@ -461,7 +465,8 @@
               >
                 {{ forloop.counter }}
               </button>
-              {% endif %} {% endfor %}
+              {% endif %} 
+              {% endfor %}
             </div>
           </div>
 
@@ -740,61 +745,60 @@
   // ================= SUBMIT =================
 
   function submitTest() {
-
     markAnswered(currentQuestion);
 
     clearInterval(countdown);
 
-
     let communicationResults = [];
 
+    cards.forEach((card, index) => {
+      let answer = "";
 
-    cards.forEach((card,index)=>{
+      const selected = card.querySelector("input[type='radio']:checked");
 
-        let answer = "";
+      if (selected) {
+        answer = selected.value;
+      }
 
+      const textarea = card.querySelector("textarea");
 
-        const selected = card.querySelector(
-            "input[type='radio']:checked"
-        );
+      if (textarea && textarea.value.trim() !== "") {
+        answer = textarea.value;
+      }
 
+      communicationResults.push({
+        question_id: card.querySelector("input, textarea").name.split("_")[1],
 
-        if(selected){
-            answer = selected.value;
-        }
+        answer: answer,
 
-
-        const textarea = card.querySelector("textarea");
-
-
-        if(textarea && textarea.value.trim() !== ""){
-            answer = textarea.value;
-        }
-
-
-        communicationResults.push({
-
-            question:index+1,
-            answer:answer,
-            status: answer ? "Answered" : "Skipped"
-
-        });
-
-
+        status: answer ? "Answered" : "Skipped",
+      });
     });
 
-
     sessionStorage.setItem(
-        "communicationResults",
-        JSON.stringify(communicationResults)
+      "communicationResults",
+      JSON.stringify(communicationResults),
     );
 
+    fetch("{% url 'submit_communication_test' %}", {
+      method: "POST",
 
-    // ONLY HERE REDIRECT
-    window.location.href =
-    "{% url 'communication_result' %}";
+      headers: {
+        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]")
+          .value,
 
-}
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        results: communicationResults,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        window.location.href = "{% url 'communication_result' %}";
+      });
+  }
 </script>
 
 {% endblock %}
