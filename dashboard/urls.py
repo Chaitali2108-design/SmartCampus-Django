@@ -28,20 +28,8 @@ path(
     views.communication_test,
     name="communication_test",
 ),
-    path("preparation/<str:test_type>/<str:page>/",views.preparation_test,name="preparation_test",),
-    path("preparation/result/",views.preparation_result,name="preparation_result"),
-    path(
-    "preparation/generate-questions/",
-    views.generate_questions,
-    name="generate_questions",
-),
 
-   #coding api connect url
-   path(
-    "api/",
-    include("dashboard.api.urls")
-),
- #for communication page
+#for communication page
 
 
 
@@ -64,5 +52,19 @@ path(
     views.coding_result,
     name="coding_result",
 ),
+    path("preparation/<str:test_type>/<str:page>/",views.preparation_test,name="preparation_test",),
+    path("preparation/result/",views.preparation_result,name="preparation_result"),
+    path(
+    "preparation/generate-questions/",
+    views.generate_questions,
+    name="generate_questions",
+),
+
+   #coding api connect url
+   path(
+    "api/",
+    include("dashboard.api.urls")
+),
+ 
 ]  
     
