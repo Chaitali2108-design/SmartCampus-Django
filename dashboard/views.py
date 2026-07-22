@@ -857,51 +857,103 @@ def submit_communication_test(request):
 
     if request.method == "POST":
 
-        data=json.loads(request.body)
+        data = json.loads(request.body)
 
-        results=data["results"]
+        results = data["results"]
 
-        correct=0
-        marks=0
-        total=0
+        correct = 0
+        marks = 0
+        total = 0
         attempted = 0
 
+        pending_evaluation = 0
 
         for item in results:
 
-            question=CommunicationQuestion.objects.get(
+            question = CommunicationQuestion.objects.get(
                 id=item["question_id"]
             )
 
+            answer = item["answer"].strip()
 
             total += question.marks
 
-            if item["answer"]:
+
+            if answer:
                 attempted += 1
 
+
+            # =========================
+            # MCQ QUESTIONS
+            # =========================
 
             if question.question_type in [
                 "grammar",
                 "grammar_situation"
             ]:
 
-                if item["answer"] == question.correct_option:
-
+                if answer == question.correct_option:
                     correct += 1
                     marks += question.marks
 
 
-        request.session["communication_score"]={
-            "total_questions":len(results),
-            "attempted":attempted,
-            "correct_answered":correct,
-            "marks_obtained":marks,
-            
+
+            # =========================
+            # LISTENING
+            # =========================
+
+            elif question.question_type == "listening":
+
+                if answer:
+                    pending_evaluation += 1
+
+
+
+            # =========================
+            # EMAIL WRITING
+            # =========================
+
+            elif question.question_type == "email":
+
+                if answer:
+                    pending_evaluation += 1
+
+
+
+            # =========================
+            # EXPRESSION
+            # =========================
+
+            elif question.question_type == "expression":
+
+                if answer:
+                    pending_evaluation += 1
+
+            print("QUESTION DATA:", item)
+
+            question = CommunicationQuestion.objects.get(
+            id=item["question_id"]
+            )
+
+
+
+        request.session["communication_score"] = {
+
+            "total_questions": len(results),
+
+            "attempted": attempted,
+
+            "correct_answered": correct,
+
+            "marks_obtained": marks,
+
+            "pending_evaluation": pending_evaluation,
+
         }
 
 
         return JsonResponse({
-            "success":True
+            "success": True
         })
 
 
