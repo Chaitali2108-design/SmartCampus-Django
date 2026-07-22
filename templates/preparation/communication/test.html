@@ -85,6 +85,7 @@
           <div
             class="question-card rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 {% if not forloop.first %}hidden{% endif %}"
             data-index="{{ forloop.counter0 }}"
+            data-id="{{ q.id }}"
           >
             <!-- Header -->
 
@@ -768,12 +769,14 @@
       }
 
       communicationResults.push({
-        question_id: card.querySelector("input, textarea").name.split("_")[1],
 
-        answer: answer,
+    question_id: card.dataset.id,
 
-        status: answer ? "Answered" : "Skipped",
-      });
+    answer: answer,
+
+    status: answer ? "Answered" : "Skipped"
+
+});
     });
 
     sessionStorage.setItem(
