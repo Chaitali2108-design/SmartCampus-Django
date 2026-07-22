@@ -20,7 +20,15 @@
       <div
         class="inline-flex mt-6 px-6 py-3 rounded-full bg-yellow-500/20 border border-yellow-400/30 text-yellow-300"
       >
-        Evaluation Completed
+        {% if item.evaluated %}
+    <span class="px-4 py-2 rounded-full bg-green-500/20 text-green-300">
+        Evaluated
+    </span>
+{% else %}
+    <span class="px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-300">
+        Pending Evaluation
+    </span>
+{% endif %}
       </div>
     </div>
 
@@ -75,6 +83,52 @@
         </div>
       </div>
     </div>
+
+    <div class="rounded-3xl bg-white/5 border border-white/10 p-8 mt-10">
+    <h2 class="text-2xl font-bold mb-8">
+        Submitted Answers
+    </h2>
+
+    <div class="space-y-6">
+
+        {% for item in answers %}
+
+        <div class="rounded-2xl bg-[#1C1A2D] border border-white/10 p-6">
+
+            <div class="flex justify-between items-center mb-4">
+
+                <h3 class="font-semibold text-lg">
+                    {{ forloop.counter }}. {{ item.question.title }}
+                </h3>
+
+                <span class="px-4 py-2 rounded-full bg-pink-500/20 text-pink-300">
+                    {{ item.question.question_type|title }}
+                </span>
+
+            </div>
+
+            <p class="text-gray-400 mb-2">
+                Your Answer
+            </p>
+
+            <div class="rounded-xl bg-[#0D1117] p-4 whitespace-pre-wrap">
+
+                {% if item.answer %}
+                    {{ item.answer }}
+                {% else %}
+                    <span class="text-red-400">
+                        Not Attempted
+                    </span>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
 
     <!-- Buttons -->
 
