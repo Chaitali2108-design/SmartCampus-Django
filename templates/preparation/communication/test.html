@@ -776,13 +776,15 @@
 
     status: answer ? "Answered" : "Skipped"
 
-});
+    });
     });
 
     sessionStorage.setItem(
       "communicationResults",
       JSON.stringify(communicationResults),
     );
+
+    console.log(communicationResults);
 
     fetch("{% url 'submit_communication_test' %}", {
       method: "POST",
