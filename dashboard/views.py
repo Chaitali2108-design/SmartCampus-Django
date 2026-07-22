@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Internship
+from .models import CommunicationAnswer, Internship
 from .models import Metric
 from .models import Activity
 from .models import PlacementDrive
@@ -875,6 +875,14 @@ def submit_communication_test(request):
             )
 
             answer = item["answer"].strip()
+
+            CommunicationAnswer.objects.update_or_create(
+                user=request.user,
+                question=question,
+                defaults={
+                "answer": answer
+                }
+            )
 
             total += question.marks
 
