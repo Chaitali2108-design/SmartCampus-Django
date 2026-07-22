@@ -973,6 +973,13 @@ def communication_result(request):
         {}
     )
 
+    answers = (
+        CommunicationAnswer.objects
+        .filter(user=request.user)
+        .select_related("question")
+        .order_by("question_id")
+    )
+
 
     return render(
         request,
@@ -990,6 +997,8 @@ def communication_result(request):
 
         "marks_obtained":
             result.get("marks_obtained",0),
+
+        "answers":answers,
 
         
 
