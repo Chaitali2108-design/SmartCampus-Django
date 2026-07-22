@@ -481,3 +481,36 @@ class CommunicationQuestion(models.Model):
 
     def __str__(self):
         return f"{self.question_type} - {self.title}"
+
+
+class CommunicationAnswer(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    question = models.ForeignKey(
+        CommunicationQuestion,
+        on_delete=models.CASCADE
+    )
+
+    answer = models.TextField(
+        blank=True
+    )
+
+    marks_obtained = models.IntegerField(
+        default=0
+    )
+
+    evaluated = models.BooleanField(
+        default=False
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+
+    def __str__(self):
+        return f"{self.user.username} - {self.question.title}"
