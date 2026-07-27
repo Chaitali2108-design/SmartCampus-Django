@@ -704,16 +704,29 @@
   });
 
   document.querySelectorAll(".option-card").forEach((label) => {
+
     label.addEventListener("click", function () {
-      const parent = this.closest(".question-card");
 
-      parent.querySelectorAll(".option-card").forEach((card) => {
-        card.classList.remove("selected");
-      });
+        const parent = this.closest(".question-card");
 
-      this.classList.add("selected");
+
+        parent.querySelectorAll(".option-card").forEach((card) => {
+            card.classList.remove("selected");
+        });
+
+
+        this.classList.add("selected");
+
+
+        const radio = this.querySelector("input[type='radio']");
+
+        if(radio){
+            radio.checked = true;
+        }
+
     });
-  });
+
+});
 
   showQuestion(0);
 
@@ -756,11 +769,14 @@
     cards.forEach((card, index) => {
       let answer = "";
 
-      const selected = card.querySelector("input[type='radio']:checked");
+      const selected = card.querySelector(
+    "input[type='radio']:checked"
+);
 
-      if (selected) {
-        answer = selected.value;
-      }
+
+if(selected){
+    answer = selected.value.trim();
+}
 
       const textarea = card.querySelector("textarea");
 
