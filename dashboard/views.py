@@ -861,12 +861,17 @@ def submit_communication_test(request):
 
         results = data["results"]
 
+
+        CommunicationAnswer.objects.filter(
+            user=request.user
+        ).delete()
+
+
         correct = 0
         marks = 0
-        total = 0
         attempted = 0
-
         pending_evaluation = 0
+
 
         for item in results:
 
@@ -874,26 +879,23 @@ def submit_communication_test(request):
                 id=item["question_id"]
             )
 
-            answer = item["answer"].strip()
 
-            CommunicationAnswer.objects.update_or_create(
+            answer = item.get(
+                "answer",
+                ""
+            ).strip()
+
+
+            CommunicationAnswer.objects.create(
                 user=request.user,
                 question=question,
-                defaults={
-                "answer": answer
-                }
+                answer=answer
             )
-
-            total += question.marks
 
 
             if answer:
                 attempted += 1
 
-
-            # =========================
-            # MCQ QUESTIONS
-            # =========================
 
             if question.question_type in [
                 "grammar",
@@ -905,56 +907,19 @@ def submit_communication_test(request):
                     marks += question.marks
 
 
-
-            # =========================
-            # LISTENING
-            # =========================
-
-            elif question.question_type == "listening":
+            else:
 
                 if answer:
                     pending_evaluation += 1
-
-
-
-            # =========================
-            # EMAIL WRITING
-            # =========================
-
-            elif question.question_type == "email":
-
-                if answer:
-                    pending_evaluation += 1
-
-
-
-            # =========================
-            # EXPRESSION
-            # =========================
-
-            elif question.question_type == "expression":
-
-                if answer:
-                    pending_evaluation += 1
-
-            print("QUESTION DATA:", item)
-
-            question = CommunicationQuestion.objects.get(
-            id=item["question_id"]
-            )
 
 
 
         request.session["communication_score"] = {
 
             "total_questions": len(results),
-
             "attempted": attempted,
-
             "correct_answered": correct,
-
             "marks_obtained": marks,
-
             "pending_evaluation": pending_evaluation,
 
         }
@@ -968,40 +933,40 @@ def submit_communication_test(request):
 @login_required
 def communication_result(request):
 
-    result=request.session.get(
+    result = request.session.get(
         "communication_score",
         {}
     )
 
-    answers = (
-        CommunicationAnswer.objects
-        .filter(user=request.user)
-        .select_related("question")
-        .order_by("question_id")
+
+    answers = CommunicationAnswer.objects.filter(
+        user=request.user
+    ).select_related(
+        "question"
+    ).order_by(
+        "question_id"
     )
+
+
+    for item in answers:
+        print(
+            "RESULT:",
+            item.question.title,
+            "ANSWER:",
+            repr(item.answer)
+        )
 
 
     return render(
         request,
         "preparation/communication/result.html",
         {
+            "total_questions": result.get("total_questions",0),
+            "attempted": result.get("attempted",0),
+            "correct_answered": result.get("correct_answered",0),
+            "marks_obtained": result.get("marks_obtained",0),
 
-        "total_questions":
-            result.get("total_questions",0),
-
-        "attempted":
-            result.get("attempted",0),
-
-        "correct_answered":
-            result.get("correct_answered",0),
-
-        "marks_obtained":
-            result.get("marks_obtained",0),
-
-        "answers":answers,
-
-        
-
+            "answers": answers,
         }
     )
 
