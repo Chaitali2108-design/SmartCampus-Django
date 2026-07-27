@@ -21,7 +21,52 @@ from django.db.models import Count
 from datetime import date
 from .models import CommunicationQuestion
 
+#prompt for ai evaluation of communication test
+def evaluate_communication_answer(question, answer):
 
+    prompt = f"""
+Evaluate the following communication answer.
+
+Question:
+{question.question}
+
+Expected Answer:
+{question.expected_answer}
+
+Candidate Answer:
+{answer}
+
+Give score only between 0 and {question.marks}.
+
+Return only the number.
+"""
+
+
+    try:
+
+        response = client.chat.completions.create(
+
+            model="llama-3.3-70b-versatile",
+
+            messages=[
+                {
+                    "role":"user",
+                    "content":prompt
+                }
+            ]
+
+        )
+
+
+        score = response.choices[0].message.content.strip()
+
+
+        return int(score)
+
+
+    except:
+
+        return 0
 
 #for recruiter dashboard
 
@@ -917,7 +962,29 @@ def submit_communication_test(request):
             else:
 
                 if answer:
-                    pending_evaluation += 1
+
+                    marks_obtained = evaluate_communication_answer(
+                    question,
+                    answer
+                    )
+
+
+                    CommunicationAnswer.objects.filter(
+                    user=request.user,
+                    question=question
+                    ).update(
+
+                        marks_obtained=marks_obtained,
+
+                        evaluated=True
+
+                    )
+
+
+                    marks += marks_obtained
+
+                    if marks_obtained > 0:
+                        correct += 1
 
 
 
