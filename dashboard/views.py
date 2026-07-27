@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render, redirect
 from .models import CommunicationAnswer, Internship
 from .models import Metric
@@ -839,6 +841,11 @@ def communication_test(request):
             sample(qs, min(count, len(qs)))
         )
 
+    request.session["communication_question_order"] = [
+        q.id for q in questions
+]
+
+
     return render(
         request,
         "preparation/communication/test.html",
@@ -846,7 +853,7 @@ def communication_test(request):
             "questions": questions,
             "difficulty": difficulty,
         },
-    )
+)
 
 import json
 from django.http import JsonResponse
@@ -939,22 +946,37 @@ def communication_result(request):
     )
 
 
+    question_order = request.session.get(
+        "communication_question_order",
+    []
+)
+
+
     answers = CommunicationAnswer.objects.filter(
         user=request.user
     ).select_related(
         "question"
-    ).order_by(
-        "question_id"
     )
 
 
-    for item in answers:
-        print(
-            "RESULT:",
-            item.question.title,
-            "ANSWER:",
-            repr(item.answer)
-        )
+    answer_map = {
+        item.question_id: item
+        for item in answers
+    }
+
+
+    ordered_answers = []
+
+
+    for q_id in question_order:
+
+        if q_id in answer_map:
+            ordered_answers.append(
+                answer_map[q_id]
+            )
+
+
+ 
 
 
     return render(
@@ -966,7 +988,7 @@ def communication_result(request):
             "correct_answered": result.get("correct_answered",0),
             "marks_obtained": result.get("marks_obtained",0),
 
-            "answers": answers,
+            "answers": ordered_answers,
         }
     )
 
