@@ -1042,6 +1042,11 @@ def communication_result(request):
                 answer_map[q_id]
             )
 
+    total_marks = sum(
+        item.question.marks
+    for item in ordered_answers
+)
+
 
  
 
@@ -1054,7 +1059,7 @@ def communication_result(request):
             "attempted": result.get("attempted",0),
             "correct_answered": result.get("correct_answered",0),
             "marks_obtained": result.get("marks_obtained",0),
-
+            "total_marks": total_marks,
             "answers": ordered_answers,
         }
     )
