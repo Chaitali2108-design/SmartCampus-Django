@@ -20,15 +20,9 @@
       <div
         class="inline-flex mt-6 px-6 py-3 rounded-full bg-yellow-500/20 border border-yellow-400/30 text-yellow-300"
       >
-        {% if item.evaluated %}
-    <span class="px-4 py-2 rounded-full bg-green-500/20 text-green-300">
-        Evaluated
-    </span>
-{% else %}
-    <span class="px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-300">
-        Pending Evaluation
-    </span>
-{% endif %}
+        <span class="px-4 py-3 rounded-full bg-green-500/20 text-green-300">
+    Evaluation Completed
+</span>
       </div>
     </div>
 
@@ -113,15 +107,70 @@
 
             <div class="rounded-xl bg-[#0D1117] p-4 whitespace-pre-wrap">
 
-                {% if item.answer %}
-                    {{ item.answer }}
-                {% else %}
-                    <span class="text-red-400">
-                        Not Attempted
-                    </span>
-                {% endif %}
+    {% if item.answer %}
 
-            </div>
+        {{ item.answer }}
+
+    {% else %}
+
+        <span class="text-red-400">
+            Not Attempted
+        </span>
+
+    {% endif %}
+
+</div>
+
+
+<div class="flex justify-between items-center mt-5">
+
+    <div>
+        <p class="text-gray-400 text-sm">
+            Maximum Marks
+        </p>
+
+        <p class="text-lg font-bold text-white">
+            {{ item.question.marks }}
+        </p>
+    </div>
+
+
+    <div>
+        <p class="text-gray-400 text-sm">
+            Marks Obtained
+        </p>
+
+        <p class="text-lg font-bold text-yellow-400">
+            {{ item.marks_obtained }} / {{total_marks}}
+        </p>
+    </div>
+
+
+    <div>
+
+        <p class="text-gray-400 text-sm">
+            Status
+        </p>
+
+
+        {% if item.evaluated %}
+
+            <span class="px-4 py-2 rounded-full bg-green-500/20 text-green-300">
+                Evaluated
+            </span>
+
+        {% else %}
+
+            <span class="px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-300">
+                Pending
+            </span>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
 
         </div>
 
