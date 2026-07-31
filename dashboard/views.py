@@ -923,6 +923,7 @@ def submit_communication_test(request):
         marks = 0
         attempted = 0
         pending_evaluation = 0
+        total_marks = 0
 
 
         for item in results:
@@ -930,6 +931,7 @@ def submit_communication_test(request):
             question = CommunicationQuestion.objects.get(
                 id=item["question_id"]
             )
+
 
 
             answer = item.get(
@@ -994,6 +996,7 @@ def submit_communication_test(request):
             "attempted": attempted,
             "correct_answered": correct,
             "marks_obtained": marks,
+            "total_marks": 100,
             "pending_evaluation": pending_evaluation,
 
         }
@@ -1042,10 +1045,6 @@ def communication_result(request):
                 answer_map[q_id]
             )
 
-    total_marks = sum(
-        item.question.marks
-    for item in ordered_answers
-)
 
 
  
@@ -1059,7 +1058,7 @@ def communication_result(request):
             "attempted": result.get("attempted",0),
             "correct_answered": result.get("correct_answered",0),
             "marks_obtained": result.get("marks_obtained",0),
-            "total_marks": total_marks,
+            "total_marks": result.get("total_marks",100),
             "answers": ordered_answers,
         }
     )
