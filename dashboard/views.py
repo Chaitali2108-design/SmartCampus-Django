@@ -1063,7 +1063,55 @@ def communication_result(request):
             )
 
 
+    grammar_count = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "grammar"
+    )
 
+    listening_count = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "listening"
+    )
+
+    situation_count = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "grammar_situation"
+    )
+
+    email_count = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "email"
+    )
+
+    expression_count = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "expression"
+    )
+
+    grammar_attempted = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "grammar" and ans.answer.strip()
+    )
+
+    listening_attempted = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "listening" and ans.answer.strip()
+    )
+
+    situation_attempted = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "grammar_situation" and ans.answer.strip()
+    )
+
+    email_attempted = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "email" and ans.answer.strip()
+    )
+
+    expression_attempted = sum(
+        1 for ans in ordered_answers
+        if ans.question.question_type == "expression" and ans.answer.strip()
+    )
  
 
 
@@ -1076,6 +1124,17 @@ def communication_result(request):
             "correct_answered": result.get("correct_answered",0),
             "marks_obtained": result.get("marks_obtained",0),
             "total_marks": result.get("total_marks",100),
+            "grammar_count": grammar_count,
+            "listening_count": listening_count,
+            "situation_count": situation_count,
+            "email_count": email_count,
+            "expression_count": expression_count,
+            "grammar_attempted": grammar_attempted,
+            "listening_attempted": listening_attempted,
+            "situation_attempted": situation_attempted,
+            "email_attempted": email_attempted,
+            "expression_attempted": expression_attempted,
+
             "answers": ordered_answers,
         }
     )
