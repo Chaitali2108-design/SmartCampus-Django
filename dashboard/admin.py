@@ -108,3 +108,32 @@ class CommunicationQuestionAdmin(admin.ModelAdmin):
         "question_type",
         "difficulty",
     )
+
+from .models import HRQuestion, HRAnswer
+
+
+@admin.register(HRQuestion)
+class HRQuestionAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "title",
+        "question_type",
+        "difficulty",
+        "marks"
+    )
+
+    list_filter = (
+        "question_type",
+        "difficulty"
+    )
+
+
+@admin.register(HRAnswer)
+class HRAnswerAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "user",
+        "question",
+        "marks_obtained",
+        "evaluated"
+    )
