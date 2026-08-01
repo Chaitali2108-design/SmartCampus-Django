@@ -18,7 +18,7 @@
       </p>
 
       <div
-        class="inline-flex mt-6 px-6 py-3 rounded-full bg-yellow-500/20 border border-yellow-400/30 text-yellow-300"
+        class="inline-flex mt-6 px-6 py-3 rounded-full  text-yellow-300"
       >
         <span class="px-4 py-3 rounded-full bg-green-500/20 text-green-300">
     Evaluation Completed
@@ -40,7 +40,7 @@
           <p class="text-gray-400">Grammar</p>
 
           <h3 class="text-3xl font-bold text-pink-400 mt-3">
-            {{ grammar_count }}
+            {{ grammar_attempted }} / {{ grammar_count }} 
           </h3>
         </div>
 
@@ -48,7 +48,7 @@
           <p class="text-gray-400">Listening</p>
 
           <h3 class="text-3xl font-bold text-blue-400 mt-3">
-            {{ listening_count }}
+            {{ listening_attempted }} / {{ listening_count }}
           </h3>
         </div>
 
@@ -56,7 +56,7 @@
           <p class="text-gray-400">Grammar Situation</p>
 
           <h3 class="text-3xl font-bold text-yellow-400 mt-3">
-            {{ situation_count }}
+            {{ situation_attempted }} / {{ situation_count }}
           </h3>
         </div>
 
@@ -64,7 +64,7 @@
           <p class="text-gray-400">Email Writing</p>
 
           <h3 class="text-3xl font-bold text-green-400 mt-3">
-            {{ email_count }}
+            {{ email_attempted }} / {{ email_count }}
           </h3>
         </div>
 
@@ -72,7 +72,7 @@
           <p class="text-gray-400">Expression</p>
 
           <h3 class="text-3xl font-bold text-purple-400 mt-3">
-            {{ expression_count }}
+            {{ expression_attempted }} / {{ expression_count }}
           </h3>
         </div>
       </div>
