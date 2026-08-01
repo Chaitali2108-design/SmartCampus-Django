@@ -960,6 +960,23 @@ def submit_communication_test(request):
                     correct += 1
                     marks += question.marks
 
+                    CommunicationAnswer.objects.filter(
+                        user=request.user,
+                        question=question
+                    ).update(
+                        marks_obtained=question.marks,
+                        evaluated=True
+                    )
+
+                else:
+                    CommunicationAnswer.objects.filter(
+                        user=request.user,
+                        question=question
+                    ).update(
+                        marks_obtained=0,
+                        evaluated=True
+                    )
+
 
             else:
 
