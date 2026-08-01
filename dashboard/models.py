@@ -514,4 +514,91 @@ class CommunicationAnswer(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.question.title}"
-    
+
+
+class HRQuestion(models.Model):
+
+    QUESTION_TYPES = [
+        ("self_intro", "Self Introduction"),
+        ("strength_weakness", "Strengths & Weaknesses"),
+        ("career_goal", "Career Goals"),
+        ("leadership", "Leadership"),
+        ("teamwork", "Teamwork"),
+        ("problem_solving", "Problem Solving"),
+        ("behavioral", "Behavioral Questions"),
+        ("company_fit", "Company Fit"),
+    ]
+
+    DIFFICULTY_LEVELS = [
+        ("easy", "Easy"),
+        ("medium", "Medium"),
+        ("hard", "Hard"),
+    ]
+
+    question_type = models.CharField(
+        max_length=50,
+        choices=QUESTION_TYPES
+    )
+
+    difficulty = models.CharField(
+        max_length=20,
+        choices=DIFFICULTY_LEVELS
+    )
+
+    title = models.CharField(
+        max_length=200
+    )
+
+    question = models.TextField()
+
+    marks = models.IntegerField(
+        default=10
+    )
+
+    sample_answer = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+
+    def __str__(self):
+        return self.title
+
+class HRAnswer(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    question = models.ForeignKey(
+        HRQuestion,
+        on_delete=models.CASCADE
+    )
+
+    answer = models.TextField()
+
+    marks_obtained = models.IntegerField(
+        default=0
+    )
+
+    evaluated = models.BooleanField(
+        default=False
+    )
+
+    feedback = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+
+    def __str__(self):
+        return self.user.username
