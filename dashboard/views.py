@@ -1143,6 +1143,8 @@ from .models import HRQuestion, HRAnswer
 
 @login_required
 def hr_test(request):
+
+    
     difficulty = request.GET.get("difficulty", "easy")
 
     valid_difficulties = ["easy", "medium", "hard"]
@@ -1310,6 +1312,75 @@ def submit_hr_test(request):
             "marks_obtained": total_marks,
             "total_marks": 100
         }
+    )
+
+@login_required
+def hr_result(request):
+
+    question_order = request.session.get(
+        "hr_question_order",
+        []
+    )
+
+    if not question_order:
+        return redirect("hr_test")
+
+    answers = HRAnswer.objects.filter(
+        user=request.user,
+        question_id__in=question_order
+    ).select_related("question")
+
+    answer_map = {
+        answer.question_id: answer
+        for answer in answers
+    }
+
+    ordered_answers = []
+
+    for question_id in question_order:
+
+        answer = answer_map.get(question_id)
+
+        if answer:
+            ordered_answers.append(answer)
+
+    total_marks = sum(
+        answer.question.marks
+        for answer in ordered_answers
+    )
+
+    marks_obtained = sum(
+        answer.marks_obtained
+        for answer in ordered_answers
+    )
+
+    attempted = sum(
+        1
+        for answer in ordered_answers
+        if answer.answer.strip()
+    )
+
+    total_questions = len(question_order)
+
+    percentage = (
+        (marks_obtained / total_marks) * 100
+        if total_marks > 0
+        else 0
+    )
+
+    context = {
+        "ordered_answers": ordered_answers,
+        "total_questions": total_questions,
+        "attempted": attempted,
+        "marks_obtained": marks_obtained,
+        "total_marks": total_marks,
+        "percentage": round(percentage, 2),
+    }
+
+    return render(
+        request,
+        "preparation/hr/result.html",
+        context
     )
 
 
