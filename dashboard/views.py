@@ -1165,7 +1165,7 @@ def hr_test(request):
 
     return render(
         request,
-        "preparation/hr/hr_test.html",
+        "preparation/hr/test.html",
         {
             "questions": questions,
             "difficulty": difficulty,
