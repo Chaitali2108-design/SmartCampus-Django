@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HR Interview Result</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-800">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="border-b border-slate-200 bg-white">
+        <div class="mx-auto max-w-7xl px-6 py-5">
+
+            <h1 class="text-2xl font-bold text-slate-900">
+                HR Interview Assessment Result
+            </h1>
+
+            <p class="mt-1 text-sm text-slate-500">
+                Review your performance and evaluation.
+            </p>
+
+        </div>
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="mx-auto max-w-7xl px-6 py-8">
+
+        <!-- ================= SUMMARY ================= -->
+
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+            <!-- Total Questions -->
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+
+                <p class="text-sm text-slate-500">
+                    Total Questions
+                </p>
+
+                <p class="mt-2 text-3xl font-bold text-slate-900">
+                    {{ total_questions }}
+                </p>
+
+            </div>
+
+
+            <!-- Attempted -->
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+
+                <p class="text-sm text-slate-500">
+                    Attempted
+                </p>
+
+                <p class="mt-2 text-3xl font-bold text-slate-900">
+                    {{ attempted }}
+                </p>
+
+            </div>
+
+
+            <!-- Marks -->
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+
+                <p class="text-sm text-slate-500">
+                    Marks Obtained
+                </p>
+
+                <p class="mt-2 text-3xl font-bold text-teal-600">
+                    {{ marks_obtained }}
+                    <span class="text-lg font-medium text-slate-400">
+                        / {{ total_marks }}
+                    </span>
+                </p>
+
+            </div>
+
+
+            <!-- Percentage -->
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+
+                <p class="text-sm text-slate-500">
+                    Percentage
+                </p>
+
+                <p class="mt-2 text-3xl font-bold text-slate-900">
+                    {{ percentage }}%
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= PERFORMANCE ================= -->
+
+        <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+            <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+
+                <div>
+
+                    <h2 class="text-lg font-semibold text-slate-900">
+                        Overall Performance
+                    </h2>
+
+                    <p class="mt-1 text-sm text-slate-500">
+                        Your HR interview assessment score.
+                    </p>
+
+                </div>
+
+
+                <!-- Score Circle -->
+
+                <div class="flex items-center gap-4">
+
+                    <div class="flex h-20 w-20 items-center justify-center rounded-full border-8 border-teal-100">
+
+                        <span class="text-lg font-bold text-teal-600">
+                            {{ percentage }}%
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        {% if percentage >= 80 %}
+
+                            <p class="font-semibold text-emerald-600">
+                                Excellent Performance
+                            </p>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                Strong overall HR interview performance.
+                            </p>
+
+                        {% elif percentage >= 60 %}
+
+                            <p class="font-semibold text-teal-600">
+                                Good Performance
+                            </p>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                You demonstrated a solid level of preparation.
+                            </p>
+
+                        {% elif percentage >= 40 %}
+
+                            <p class="font-semibold text-amber-600">
+                                Needs Improvement
+                            </p>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                Some areas require additional preparation.
+                            </p>
+
+                        {% else %}
+
+                            <p class="font-semibold text-red-600">
+                                Requires More Preparation
+                            </p>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                Review your answers and strengthen your preparation.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SUBMITTED ANSWERS ================= -->
+
+        <div class="mt-6">
+
+            <div class="mb-4">
+
+                <h2 class="text-xl font-bold text-slate-900">
+                    Submitted Answers
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Detailed evaluation of each response.
+                </p>
+
+            </div>
+
+
+            <div class="space-y-5">
+
+                {% for answer in ordered_answers %}
+
+                <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+                    <!-- Question Header -->
+
+                    <div class="border-b border-slate-100 bg-slate-50 px-5 py-4">
+
+                        <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+
+                            <div>
+
+                                <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+                                    Question {{ forloop.counter }}
+                                </p>
+
+                                <h3 class="mt-1 text-base font-semibold text-slate-900">
+                                    {{ answer.question.title }}
+                                </h3>
+
+                            </div>
+
+
+                            <div class="flex shrink-0 items-center gap-2">
+
+                                <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700">
+                                    {{ answer.question.question_type|title }}
+                                </span>
+
+                                <span class="rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold text-slate-700">
+                                    {{ answer.marks_obtained }} / {{ answer.question.marks }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Question -->
+
+                    <div class="px-5 py-5">
+
+                        <p class="text-sm font-medium text-slate-700">
+                            {{ answer.question.question }}
+                        </p>
+
+
+                        <!-- User Answer -->
+
+                        <div class="mt-5">
+
+                            <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                                Your Answer
+                            </p>
+
+                            {% if answer.answer %}
+
+                                <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+
+                                    <p class="whitespace-pre-line text-sm leading-7 text-slate-700">
+                                        {{ answer.answer }}
+                                    </p>
+
+                                </div>
+
+                            {% else %}
+
+                                <div class="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-4">
+
+                                    <p class="text-sm italic text-slate-400">
+                                        No answer provided.
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Evaluation -->
+
+                        <div class="mt-5 rounded-xl border border-slate-100 bg-slate-50 p-4">
+
+                            <div class="flex items-center justify-between">
+
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                                    Evaluation
+                                </p>
+
+                                {% if answer.evaluated %}
+
+                                    <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                                        Evaluated
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">
+                                        Pending Evaluation
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            {% if answer.feedback %}
+
+                                <p class="mt-3 text-sm leading-6 text-slate-600">
+                                    {{ answer.feedback }}
+                                </p>
+
+                            {% else %}
+
+                                <p class="mt-3 text-sm italic text-slate-400">
+                                    No feedback available.
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="rounded-2xl border border-slate-200 bg-white p-10 text-center">
+
+                    <p class="text-sm text-slate-500">
+                        No HR answers were found.
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ACTIONS ================= -->
+
+        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+
+            <a
+                href="{% url 'hr_test' %}"
+                class="rounded-xl bg-teal-600 px-6 py-3 text-center text-sm font-semibold text-white transition hover:bg-teal-700"
+            >
+                Retake HR Test
+            </a>
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="rounded-xl border border-slate-200 bg-white px-6 py-3 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
