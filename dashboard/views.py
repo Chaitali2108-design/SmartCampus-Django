@@ -1139,6 +1139,179 @@ def communication_result(request):
         }
     )
 
+from .models import HRQuestion, HRAnswer
+
+@login_required
+def hr_test(request):
+    difficulty = request.GET.get("difficulty", "easy")
+
+    valid_difficulties = ["easy", "medium", "hard"]
+
+    if difficulty not in valid_difficulties:
+        difficulty = "easy"
+
+    questions = list(
+        HRQuestion.objects.filter(
+            difficulty=difficulty
+        ).order_by("id")
+    )
+
+    # Store the exact question order for the result page
+    request.session["hr_question_order"] = [
+        question.id for question in questions
+    ]
+
+    request.session["hr_difficulty"] = difficulty
+
+    return render(
+        request,
+        "preparation/hr/hr_test.html",
+        {
+            "questions": questions,
+            "difficulty": difficulty,
+            "total_marks": sum(
+                question.marks for question in questions
+            ),
+        }
+    )
+
+def evaluate_hr_answer(answer, question):
+    """
+    Evaluate an HR interview answer.
+
+    Returns:
+        marks: marks awarded
+        feedback: evaluation feedback
+    """
+
+    if not answer or not answer.strip():
+        return 0, "No answer was provided."
+
+    answer = answer.strip()
+
+    # Temporary evaluation logic.
+    # We will improve this with proper evaluation later.
+
+    word_count = len(answer.split())
+
+    if word_count < 10:
+        marks = max(1, question.marks // 4)
+        feedback = (
+            "The answer is too brief. "
+            "Provide more explanation and relevant examples."
+        )
+
+    elif word_count < 30:
+        marks = max(1, question.marks // 2)
+        feedback = (
+            "The answer addresses the question but needs "
+            "more detail, reasoning, and specific examples."
+        )
+
+    elif word_count < 60:
+        marks = int(question.marks * 0.75)
+        feedback = (
+            "Good response. The answer provides reasonable "
+            "explanation, but could include stronger examples "
+            "and deeper reasoning."
+        )
+
+    else:
+        marks = question.marks
+        feedback = (
+            "Strong response with sufficient explanation "
+            "and relevant detail."
+        )
+
+    return marks, feedback
+
+@login_required
+def submit_hr_test(request):
+
+    if request.method != "POST":
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Invalid request method."
+            },
+            status=405
+        )
+
+    try:
+        data = json.loads(request.body)
+
+    except json.JSONDecodeError:
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Invalid JSON data."
+            },
+            status=400
+        )
+
+    answers = data.get("answers", {})
+
+    question_order = request.session.get(
+        "hr_question_order",
+        []
+    )
+
+    if not question_order:
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "HR test session has expired."
+            },
+            status=400
+        )
+
+    # Remove previous HR answers for this user
+    HRAnswer.objects.filter(
+        user=request.user
+    ).delete()
+
+    total_marks = 0
+
+    for question_id in question_order:
+
+        try:
+            question = HRQuestion.objects.get(
+                id=question_id
+            )
+        except HRQuestion.DoesNotExist:
+            continue
+
+        answer = answers.get(
+            str(question_id),
+            ""
+        )
+
+        answer = answer.strip() if answer else ""
+
+        marks_obtained, feedback = evaluate_hr_answer(
+            answer,
+            question
+        )
+
+        HRAnswer.objects.create(
+            user=request.user,
+            question=question,
+            answer=answer,
+            marks_obtained=marks_obtained,
+            evaluated=True,
+            feedback=feedback
+        )
+
+        total_marks += marks_obtained
+
+    return JsonResponse(
+        {
+            "success": True,
+            "marks_obtained": total_marks,
+            "total_marks": 100
+        }
+    )
+
 
 import json
 from django.contrib import messages
