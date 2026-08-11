@@ -1,0 +1,1137 @@
+{% extends "base.html" %} {% block content %}
+
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+
+  <!-- Header -->
+
+  <header
+    class="sticky top-0 z-50 border-b border-white/10 bg-[#140F1F]/90 backdrop-blur-xl"
+  >
+    <div
+      class="max-w-[1700px] mx-auto px-8 py-5 flex items-center justify-between"
+    >
+
+      <div>
+        <h1 class="text-3xl font-bold">
+          HR Interview Assessment
+        </h1>
+
+        <p class="text-gray-400 mt-2">
+          Placement Preparation Round
+        </p>
+      </div>
+
+
+      <div class="flex items-center gap-8">
+
+        <div class="text-center">
+          <p class="text-gray-400 text-sm">
+            Difficulty
+          </p>
+
+          <h3 class="font-semibold capitalize">
+            {{ difficulty }}
+          </h3>
+        </div>
+
+
+        <div class="text-center">
+          <p class="text-gray-400 text-sm">
+            Total Marks
+          </p>
+
+          <h3 class="font-semibold">
+            100
+          </h3>
+        </div>
+
+
+        <div
+          class="rounded-2xl bg-pink-500/10 border border-pink-500/20 px-6 py-3"
+        >
+          <p class="text-sm text-gray-300">
+            Time Left
+          </p>
+
+          <h2
+            id="timer"
+            class="text-2xl font-bold text-pink-400"
+          >
+            30:00
+          </h2>
+        </div>
+
+
+        <button
+          type="button"
+          onclick="submitTest()"
+          class="px-6 py-3 rounded-2xl bg-red-500 hover:bg-red-400 transition"
+        >
+          Submit Test
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- Main Layout -->
+
+  <div class="max-w-[1700px] mx-auto p-8">
+
+    <div class="grid grid-cols-12 gap-8 items-stretch">
+
+
+      <!-- LEFT PANEL -->
+
+      <div class="col-span-8 flex flex-col gap-8">
+
+
+        <!-- Progress Card -->
+
+        <div
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 mb-4"
+        >
+
+          <div class="flex justify-between items-center">
+
+            <span
+              id="questionNumber"
+              class="px-4 py-2 rounded-full bg-pink-500/10 text-pink-300"
+            >
+              Question 1
+            </span>
+
+
+            <span
+              id="progressText"
+              class="text-gray-400"
+            >
+              0% Completed
+            </span>
+
+          </div>
+
+
+          <div
+            class="h-3 rounded-full bg-white/10 overflow-hidden mt-6"
+          >
+
+            <div
+              id="progressBar"
+              class="h-full bg-gradient-to-r from-pink-500 to-violet-500"
+              style="width: 0%"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Question Form -->
+
+        <form
+          id="hrForm"
+          method="POST"
+          action="{% url 'submit_hr_test' %}"
+        >
+
+          {% csrf_token %}
+
+          {% for q in questions %}
+
+          <div
+            class="question-card rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 {% if not forloop.first %}hidden{% endif %}"
+            data-index="{{ forloop.counter0 }}"
+            data-id="{{ q.id }}"
+          >
+
+            <!-- Header -->
+
+            <div class="flex justify-between items-center mb-8">
+
+              <div class="flex items-center gap-4">
+
+                <span
+                  class="px-4 py-2 rounded-full bg-violet-500/20 border border-violet-400/30 text-violet-300 text-sm"
+                >
+                  {{ q.question_type|title }}
+                </span>
+
+
+                <span
+                  class="px-4 py-2 rounded-full bg-pink-500/20 border border-pink-400/30 text-pink-300 text-sm"
+                >
+                  {{ q.marks }} Marks
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- Title -->
+
+            <h2 class="text-2xl font-semibold mb-4">
+              {{ q.title }}
+            </h2>
+
+
+            <!-- Question -->
+
+            <p class="text-lg text-gray-300 leading-8 mb-8">
+              {{ q.question }}
+            </p>
+
+
+            <!-- ================= HR ANSWER ================= -->
+
+            <textarea
+              name="question_{{ q.id }}"
+              rows="9"
+              placeholder="Write your answer professionally..."
+              class="w-full rounded-2xl bg-black/20 border border-white/10 p-5 outline-none resize-none focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/30 transition"
+            ></textarea>
+
+
+            <!-- Navigation -->
+
+            <div
+              class="flex justify-between items-center mt-10 pt-8 border-t border-white/10"
+            >
+
+              <button
+                type="button"
+                class="prev-btn px-7 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+              >
+                ← Previous
+              </button>
+
+
+              <button
+                type="button"
+                class="next-btn px-8 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-violet-500 hover:scale-105 transition-all"
+              >
+                Save & Next →
+              </button>
+
+            </div>
+
+          </div>
+
+          {% endfor %}
+
+        </form>
+
+      </div>
+
+
+      <!-- ================= RIGHT PANEL ================= -->
+
+      <div class="col-span-4 flex">
+
+        <div
+          class="rounded-[32px] bg-white/5 border border-white/10 backdrop-blur-xl p-8 flex flex-col h-full w-full"
+        >
+
+          <h2 class="text-xl font-semibold mb-8">
+            Question Palette
+          </h2>
+
+
+          <!-- Self Introduction -->
+
+          <div class="mb-7">
+
+            <h3 class="text-sm font-semibold text-pink-300 mb-3">
+              Self Introduction
+            </h3>
+
+            <div class="grid grid-cols-5 gap-3">
+
+              {% for q in questions %}
+
+              {% if q.question_type == "self_intro" %}
+
+              <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+                data-index="{{ forloop.counter0 }}"
+              >
+                {{ forloop.counter }}
+              </button>
+
+              {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+
+          <!-- Strengths & Weaknesses -->
+
+          <div class="mb-7">
+
+            <h3 class="text-sm font-semibold text-blue-300 mb-3">
+              Strengths & Weaknesses
+            </h3>
+
+            <div class="grid grid-cols-5 gap-3">
+
+              {% for q in questions %}
+
+              {% if q.question_type == "strength_weakness" %}
+
+              <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+                data-index="{{ forloop.counter0 }}"
+              >
+                {{ forloop.counter }}
+              </button>
+
+              {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+
+          <!-- Career Goals -->
+
+          <div class="mb-7">
+
+            <h3 class="text-sm font-semibold text-yellow-300 mb-3">
+              Career Goals
+            </h3>
+
+            <div class="grid grid-cols-5 gap-3">
+
+              {% for q in questions %}
+
+              {% if q.question_type == "career_goal" %}
+
+              <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+                data-index="{{ forloop.counter0 }}"
+              >
+                {{ forloop.counter }}
+              </button>
+
+              {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+
+          <!-- Leadership -->
+
+          <div class="mb-7">
+
+            <h3 class="text-sm font-semibold text-green-300 mb-3">
+              Leadership
+            </h3>
+
+            <div class="grid grid-cols-5 gap-3">
+
+              {% for q in questions %}
+
+              {% if q.question_type == "leadership" %}
+
+              <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+                data-index="{{ forloop.counter0 }}"
+              >
+                {{ forloop.counter }}
+              </button>
+
+              {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+
+          <!-- Teamwork -->
+
+          <div class="mb-7">
+
+            <h3 class="text-sm font-semibold text-cyan-300 mb-3">
+              Teamwork
+            </h3>
+
+            <div class="grid grid-cols-5 gap-3">
+
+              {% for q in questions %}
+
+              {% if q.question_type == "teamwork" %}
+
+              <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+                data-index="{{ forloop.counter0 }}"
+              >
+                {{ forloop.counter }}
+              </button>
+
+              {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+
+          <!-- Problem Solving -->
+
+          <div class="mb-7">
+
+            <h3 class="text-sm font-semibold text-orange-300 mb-3">
+              Problem Solving
+            </h3>
+
+            <div class="grid grid-cols-5 gap-3">
+
+              {% for q in questions %}
+
+              {% if q.question_type == "problem_solving" %}
+
+              <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+                data-index="{{ forloop.counter0 }}"
+              >
+                {{ forloop.counter }}
+              </button>
+
+              {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+
+          <!-- Behavioral -->
+
+          <div class="mb-7">
+
+            <h3 class="text-sm font-semibold text-purple-300 mb-3">
+              Behavioral
+            </h3>
+
+            <div class="grid grid-cols-5 gap-3">
+
+              {% for q in questions %}
+
+              {% if q.question_type == "behavioral" %}
+
+              <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+                data-index="{{ forloop.counter0 }}"
+              >
+                {{ forloop.counter }}
+              </button>
+
+              {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+
+          <!-- Company Fit -->
+
+          <div>
+
+            <h3 class="text-sm font-semibold text-indigo-300 mb-3">
+              Company Fit
+            </h3>
+
+            <div class="grid grid-cols-5 gap-3">
+
+              {% for q in questions %}
+
+              {% if q.question_type == "company_fit" %}
+
+              <button
+                type="button"
+                class="palette-btn aspect-square rounded-xl border bg-white/5 border-white/10 transition"
+                data-index="{{ forloop.counter0 }}"
+              >
+                {{ forloop.counter }}
+              </button>
+
+              {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+
+          <!-- Summary -->
+
+          <div class="mt-8 pt-6 border-t border-white/10">
+
+            <h3 class="text-lg font-semibold mb-4">
+              Summary
+            </h3>
+
+
+            <div class="space-y-3">
+
+              <div class="flex justify-between">
+
+                <span class="text-gray-400">
+                  Answered
+                </span>
+
+                <span
+                  id="answeredCount"
+                  class="text-green-400"
+                >
+                  0
+                </span>
+
+              </div>
+
+
+              <div class="flex justify-between">
+
+                <span class="text-gray-400">
+                  Visited
+                </span>
+
+                <span
+                  id="visitedCount"
+                  class="text-yellow-400"
+                >
+                  1
+                </span>
+
+              </div>
+
+
+              <div class="flex justify-between">
+
+                <span class="text-gray-400">
+                  Remaining
+                </span>
+
+                <span
+                  id="remainingCount"
+                  class="text-red-400"
+                >
+                  {{ questions|length }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+
+  .option-card.selected {
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.25),
+      rgba(56, 189, 248, 0.1)
+    ) !important;
+
+    border-color: #38bdf8 !important;
+
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.25);
+  }
+
+
+  /* Current Question */
+
+  .palette-current {
+    background: rgba(236, 72, 153, 0.25) !important;
+
+    color: #f9a8d4 !important;
+
+    border-color: #ec4899 !important;
+
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.35);
+  }
+
+
+  /* Answered */
+
+  .palette-answered {
+    background: rgba(34, 197, 94, 0.2) !important;
+
+    color: #86efac !important;
+
+    border-color: #22c55e !important;
+  }
+
+
+  /* Reviewed / Visited but unanswered */
+
+  .palette-review {
+    background: rgba(234, 179, 8, 0.2) !important;
+
+    color: #fde047 !important;
+
+    border-color: #eab308 !important;
+  }
+
+
+  /* Ignored / Not visited */
+
+  .palette-unvisited {
+    background: rgba(255, 255, 255, 0.05) !important;
+
+    color: #9ca3af !important;
+
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+</style>
+
+
+<script>
+
+  let currentQuestion = 0;
+
+
+  const cards =
+    document.querySelectorAll(".question-card");
+
+
+  const paletteButtons =
+    document.querySelectorAll(".palette-btn");
+
+
+  const answeredCount =
+    document.getElementById("answeredCount");
+
+
+  const remainingCount =
+    document.getElementById("remainingCount");
+
+
+  const questionNumber =
+    document.getElementById("questionNumber");
+
+
+  const progressText =
+    document.getElementById("progressText");
+
+
+  const progressBar =
+    document.getElementById("progressBar");
+
+
+  function showQuestion(index) {
+
+    if (index < 0 || index >= cards.length)
+      return;
+
+
+    cards.forEach((card) =>
+      card.classList.add("hidden")
+    );
+
+
+    cards[index].classList.remove("hidden");
+
+
+    currentQuestion = index;
+
+
+    updateProgress();
+
+    updatePalette();
+
+  }
+
+
+  function updateProgress() {
+
+    questionNumber.textContent =
+      `Question ${currentQuestion + 1} of ${cards.length}`;
+
+
+    const percent =
+      ((currentQuestion + 1) / cards.length) * 100;
+
+
+    progressText.textContent =
+      `${Math.round(percent)}% Completed`;
+
+
+    progressBar.style.width =
+      percent + "%";
+
+  }
+
+
+  function markAnswered(index) {
+
+    const card = cards[index];
+
+
+    let answered = false;
+
+
+    const textarea =
+      card.querySelector("textarea");
+
+
+    if (
+      textarea &&
+      textarea.value.trim() !== ""
+    ) {
+
+      answered = true;
+
+    }
+
+
+    if (answered) {
+
+      paletteButtons[index]
+        .classList.remove("palette-current");
+
+      paletteButtons[index]
+        .classList.add("palette-answered");
+
+    }
+
+
+    updateSummary();
+
+  }
+
+
+  function updateSummary() {
+
+    let textAnswered = 0;
+
+
+    document
+      .querySelectorAll("textarea")
+      .forEach((textarea) => {
+
+        if (
+          textarea.value.trim() !== ""
+        ) {
+
+          textAnswered++;
+
+        }
+
+      });
+
+
+    answeredCount.textContent =
+      textAnswered;
+
+
+    document.getElementById(
+      "visitedCount"
+    ).textContent =
+      currentQuestion + 1;
+
+
+    remainingCount.textContent =
+      cards.length - textAnswered;
+
+  }
+
+
+  function updatePalette() {
+
+    paletteButtons.forEach(
+      (btn, index) => {
+
+        btn.classList.remove(
+          "palette-current",
+          "palette-answered",
+          "palette-review",
+          "palette-unvisited"
+        );
+
+
+        const textarea =
+          cards[index].querySelector(
+            "textarea"
+          );
+
+
+        const answered =
+          textarea &&
+          textarea.value.trim() !== "";
+
+
+        if (
+          index === currentQuestion
+        ) {
+
+          btn.classList.add(
+            "palette-current"
+          );
+
+        }
+
+        else if (answered) {
+
+          btn.classList.add(
+            "palette-answered"
+          );
+
+        }
+
+        else if (
+          index < currentQuestion
+        ) {
+
+          btn.classList.add(
+            "palette-review"
+          );
+
+        }
+
+        else {
+
+          btn.classList.add(
+            "palette-unvisited"
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* ================= NEXT ================= */
+
+
+  document
+    .querySelectorAll(".next-btn")
+    .forEach((btn) => {
+
+      btn.onclick = function () {
+
+        markAnswered(
+          currentQuestion
+        );
+
+
+        if (
+          currentQuestion <
+          cards.length - 1
+        ) {
+
+          showQuestion(
+            currentQuestion + 1
+          );
+
+        }
+
+      };
+
+    });
+
+
+  /* ================= PREVIOUS ================= */
+
+
+  document
+    .querySelectorAll(".prev-btn")
+    .forEach((btn) => {
+
+      btn.onclick = function () {
+
+        if (
+          currentQuestion > 0
+        ) {
+
+          showQuestion(
+            currentQuestion - 1
+          );
+
+        }
+
+      };
+
+    });
+
+
+  /* ================= PALETTE ================= */
+
+
+  paletteButtons.forEach((btn) => {
+
+    btn.onclick = function () {
+
+      markAnswered(
+        currentQuestion
+      );
+
+
+      showQuestion(
+        parseInt(
+          this.dataset.index
+        )
+      );
+
+    };
+
+  });
+
+
+  /* ================= TEXTAREA CHANGE ================= */
+
+
+  document
+    .querySelectorAll("textarea")
+    .forEach((textarea) => {
+
+      textarea.addEventListener(
+        "input",
+        function () {
+
+          updateSummary();
+
+          updatePalette();
+
+        }
+      );
+
+    });
+
+
+  /* ================= INITIALIZE ================= */
+
+
+  showQuestion(0);
+
+  updateSummary();
+
+
+  /* ================= TIMER ================= */
+
+
+  let totalSeconds = 30 * 60;
+
+
+  const timer =
+    document.getElementById("timer");
+
+
+  const countdown =
+    setInterval(function () {
+
+      const minutes =
+        Math.floor(
+          totalSeconds / 60
+        );
+
+
+      const seconds =
+        totalSeconds % 60;
+
+
+      timer.innerHTML =
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
+
+
+      if (totalSeconds <= 0) {
+
+        clearInterval(countdown);
+
+        submitTest();
+
+        return;
+
+      }
+
+
+      totalSeconds--;
+
+    }, 1000);
+
+
+  /* ================= SUBMIT ================= */
+
+
+  function submitTest() {
+
+    markAnswered(
+      currentQuestion
+    );
+
+
+    clearInterval(
+      countdown
+    );
+
+
+    let hrResults = [];
+
+
+    cards.forEach(
+      (card, index) => {
+
+        let answer = "";
+
+
+        const textarea =
+          card.querySelector(
+            "textarea"
+          );
+
+
+        if (
+          textarea &&
+          textarea.value.trim() !== ""
+        ) {
+
+          answer =
+            textarea.value.trim();
+
+        }
+
+
+        hrResults.push({
+
+          question_id:
+            card.dataset.id,
+
+          answer:
+            answer,
+
+          status:
+            answer
+              ? "Answered"
+              : "Skipped"
+
+        });
+
+      }
+    );
+
+
+    sessionStorage.setItem(
+      "hrResults",
+      JSON.stringify(
+        hrResults
+      )
+    );
+
+
+    console.log(hrResults);
+
+
+    fetch(
+      "{% url 'submit_hr_test' %}",
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "X-CSRFToken":
+            document.querySelector(
+              "[name=csrfmiddlewaretoken]"
+            ).value,
+
+          "Content-Type":
+            "application/json"
+
+        },
+
+
+        body: JSON.stringify({
+
+          results:
+            hrResults
+
+        })
+
+      }
+    )
+
+      .then(
+        (response) =>
+          response.json()
+      )
+
+      .then((data) => {
+
+        if (data.success) {
+
+          window.location.href =
+            "{% url 'hr_result' %}";
+
+        }
+
+      })
+
+      .catch((error) => {
+
+        console.error(
+          "HR Test Submission Error:",
+          error
+        );
+
+      });
+
+  }
+
+</script>
+
+
+{% endblock %}
