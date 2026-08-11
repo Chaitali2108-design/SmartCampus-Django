@@ -45,6 +45,25 @@ path(
     views.communication_result,
     name="communication_result",
 ),
+# ================= HR TEST =================
+
+path(
+    "preparation/hr/test/",
+    views.hr_test,
+    name="hr_test"
+),
+
+path(
+    "preparation/hr/submit/",
+    views.submit_hr_test,
+    name="submit_hr_test"
+),
+
+path(
+    "preparation/hr/result/",
+    views.hr_result,
+    name="hr_result"
+),
 
 #for coding result
 path(
@@ -65,6 +84,7 @@ path(
     "api/",
     include("dashboard.api.urls")
 ),
+
  
 ]  
     
