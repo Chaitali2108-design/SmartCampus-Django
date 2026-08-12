@@ -1177,55 +1177,88 @@ def hr_test(request):
         }
     )
 
-def evaluate_hr_answer(answer, question):
-    """
-    Evaluate an HR interview answer.
 
-    Returns:
-        marks: marks awarded
-        feedback: evaluation feedback
-    """
+# AI evaluation for HR interview answers
+def evaluate_hr_answer(answer, question):
 
     if not answer or not answer.strip():
         return 0, "No answer was provided."
 
-    answer = answer.strip()
+    prompt = f"""
+You are an experienced HR interviewer evaluating a candidate's interview answer.
 
-    # Temporary evaluation logic.
-    # We will improve this with proper evaluation later.
+Question Type:
+{question.question_type}
 
-    word_count = len(answer.split())
+Question:
+{question.question}
 
-    if word_count < 10:
-        marks = max(1, question.marks // 4)
-        feedback = (
-            "The answer is too brief. "
-            "Provide more explanation and relevant examples."
+Candidate Answer:
+{answer}
+
+Maximum Marks:
+{question.marks}
+
+Evaluate the candidate's answer based on:
+
+1. Relevance to the question
+2. Clarity and communication
+3. Professionalism
+4. Depth and reasoning
+5. Quality of examples or supporting points
+6. Confidence and maturity of the response
+
+Important rules:
+- Give a score strictly between 0 and {question.marks}.
+- Do not give marks simply because the answer is long.
+- A short but relevant and strong answer can receive a high score.
+- An irrelevant, generic, copied, or meaningless answer should receive a low score.
+- Do not penalize normal grammatical mistakes too heavily if the meaning is clear.
+- Judge the answer according to the question type.
+- Never give more than {question.marks} marks.
+
+Return ONLY the following format:
+
+SCORE|FEEDBACK
+
+Where:
+- SCORE is an integer between 0 and {question.marks}
+- FEEDBACK is a short professional explanation of the evaluation.
+
+Example:
+8|Good answer with clear reasoning and relevant examples, but it could provide more specific details.
+"""
+
+    try:
+
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
         )
 
-    elif word_count < 30:
-        marks = max(1, question.marks // 2)
-        feedback = (
-            "The answer addresses the question but needs "
-            "more detail, reasoning, and specific examples."
-        )
+        result = response.choices[0].message.content.strip()
 
-    elif word_count < 60:
-        marks = int(question.marks * 0.75)
-        feedback = (
-            "Good response. The answer provides reasonable "
-            "explanation, but could include stronger examples "
-            "and deeper reasoning."
-        )
+        score_text, feedback = result.split("|", 1)
 
-    else:
-        marks = question.marks
-        feedback = (
-            "Strong response with sufficient explanation "
-            "and relevant detail."
-        )
+        score = int(score_text.strip())
 
-    return marks, feedback
+        # Safety check
+        score = max(0, min(score, question.marks))
+
+        return score, feedback.strip()
+
+    except Exception as e:
+
+        print("HR AI Evaluation Error:", e)
+
+        return 0, "Unable to evaluate this answer."
+
+
 
 @login_required
 def submit_hr_test(request):
@@ -1315,52 +1348,37 @@ def submit_hr_test(request):
     )
 
 @login_required
+@login_required
 def hr_result(request):
 
-    question_order = request.session.get(
-        "hr_question_order",
-        []
-    )
-
-    if not question_order:
-        return redirect("hr_test")
-
     answers = HRAnswer.objects.filter(
-        user=request.user,
-        question_id__in=question_order
-    ).select_related("question")
+        user=request.user
+    ).select_related("question").order_by("question__id")
 
-    answer_map = {
-        answer.question_id: answer
-        for answer in answers
-    }
-
-    ordered_answers = []
-
-    for question_id in question_order:
-
-        answer = answer_map.get(question_id)
-
-        if answer:
-            ordered_answers.append(answer)
+    difficulty = request.session.get(
+        "hr_difficulty",
+        "easy"
+    )
 
     total_marks = sum(
         answer.question.marks
-        for answer in ordered_answers
+        for answer in answers
     )
 
     marks_obtained = sum(
         answer.marks_obtained
-        for answer in ordered_answers
+        for answer in answers
     )
 
-    attempted = sum(
-        1
-        for answer in ordered_answers
-        if answer.answer.strip()
-    )
+    answered_count = answers.exclude(
+        answer=""
+    ).count()
 
-    total_questions = len(question_order)
+    skipped_count = answers.filter(
+        answer=""
+    ).count()
+
+    total_questions = answers.count()
 
     percentage = (
         (marks_obtained / total_marks) * 100
@@ -1368,13 +1386,87 @@ def hr_result(request):
         else 0
     )
 
+    # ----------------------------------------
+    # Overall performance
+    # ----------------------------------------
+
+    if percentage >= 80:
+        performance = "Excellent"
+        performance_message = (
+            "You demonstrated strong HR interview readiness "
+            "with clear and relevant responses."
+        )
+
+    elif percentage >= 60:
+        performance = "Good"
+        performance_message = (
+            "You demonstrated a good level of interview "
+            "readiness, but some answers can be strengthened."
+        )
+
+    elif percentage >= 40:
+        performance = "Average"
+        performance_message = (
+            "Your responses show basic interview readiness. "
+            "Focus on providing clearer explanations and examples."
+        )
+
+    else:
+        performance = "Needs Improvement"
+        performance_message = (
+            "Your responses need significant improvement. "
+            "Practice common HR questions and provide more "
+            "structured answers."
+        )
+
+    # ----------------------------------------
+    # Answer rate
+    # ----------------------------------------
+
+    answer_rate = (
+        (answered_count / total_questions) * 100
+        if total_questions > 0
+        else 0
+    )
+
+    # ----------------------------------------
+    # Strong / weak answers
+    # ----------------------------------------
+
+    strong_answers = answers.filter(
+        marks_obtained__gte=7
+    ).count()
+
+    weak_answers = answers.filter(
+        marks_obtained__lte=4
+    ).count()
+
     context = {
-        "ordered_answers": ordered_answers,
-        "total_questions": total_questions,
-        "attempted": attempted,
-        "marks_obtained": marks_obtained,
+        "answers": answers,
+
+        "difficulty": difficulty,
+
         "total_marks": total_marks,
+
+        "marks_obtained": marks_obtained,
+
         "percentage": round(percentage, 2),
+
+        "performance": performance,
+
+        "performance_message": performance_message,
+
+        "answered_count": answered_count,
+
+        "skipped_count": skipped_count,
+
+        "total_questions": total_questions,
+
+        "answer_rate": round(answer_rate, 2),
+
+        "strong_answers": strong_answers,
+
+        "weak_answers": weak_answers,
     }
 
     return render(
