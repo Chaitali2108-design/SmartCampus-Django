@@ -10,6 +10,8 @@ urlpatterns = [
 
     path('', include('dashboard.urls')),
 
+    path('resume/', include('resume_builder.urls')),
+
     path(
         "accounts/login/",
         auth_views.LoginView.as_view(
