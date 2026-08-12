@@ -1,345 +1,523 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
 
-    <title>HR Interview Result</title>
+<div class="min-h-screen bg-[#140F1F] text-white">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+    <!-- Header -->
 
-<body class="min-h-screen bg-slate-50 text-slate-800">
+    <header class="border-b border-white/10 bg-[#140F1F]/90 backdrop-blur-xl">
 
-    <!-- ================= HEADER ================= -->
+        <div class="max-w-[1700px] mx-auto px-8 py-7">
 
-    <header class="border-b border-slate-200 bg-white">
-        <div class="mx-auto max-w-7xl px-6 py-5">
+            <div class="flex items-center justify-between">
 
-            <h1 class="text-2xl font-bold text-slate-900">
-                HR Interview Assessment Result
-            </h1>
+                <div>
+                    <h1 class="text-3xl font-bold">
+                        HR Interview Result
+                    </h1>
 
-            <p class="mt-1 text-sm text-slate-500">
-                Review your performance and evaluation.
-            </p>
+                    <p class="text-gray-400 mt-2">
+                        Placement Preparation Round
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                    <span class="px-4 py-2 rounded-full
+                        bg-violet-500/20
+                        border border-violet-400/30
+                        text-violet-300
+                        capitalize">
+
+                        {{ difficulty }}
+
+                    </span>
+
+                    <a
+                        href="{% url 'preparation' %}"
+                        class="px-6 py-3 rounded-2xl
+                        bg-white/5
+                        border border-white/10
+                        hover:bg-white/10
+                        transition"
+                    >
+                        Back to Preparation
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
+
     </header>
 
 
-    <!-- ================= MAIN ================= -->
+    <!-- Main -->
 
-    <main class="mx-auto max-w-7xl px-6 py-8">
+    <main class="max-w-[1700px] mx-auto p-8">
 
-        <!-- ================= SUMMARY ================= -->
 
-        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Score Section -->
 
-            <!-- Total Questions -->
+        <div class="grid grid-cols-12 gap-8 mb-8">
 
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
-                <p class="text-sm text-slate-500">
-                    Total Questions
+            <!-- Main Score -->
+
+            <div
+                class="col-span-5
+                rounded-[32px]
+                bg-white/5
+                border border-white/10
+                backdrop-blur-xl
+                p-10
+                flex flex-col items-center justify-center"
+            >
+
+                <p class="text-gray-400 text-lg">
+                    Your Score
                 </p>
 
-                <p class="mt-2 text-3xl font-bold text-slate-900">
-                    {{ total_questions }}
-                </p>
+                <div class="mt-5">
 
-            </div>
+                    <span class="text-7xl font-bold text-pink-400">
+                        {{ marks_obtained }}
+                    </span>
 
-
-            <!-- Attempted -->
-
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-
-                <p class="text-sm text-slate-500">
-                    Attempted
-                </p>
-
-                <p class="mt-2 text-3xl font-bold text-slate-900">
-                    {{ attempted }}
-                </p>
-
-            </div>
-
-
-            <!-- Marks -->
-
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-
-                <p class="text-sm text-slate-500">
-                    Marks Obtained
-                </p>
-
-                <p class="mt-2 text-3xl font-bold text-teal-600">
-                    {{ marks_obtained }}
-                    <span class="text-lg font-medium text-slate-400">
+                    <span class="text-3xl text-gray-500">
                         / {{ total_marks }}
                     </span>
-                </p>
 
-            </div>
+                </div>
 
-
-            <!-- Percentage -->
-
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-
-                <p class="text-sm text-slate-500">
-                    Percentage
-                </p>
-
-                <p class="mt-2 text-3xl font-bold text-slate-900">
+                <p class="text-2xl font-semibold mt-5">
                     {{ percentage }}%
                 </p>
 
+                <div
+                    class="mt-5 px-5 py-2 rounded-full
+                    bg-pink-500/10
+                    border border-pink-500/20
+                    text-pink-300"
+                >
+                    {{ performance }}
+                </div>
+
             </div>
 
-        </div>
+
+            <!-- Statistics -->
+
+            <div class="col-span-7 grid grid-cols-2 gap-6">
 
 
-        <!-- ================= PERFORMANCE ================= -->
+                <div
+                    class="rounded-[28px]
+                    bg-white/5
+                    border border-white/10
+                    p-7"
+                >
 
-        <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-
-            <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-
-                <div>
-
-                    <h2 class="text-lg font-semibold text-slate-900">
-                        Overall Performance
-                    </h2>
-
-                    <p class="mt-1 text-sm text-slate-500">
-                        Your HR interview assessment score.
+                    <p class="text-gray-400">
+                        Total Questions
                     </p>
+
+                    <h2 class="text-4xl font-bold mt-3">
+                        {{ total_questions }}
+                    </h2>
 
                 </div>
 
 
-                <!-- Score Circle -->
+                <div
+                    class="rounded-[28px]
+                    bg-white/5
+                    border border-white/10
+                    p-7"
+                >
 
-                <div class="flex items-center gap-4">
+                    <p class="text-gray-400">
+                        Answered
+                    </p>
 
-                    <div class="flex h-20 w-20 items-center justify-center rounded-full border-8 border-teal-100">
+                    <h2 class="text-4xl font-bold mt-3 text-green-400">
+                        {{ answered_count }}
+                    </h2>
 
-                        <span class="text-lg font-bold text-teal-600">
-                            {{ percentage }}%
-                        </span>
+                </div>
+
+
+                <div
+                    class="rounded-[28px]
+                    bg-white/5
+                    border border-white/10
+                    p-7"
+                >
+
+                    <p class="text-gray-400">
+                        Skipped
+                    </p>
+
+                    <h2 class="text-4xl font-bold mt-3 text-red-400">
+                        {{ skipped_count }}
+                    </h2>
+
+                </div>
+
+
+                <div
+                    class="rounded-[28px]
+                    bg-white/5
+                    border border-white/10
+                    p-7"
+                >
+
+                    <p class="text-gray-400">
+                        Difficulty
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-3 capitalize">
+                        {{ difficulty }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Performance -->
+
+        <div
+            class="rounded-[32px]
+            bg-white/5
+            border border-white/10
+            backdrop-blur-xl
+            p-8 mb-8"
+        >
+
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+
+                    <h2 class="text-xl font-semibold">
+                        Overall Performance
+                    </h2>
+
+                    <p class="text-gray-400 mt-1">
+                        HR interview assessment score
+                    </p>
+
+                </div>
+
+                <span class="text-xl font-bold text-pink-400">
+                    {{ percentage }}%
+                </span>
+
+            </div>
+
+
+            <div class="h-4 rounded-full bg-white/10 overflow-hidden">
+
+                <div
+                    class="h-full
+                    bg-gradient-to-r
+                    from-pink-500
+                    to-violet-500"
+                    style="width: {{ percentage }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= HR ANALYSIS ================= -->
+
+<div
+    class="rounded-[32px]
+    bg-white/5
+    border border-white/10
+    backdrop-blur-xl
+    p-8 mb-8"
+>
+
+    <div class="mb-7">
+
+        <h2 class="text-2xl font-semibold">
+            HR Performance Analysis
+        </h2>
+
+        <p class="text-gray-400 mt-2">
+            Analysis of your interview response performance
+        </p>
+
+    </div>
+
+
+    <!-- Performance Message -->
+
+    <div
+        class="rounded-2xl
+        bg-violet-500/5
+        border border-violet-500/20
+        p-6 mb-7"
+    >
+
+        <h3 class="text-lg font-semibold text-violet-300">
+            {{ performance }}
+        </h3>
+
+        <p class="text-gray-300 mt-2 leading-7">
+            {{ performance_message }}
+        </p>
+
+    </div>
+
+
+    <!-- Analysis Cards -->
+
+    <div class="grid grid-cols-3 gap-6">
+
+
+        <!-- Answer Rate -->
+
+        <div
+            class="rounded-2xl
+            bg-black/20
+            border border-white/10
+            p-6"
+        >
+
+            <p class="text-gray-400 text-sm">
+                Answer Rate
+            </p>
+
+            <h3 class="text-3xl font-bold mt-2 text-green-400">
+                {{ answer_rate }}%
+            </h3>
+
+        </div>
+
+
+        <!-- Strong Answers -->
+
+        <div
+            class="rounded-2xl
+            bg-black/20
+            border border-white/10
+            p-6"
+        >
+
+            <p class="text-gray-400 text-sm">
+                Strong Answers
+            </p>
+
+            <h3 class="text-3xl font-bold mt-2 text-cyan-400">
+                {{ strong_answers }}
+            </h3>
+
+        </div>
+
+
+        <!-- Weak Answers -->
+
+        <div
+            class="rounded-2xl
+            bg-black/20
+            border border-white/10
+            p-6"
+        >
+
+            <p class="text-gray-400 text-sm">
+                Answers Needing Improvement
+            </p>
+
+            <h3 class="text-3xl font-bold mt-2 text-yellow-400">
+                {{ weak_answers }}
+            </h3>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+        <!-- Question-wise Results -->
+
+        <div
+            class="rounded-[32px]
+            bg-white/5
+            border border-white/10
+            backdrop-blur-xl
+            p-8"
+        >
+
+            <div class="flex items-center justify-between mb-8">
+
+                <div>
+
+                    <h2 class="text-2xl font-semibold">
+                        Question-wise Evaluation
+                    </h2>
+
+                    <p class="text-gray-400 mt-1">
+                        Review your answers and feedback
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="space-y-6">
+
+                {% for item in answers %}
+
+                <div
+                    class="rounded-3xl
+                    bg-black/20
+                    border border-white/10
+                    p-7"
+                >
+
+                    <!-- Question Header -->
+
+                    <div class="flex justify-between items-start gap-6">
+
+                        <div class="flex-1">
+
+                            <div class="flex items-center gap-3 mb-4">
+
+                                <span
+                                    class="px-3 py-1 rounded-full
+                                    bg-violet-500/20
+                                    border border-violet-400/30
+                                    text-violet-300 text-sm"
+                                >
+                                    Question {{ forloop.counter }}
+                                </span>
+
+                                <span
+                                    class="px-3 py-1 rounded-full
+                                    bg-pink-500/20
+                                    border border-pink-400/30
+                                    text-pink-300 text-sm"
+                                >
+                                    {{ item.question.marks }} Marks
+                                </span>
+
+                            </div>
+
+                            <h3 class="text-lg font-semibold">
+                                {{ item.question.title }}
+                            </h3>
+
+                            <p class="text-gray-300 mt-3 leading-7">
+                                {{ item.question.question }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- Marks -->
+
+                        <div class="text-right min-w-[100px]">
+
+                            <p class="text-gray-500 text-sm">
+                                Score
+                            </p>
+
+                            <p class="text-3xl font-bold text-green-400 mt-1">
+                                {{ item.marks_obtained }}
+                            </p>
+
+                            <p class="text-gray-500 text-sm">
+                                / {{ item.question.marks }}
+                            </p>
+
+                        </div>
 
                     </div>
 
-                    <div>
 
-                        {% if percentage >= 80 %}
+                    <!-- Candidate Answer -->
 
-                            <p class="font-semibold text-emerald-600">
-                                Excellent Performance
-                            </p>
+                    <div class="mt-7">
 
-                            <p class="mt-1 text-sm text-slate-500">
-                                Strong overall HR interview performance.
-                            </p>
+                        <p class="text-sm text-gray-400 mb-2">
+                            Your Answer
+                        </p>
 
-                        {% elif percentage >= 60 %}
+                        {% if item.answer %}
 
-                            <p class="font-semibold text-teal-600">
-                                Good Performance
-                            </p>
-
-                            <p class="mt-1 text-sm text-slate-500">
-                                You demonstrated a solid level of preparation.
-                            </p>
-
-                        {% elif percentage >= 40 %}
-
-                            <p class="font-semibold text-amber-600">
-                                Needs Improvement
-                            </p>
-
-                            <p class="mt-1 text-sm text-slate-500">
-                                Some areas require additional preparation.
-                            </p>
+                        <div
+                            class="rounded-2xl
+                            bg-white/5
+                            border border-white/10
+                            p-5
+                            text-gray-200
+                            leading-7
+                            whitespace-pre-line"
+                        >
+                            {{ item.answer }}
+                        </div>
 
                         {% else %}
 
-                            <p class="font-semibold text-red-600">
-                                Requires More Preparation
-                            </p>
-
-                            <p class="mt-1 text-sm text-slate-500">
-                                Review your answers and strengthen your preparation.
-                            </p>
+                        <div
+                            class="rounded-2xl
+                            bg-red-500/5
+                            border border-red-500/20
+                            p-5
+                            text-red-300"
+                        >
+                            No answer was provided.
+                        </div>
 
                         {% endif %}
 
                     </div>
 
-                </div>
 
-            </div>
+                    <!-- Feedback -->
 
-        </div>
+                    {% if item.feedback %}
 
+                    <div class="mt-5">
 
-        <!-- ================= SUBMITTED ANSWERS ================= -->
-
-        <div class="mt-6">
-
-            <div class="mb-4">
-
-                <h2 class="text-xl font-bold text-slate-900">
-                    Submitted Answers
-                </h2>
-
-                <p class="mt-1 text-sm text-slate-500">
-                    Detailed evaluation of each response.
-                </p>
-
-            </div>
-
-
-            <div class="space-y-5">
-
-                {% for answer in ordered_answers %}
-
-                <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-
-                    <!-- Question Header -->
-
-                    <div class="border-b border-slate-100 bg-slate-50 px-5 py-4">
-
-                        <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-
-                            <div>
-
-                                <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
-                                    Question {{ forloop.counter }}
-                                </p>
-
-                                <h3 class="mt-1 text-base font-semibold text-slate-900">
-                                    {{ answer.question.title }}
-                                </h3>
-
-                            </div>
-
-
-                            <div class="flex shrink-0 items-center gap-2">
-
-                                <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700">
-                                    {{ answer.question.question_type|title }}
-                                </span>
-
-                                <span class="rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold text-slate-700">
-                                    {{ answer.marks_obtained }} / {{ answer.question.marks }}
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Question -->
-
-                    <div class="px-5 py-5">
-
-                        <p class="text-sm font-medium text-slate-700">
-                            {{ answer.question.question }}
+                        <p class="text-sm text-gray-400 mb-2">
+                            Feedback
                         </p>
 
-
-                        <!-- User Answer -->
-
-                        <div class="mt-5">
-
-                            <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                                Your Answer
-                            </p>
-
-                            {% if answer.answer %}
-
-                                <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
-
-                                    <p class="whitespace-pre-line text-sm leading-7 text-slate-700">
-                                        {{ answer.answer }}
-                                    </p>
-
-                                </div>
-
-                            {% else %}
-
-                                <div class="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-4">
-
-                                    <p class="text-sm italic text-slate-400">
-                                        No answer provided.
-                                    </p>
-
-                                </div>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <!-- Evaluation -->
-
-                        <div class="mt-5 rounded-xl border border-slate-100 bg-slate-50 p-4">
-
-                            <div class="flex items-center justify-between">
-
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                                    Evaluation
-                                </p>
-
-                                {% if answer.evaluated %}
-
-                                    <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
-                                        Evaluated
-                                    </span>
-
-                                {% else %}
-
-                                    <span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">
-                                        Pending Evaluation
-                                    </span>
-
-                                {% endif %}
-
-                            </div>
-
-
-                            {% if answer.feedback %}
-
-                                <p class="mt-3 text-sm leading-6 text-slate-600">
-                                    {{ answer.feedback }}
-                                </p>
-
-                            {% else %}
-
-                                <p class="mt-3 text-sm italic text-slate-400">
-                                    No feedback available.
-                                </p>
-
-                            {% endif %}
-
+                        <div
+                            class="rounded-2xl
+                            bg-violet-500/5
+                            border border-violet-500/20
+                            p-5
+                            text-gray-300
+                            leading-7"
+                        >
+                            {{ item.feedback }}
                         </div>
 
                     </div>
+
+                    {% endif %}
 
                 </div>
 
                 {% empty %}
 
-                <div class="rounded-2xl border border-slate-200 bg-white p-10 text-center">
+                <div class="text-center py-16">
 
-                    <p class="text-sm text-slate-500">
-                        No HR answers were found.
+                    <p class="text-gray-400 text-lg">
+                        No HR test result found.
                     </p>
 
                 </div>
@@ -350,29 +528,8 @@
 
         </div>
 
-
-        <!-- ================= ACTIONS ================= -->
-
-        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-
-            <a
-                href="{% url 'hr_test' %}"
-                class="rounded-xl bg-teal-600 px-6 py-3 text-center text-sm font-semibold text-white transition hover:bg-teal-700"
-            >
-                Retake HR Test
-            </a>
-
-            <a
-                href="{% url 'dashboard' %}"
-                class="rounded-xl border border-slate-200 bg-white px-6 py-3 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-            >
-                Back to Dashboard
-            </a>
-
-        </div>
-
     </main>
 
-</body>
+</div>
 
-</html>
+{% endblock %}
