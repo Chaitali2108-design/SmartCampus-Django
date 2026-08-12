@@ -1,0 +1,3348 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+
+    <div class="max-w-7xl mx-auto px-6 py-10">
+
+        <!-- ================================================= -->
+        <!-- HEADER -->
+        <!-- ================================================= -->
+
+        <div class="flex items-center justify-between mb-10">
+
+            <div>
+
+                <a
+                    href="{% url 'resume_list' %}"
+                    class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition"
+                >
+                    ← My Resumes
+                </a>
+
+                <h1 class="text-4xl font-bold mt-5">
+                    {{ resume.title }}
+                </h1>
+
+                <p class="text-gray-400 mt-2">
+                    Build your professional resume
+                </p>
+
+            </div>
+
+            <div class="flex gap-3">
+
+                <button
+                    type="button"
+                    class="px-5 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+                >
+                    Preview
+                </button>
+
+                <button
+                    type="button"
+                    class="px-5 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    Download PDF
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- MAIN BUILDER -->
+        <!-- ================================================= -->
+
+        <div class="grid grid-cols-12 gap-8">
+
+
+            <!-- ================================================= -->
+            <!-- LEFT SIDE -->
+            <!-- ================================================= -->
+
+            <div class="col-span-12 lg:col-span-7">
+
+
+                <!-- ================================================= -->
+                <!-- PERSONAL INFORMATION -->
+                <!-- ================================================= -->
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    {% csrf_token %}
+
+                    <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+                        <div class="mb-8">
+
+                            <h2 class="text-2xl font-semibold">
+                                Personal Information
+                            </h2>
+
+                            <p class="text-gray-400 text-sm mt-1">
+                                Add your basic professional information.
+                            </p>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                            <!-- Profile Photo -->
+
+                            <div class="md:col-span-2">
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    Profile Photo
+                                </label>
+
+                                <input
+                                    type="file"
+                                    name="profile_photo"
+                                    accept="image/*"
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-gray-300"
+                                >
+
+                                {% if personal_information.profile_photo %}
+
+                                    <div class="mt-3">
+
+                                        <img
+                                            src="{{ personal_information.profile_photo.url }}"
+                                            alt="Profile Photo"
+                                            class="w-20 h-20 rounded-xl object-cover border border-white/10"
+                                        >
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- Full Name -->
+
+                            <div class="md:col-span-2">
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="full_name"
+                                    value="{{ personal_information.full_name }}"
+                                    placeholder="Enter your full name"
+                                    required
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                >
+
+                            </div>
+
+
+                            <!-- Professional Title -->
+
+                            <div class="md:col-span-2">
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    Professional Title
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="professional_title"
+                                    value="{{ personal_information.professional_title }}"
+                                    placeholder="e.g. Software Engineer"
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                >
+
+                            </div>
+
+
+                            <!-- Email -->
+
+                            <div>
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value="{{ personal_information.email }}"
+                                    placeholder="you@example.com"
+                                    required
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                >
+
+                            </div>
+
+
+                            <!-- Phone -->
+
+                            <div>
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    Phone
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    value="{{ personal_information.phone }}"
+                                    placeholder="+91 XXXXX XXXXX"
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                >
+
+                            </div>
+
+
+                            <!-- Location -->
+
+                            <div class="md:col-span-2">
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    Location
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="location"
+                                    value="{{ personal_information.location }}"
+                                    placeholder="City, State, Country"
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                >
+
+                            </div>
+
+
+                            <!-- LinkedIn -->
+
+                            <div>
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    LinkedIn
+                                </label>
+
+                                <input
+                                    type="url"
+                                    name="linkedin"
+                                    value="{{ personal_information.linkedin }}"
+                                    placeholder="https://linkedin.com/in/..."
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                >
+
+                            </div>
+
+
+                            <!-- GitHub -->
+
+                            <div>
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    GitHub
+                                </label>
+
+                                <input
+                                    type="url"
+                                    name="github"
+                                    value="{{ personal_information.github }}"
+                                    placeholder="https://github.com/..."
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                >
+
+                            </div>
+
+
+                            <!-- Portfolio -->
+
+                            <div class="md:col-span-2">
+
+                                <label class="block text-sm text-gray-300 mb-2">
+                                    Portfolio Website
+                                </label>
+
+                                <input
+                                    type="url"
+                                    name="portfolio"
+                                    value="{{ personal_information.portfolio }}"
+                                    placeholder="https://yourportfolio.com"
+                                    class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- PROFESSIONAL SUMMARY -->
+                    <!-- ================================================= -->
+
+                    <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+                        <div class="mb-8">
+
+                            <h2 class="text-2xl font-semibold">
+                                Professional Summary
+                            </h2>
+
+                            <p class="text-gray-400 text-sm mt-1">
+                                Write a short summary highlighting your background,
+                                skills and career goals.
+                            </p>
+
+                        </div>
+
+                        <textarea
+                            name="summary"
+                            rows="8"
+                            placeholder="Example: Computer Engineering student with experience in Python, Django and web development..."
+                            class="w-full px-4 py-4 rounded-xl bg-black/20 border border-white/10 outline-none resize-none focus:border-purple-500/60 transition"
+                        >{{ personal_information.summary }}</textarea>
+
+                        <p class="text-xs text-gray-500 mt-3">
+                            Keep your summary concise and focused on your professional profile.
+                        </p>
+
+                    </div>
+
+
+                    <!-- SAVE PERSONAL INFORMATION -->
+
+                    <div class="flex justify-end mb-8">
+
+                        <button
+                            type="submit"
+                            class="px-8 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                        >
+                            Save Personal Information
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <!-- ================================================= -->
+                <!-- EDUCATION -->
+                <!-- ================================================= -->
+
+                <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+                    <div class="mb-8">
+
+                        <h2 class="text-2xl font-semibold">
+                            Education
+                        </h2>
+
+                        <p class="text-gray-400 text-sm mt-1">
+                            Add your academic qualifications.
+                        </p>
+
+                    </div>
+
+
+                    <!-- EXISTING EDUCATION -->
+
+                    {% for education in resume.education.all %}
+
+                        <div class="rounded-2xl border border-white/10 bg-black/20 p-6 mb-5">
+
+                            <div class="flex items-start justify-between gap-4">
+
+                                <div class="flex-1">
+
+                                    <h3 class="text-lg font-semibold">
+                                        {{ education.degree }}
+                                    </h3>
+
+                                    <p class="text-purple-400 mt-1">
+                                        {{ education.institution }}
+                                    </p>
+
+                                    {% if education.field_of_study %}
+
+                                        <p class="text-gray-400 text-sm mt-1">
+                                            {{ education.field_of_study }}
+                                        </p>
+
+                                    {% endif %}
+
+                                    <div class="text-sm text-gray-500 mt-3">
+
+                                        {% if education.start_date %}
+                                            {{ education.start_date|date:"M Y" }}
+                                        {% endif %}
+
+                                        {% if education.start_date or education.end_date or education.currently_studying %}
+                                            -
+                                        {% endif %}
+
+                                        {% if education.currently_studying %}
+                                            Present
+                                        {% elif education.end_date %}
+                                            {{ education.end_date|date:"M Y" }}
+                                        {% endif %}
+
+                                    </div>
+
+                                    {% if education.grade %}
+
+                                        <p class="text-gray-300 text-sm mt-2">
+                                            Grade: {{ education.grade }}
+                                        </p>
+
+                                    {% endif %}
+
+                                    {% if education.description %}
+
+                                        <p class="text-gray-400 text-sm mt-3 leading-6">
+                                            {{ education.description }}
+                                        </p>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'education_delete' resume.id education.id %}"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        onclick="return confirm('Delete this education record?');"
+                                        class="px-4 py-2 rounded-lg text-red-400 border border-red-400/20 hover:bg-red-400/10 transition"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    {% empty %}
+
+                        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center">
+
+                            <p class="text-gray-500">
+                                No education added yet.
+                            </p>
+
+                        </div>
+
+                    {% endfor %}
+
+
+                    <!-- ADD EDUCATION -->
+
+                    <div class="border-t border-white/10 mt-8 pt-8">
+
+                        <h3 class="text-lg font-semibold mb-6">
+                            Add Education
+                        </h3>
+
+                        <form
+                            method="POST"
+                            action="{% url 'education_add' resume.id %}"
+                            class="space-y-6"
+                        >
+
+                            {% csrf_token %}
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                                <div class="md:col-span-2">
+
+                                    <label class="block text-sm text-gray-300 mb-2">
+                                        Institution
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="institution"
+                                        placeholder="e.g. KCE's College of Engineering and Management"
+                                        required
+                                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                    >
+
+                                </div>
+
+
+                                <div>
+
+                                    <label class="block text-sm text-gray-300 mb-2">
+                                        Degree
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="degree"
+                                        placeholder="e.g. Diploma in Computer Engineering"
+                                        required
+                                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                    >
+
+                                </div>
+
+
+                                <div>
+
+                                    <label class="block text-sm text-gray-300 mb-2">
+                                        Field of Study
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="field_of_study"
+                                        placeholder="e.g. Computer Engineering"
+                                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                    >
+
+                                </div>
+
+
+                                <div>
+
+                                    <label class="block text-sm text-gray-300 mb-2">
+                                        Start Date
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        name="start_date"
+                                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                                    >
+
+                                </div>
+
+
+                                <div>
+
+                                    <label class="block text-sm text-gray-300 mb-2">
+                                        End Date
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        name="end_date"
+                                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                                    >
+
+                                </div>
+
+
+                                <div class="md:col-span-2">
+
+                                    <label class="flex items-center gap-3 cursor-pointer">
+
+                                        <input
+                                            type="checkbox"
+                                            name="currently_studying"
+                                            class="w-4 h-4 rounded border-white/20 bg-black/20"
+                                        >
+
+                                        <span class="text-sm text-gray-300">
+                                            I am currently studying here
+                                        </span>
+
+                                    </label>
+
+                                </div>
+
+
+                                <div class="md:col-span-2">
+
+                                    <label class="block text-sm text-gray-300 mb-2">
+                                        Grade / CGPA / Percentage
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="grade"
+                                        placeholder="e.g. 92.8% or 8.5 CGPA"
+                                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                                    >
+
+                                </div>
+
+
+                                <div class="md:col-span-2">
+
+                                    <label class="block text-sm text-gray-300 mb-2">
+                                        Description
+                                    </label>
+
+                                    <textarea
+                                        name="description"
+                                        rows="4"
+                                        placeholder="Add relevant coursework, achievements, activities, etc."
+                                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none resize-none focus:border-purple-500/60 transition"
+                                    ></textarea>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="flex justify-end">
+
+                                <button
+                                    type="submit"
+                                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                                >
+                                    + Add Education
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+<!-- ================================================= -->
+<!-- WORK EXPERIENCE -->
+<!-- ================================================= -->
+
+<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+
+        <div>
+            <h2 class="text-2xl font-semibold">
+                Work Experience
+            </h2>
+
+            <p class="text-gray-400 text-sm mt-1">
+                Add your previous jobs, internships, freelance work or contracts.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- EXISTING EXPERIENCE -->
+    <!-- ================================================= -->
+
+    {% for experience in resume.experiences.all %}
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-6 mb-5">
+
+            <div class="flex items-start justify-between gap-5">
+
+                <!-- Experience Information -->
+
+                <div class="flex-1">
+
+                    <div class="flex items-center gap-3 flex-wrap">
+
+                        <h3 class="text-lg font-semibold">
+                            {{ experience.job_title }}
+                        </h3>
+
+                        {% if experience.experience_type %}
+                            <span class="px-2.5 py-1 rounded-lg text-xs bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                {{ experience.get_experience_type_display }}
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+
+                    <p class="text-purple-400 mt-1">
+                        {{ experience.company }}
+                    </p>
+
+
+                    {% if experience.location %}
+                        <p class="text-gray-400 text-sm mt-1">
+                            {{ experience.location }}
+                        </p>
+                    {% endif %}
+
+
+                    <!-- Date -->
+
+                    <div class="text-sm text-gray-500 mt-3">
+
+                        {% if experience.start_date %}
+                            {{ experience.start_date|date:"M Y" }}
+                        {% endif %}
+
+                        {% if experience.start_date or experience.end_date or experience.currently_working %}
+                            -
+                        {% endif %}
+
+                        {% if experience.currently_working %}
+                            Present
+
+                        {% elif experience.end_date %}
+                            {{ experience.end_date|date:"M Y" }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Description -->
+
+                    {% if experience.description %}
+
+                        <p class="text-gray-400 text-sm mt-4 leading-6 whitespace-pre-line">
+                            {{ experience.description }}
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Delete -->
+
+                <form
+                    method="POST"
+                    action="{% url 'experience_delete' resume.id experience.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Delete this experience record?');"
+                        class="px-4 py-2 rounded-lg text-red-400 border border-red-400/20 hover:bg-red-400/10 transition"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center">
+
+            <p class="text-gray-500">
+                No work experience added yet.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- ================================================= -->
+    <!-- ADD EXPERIENCE -->
+    <!-- ================================================= -->
+
+    <div class="border-t border-white/10 mt-8 pt-8">
+
+        <h3 class="text-lg font-semibold mb-6">
+            Add Work Experience
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{% url 'experience_add' resume.id %}"
+            class="space-y-6"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                <!-- Experience Type -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Experience Type
+                    </label>
+
+                    <select
+                        name="experience_type"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                        <option value="full_time">
+                            Full-time
+                        </option>
+
+                        <option value="part_time">
+                            Part-time
+                        </option>
+
+                        <option value="internship">
+                            Internship
+                        </option>
+
+                        <option value="freelance">
+                            Freelance
+                        </option>
+
+                        <option value="contract">
+                            Contract
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Job Title -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Job Title
+                    </label>
+
+                    <input
+                        type="text"
+                        name="job_title"
+                        placeholder="e.g. Backend Developer"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Company -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Company / Organization
+                    </label>
+
+                    <input
+                        type="text"
+                        name="company"
+                        placeholder="e.g. ABC Technologies"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Location -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="e.g. Pune, Maharashtra"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Start Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Start Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="start_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- End Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        End Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="end_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Currently Working -->
+
+                <div class="md:col-span-2">
+
+                    <label class="flex items-center gap-3 cursor-pointer">
+
+                        <input
+                            type="checkbox"
+                            name="currently_working"
+                            class="w-4 h-4 rounded border-white/20 bg-black/20"
+                        >
+
+                        <span class="text-sm text-gray-300">
+                            I currently work here
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="5"
+                        placeholder="Describe your responsibilities, achievements, technologies used, and important contributions..."
+                        class="w-full px-4 py-4 rounded-xl bg-black/20 border border-white/10 outline-none resize-none focus:border-purple-500/60 transition"
+                    ></textarea>
+
+                    <p class="text-xs text-gray-500 mt-2">
+                        Focus on responsibilities, achievements and measurable results.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Add Button -->
+
+            <div class="flex justify-end">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    + Add Experience
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- SKILLS -->
+<!-- ================================================= -->
+
+<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h2 class="text-2xl font-semibold">
+            Skills
+        </h2>
+
+        <p class="text-gray-400 text-sm mt-1">
+            Add technical and professional skills.
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- EXISTING SKILLS -->
+    <!-- ================================================= -->
+
+    {% if resume.skills.all %}
+
+        <div class="flex flex-wrap gap-3 mb-8">
+
+            {% for skill in resume.skills.all %}
+
+                <div class="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-black/20 border border-white/10">
+
+                    <div>
+
+                        <span class="text-sm text-white">
+                            {{ skill.name }}
+                        </span>
+
+                        {% if skill.level %}
+                            <span class="text-xs text-gray-500 ml-2">
+                                {{ skill.level }}
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{% url 'skill_delete' resume.id skill.id %}"
+                    >
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            onclick="return confirm('Delete this skill?');"
+                            class="text-gray-500 hover:text-red-400 transition text-lg leading-none"
+                        >
+                            ×
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center mb-8">
+
+            <p class="text-gray-500">
+                No skills added yet.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ================================================= -->
+    <!-- ADD SKILL -->
+    <!-- ================================================= -->
+
+    <div class="border-t border-white/10 pt-8">
+
+        <h3 class="text-lg font-semibold mb-6">
+            Add Skill
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{% url 'skill_add' resume.id %}"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                <!-- Skill Name -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Skill
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="e.g. Python"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Skill Level -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Level
+                    </label>
+
+                    <select
+                        name="level"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                        <option value="">
+                            Select level
+                        </option>
+
+                        <option value="Beginner">
+                            Beginner
+                        </option>
+
+                        <option value="Intermediate">
+                            Intermediate
+                        </option>
+
+                        <option value="Advanced">
+                            Advanced
+                        </option>
+
+                        <option value="Expert">
+                            Expert
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- Add Button -->
+
+            <div class="flex justify-end mt-6">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    + Add Skill
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- PROJECTS -->
+<!-- ================================================= -->
+
+<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h2 class="text-2xl font-semibold">
+            Projects
+        </h2>
+
+        <p class="text-gray-400 text-sm mt-1">
+            Showcase your important academic and personal projects.
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- EXISTING PROJECTS -->
+    <!-- ================================================= -->
+
+    {% for project in resume.resume_projects.all %}
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-6 mb-5">
+
+            <div class="flex items-start justify-between gap-5">
+
+                <div class="flex-1">
+
+                    <div class="flex items-center gap-3 flex-wrap">
+
+                        <h3 class="text-lg font-semibold">
+                            {{ project.name }}
+                        </h3>
+
+                        {% if project.is_current %}
+                            <span class="px-2.5 py-1 rounded-lg text-xs bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                Current
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+
+                    {% if project.role %}
+                        <p class="text-purple-400 mt-1">
+                            {{ project.role }}
+                        </p>
+                    {% endif %}
+
+
+                    {% if project.technologies %}
+                        <p class="text-gray-400 text-sm mt-2">
+                            {{ project.technologies }}
+                        </p>
+                    {% endif %}
+
+
+                    {% if project.start_date or project.end_date or project.is_current %}
+
+                        <div class="text-sm text-gray-500 mt-3">
+
+                            {% if project.start_date %}
+                                {{ project.start_date|date:"M Y" }}
+                            {% endif %}
+
+                            {% if project.start_date or project.end_date or project.is_current %}
+                                -
+                            {% endif %}
+
+                            {% if project.is_current %}
+                                Present
+                            {% elif project.end_date %}
+                                {{ project.end_date|date:"M Y" }}
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if project.description %}
+
+                        <p class="text-gray-400 text-sm mt-4 leading-6 whitespace-pre-line">
+                            {{ project.description }}
+                        </p>
+
+                    {% endif %}
+
+
+                    <!-- Project Links -->
+
+                    {% if project.github_url or project.project_url %}
+
+                        <div class="flex gap-4 mt-4">
+
+                            {% if project.github_url %}
+
+                                <a
+                                    href="{{ project.github_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-sm text-purple-400 hover:text-purple-300 transition"
+                                >
+                                    GitHub →
+                                </a>
+
+                            {% endif %}
+
+
+                            {% if project.project_url %}
+
+                                <a
+                                    href="{{ project.project_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-sm text-purple-400 hover:text-purple-300 transition"
+                                >
+                                    Live Demo →
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Delete -->
+
+                <form
+                    method="POST"
+                    action="{% url 'project_delete' resume.id project.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Delete this project?');"
+                        class="px-4 py-2 rounded-lg text-red-400 border border-red-400/20 hover:bg-red-400/10 transition"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center mb-8">
+
+            <p class="text-gray-500">
+                No projects added yet.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- ================================================= -->
+    <!-- ADD PROJECT -->
+    <!-- ================================================= -->
+
+    <div class="border-t border-white/10 pt-8">
+
+        <h3 class="text-lg font-semibold mb-6">
+            Add Project
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{% url 'project_add' resume.id %}"
+            class="space-y-6"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                <!-- Project Name -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Project Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="e.g. Multi-Tenant SaaS Platform"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Role -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Your Role
+                    </label>
+
+                    <input
+                        type="text"
+                        name="role"
+                        placeholder="e.g. Backend Developer"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Technologies -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Technologies
+                    </label>
+
+                    <input
+                        type="text"
+                        name="technologies"
+                        placeholder="e.g. Django, Python, MySQL, Tailwind"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Start Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Start Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="start_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- End Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        End Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="end_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Current Project -->
+
+                <div class="md:col-span-2">
+
+                    <label class="flex items-center gap-3 cursor-pointer">
+
+                        <input
+                            type="checkbox"
+                            name="is_current"
+                            class="w-4 h-4 rounded border-white/20 bg-black/20"
+                        >
+
+                        <span class="text-sm text-gray-300">
+                            This project is currently ongoing
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- Project URL -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Live Project URL
+                    </label>
+
+                    <input
+                        type="url"
+                        name="project_url"
+                        placeholder="https://example.com"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- GitHub URL -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        GitHub URL
+                    </label>
+
+                    <input
+                        type="url"
+                        name="github_url"
+                        placeholder="https://github.com/username/project"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Project Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="6"
+                        required
+                        placeholder="Describe the project, your contribution, important features and technologies used..."
+                        class="w-full px-4 py-4 rounded-xl bg-black/20 border border-white/10 outline-none resize-none focus:border-purple-500/60 transition"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- Add Button -->
+
+            <div class="flex justify-end">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    + Add Project
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- CERTIFICATIONS -->
+<!-- ================================================= -->
+
+<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+    <div class="mb-8">
+
+        <h2 class="text-2xl font-semibold">
+            Certifications
+        </h2>
+
+        <p class="text-gray-400 text-sm mt-1">
+            Add your professional certifications and credentials.
+        </p>
+
+    </div>
+
+
+    <!-- EXISTING CERTIFICATIONS -->
+
+    {% for certification in resume.certifications.all %}
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-6 mb-5">
+
+            <div class="flex items-start justify-between gap-5">
+
+                <div class="flex-1">
+
+                    <h3 class="text-lg font-semibold">
+                        {{ certification.name }}
+                    </h3>
+
+                    {% if certification.issuing_organization %}
+                        <p class="text-purple-400 mt-1">
+                            {{ certification.issuing_organization }}
+                        </p>
+                    {% endif %}
+
+                    {% if certification.issue_date %}
+                        <p class="text-sm text-gray-500 mt-2">
+                            Issued {{ certification.issue_date|date:"M Y" }}
+                        </p>
+                    {% endif %}
+
+                    {% if certification.credential_id %}
+                        <p class="text-sm text-gray-400 mt-2">
+                            Credential ID:
+                            {{ certification.credential_id }}
+                        </p>
+                    {% endif %}
+
+                    {% if certification.credential_url %}
+                        <a
+                            href="{{ certification.credential_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-block text-sm text-purple-400 hover:text-purple-300 transition mt-3"
+                        >
+                            View Credential →
+                        </a>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- DELETE -->
+
+                <form
+                    method="POST"
+                    action="{% url 'certification_delete' resume.id certification.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Delete this certification?');"
+                        class="px-4 py-2 rounded-lg text-red-400 border border-red-400/20 hover:bg-red-400/10 transition"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center mb-8">
+
+            <p class="text-gray-500">
+                No certifications added yet.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- ADD CERTIFICATION -->
+
+    <div class="border-t border-white/10 pt-8">
+
+        <h3 class="text-lg font-semibold mb-6">
+            Add Certification
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{% url 'certification_add' resume.id %}"
+            class="space-y-6"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                <!-- Name -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Certification Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="e.g. Python Programming Certification"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Issuing Organization -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Issuing Organization
+                    </label>
+
+                    <input
+                        type="text"
+                        name="issuing_organization"
+                        placeholder="e.g. Google, Microsoft, Coursera"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Issue Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Issue Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="issue_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Credential ID -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Credential ID
+                    </label>
+
+                    <input
+                        type="text"
+                        name="credential_id"
+                        placeholder="e.g. ABC123XYZ"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Credential URL -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Credential URL
+                    </label>
+
+                    <input
+                        type="url"
+                        name="credential_url"
+                        placeholder="https://example.com/credential"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="flex justify-end">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    + Add Certification
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ACHIEVEMENTS -->
+<!-- ================================================= -->
+<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+    <!-- Header -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-semibold">
+            Achievements
+        </h2>
+
+        <p class="text-gray-400 text-sm mt-1">
+            Highlight awards, competitions and important achievements.
+        </p>
+    </div>
+
+
+    <!-- ================= EXISTING ACHIEVEMENTS ================= -->
+
+    {% for achievement in resume.achievements.all %}
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-6 mb-5">
+
+            <div class="flex items-start justify-between gap-5">
+
+                <!-- Achievement Information -->
+                <div class="flex-1">
+
+                    <h3 class="text-lg font-semibold">
+                        {{ achievement.title }}
+                    </h3>
+
+                    {% if achievement.date %}
+                        <p class="text-purple-400 text-sm mt-1">
+                            {{ achievement.date|date:"M Y" }}
+                        </p>
+                    {% endif %}
+
+                    {% if achievement.description %}
+                        <p class="text-gray-400 text-sm mt-3 leading-6">
+                            {{ achievement.description }}
+                        </p>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Delete -->
+                <form
+                    method="POST"
+                    action="{% url 'achievement_delete' resume.id achievement.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Delete this achievement?');"
+                        class="px-4 py-2 rounded-lg text-red-400 border border-red-400/20 hover:bg-red-400/10 transition"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center">
+
+            <p class="text-gray-500">
+                No achievements added yet.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- ================= ADD ACHIEVEMENT ================= -->
+
+    <div class="border-t border-white/10 mt-8 pt-8">
+
+        <h3 class="text-lg font-semibold mb-6">
+            Add Achievement
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{% url 'achievement_add' resume.id %}"
+            class="space-y-6"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Title -->
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Achievement Title
+                    </label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="e.g. Winner of State Level Coding Competition"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Date -->
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="4"
+                        placeholder="Describe your achievement, award, competition or recognition..."
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none resize-none focus:border-purple-500/60 transition"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- Add Button -->
+            <div class="flex justify-end">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    + Add Achievement
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- TRAINING -->
+<!-- ================================================= -->
+
+<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h2 class="text-2xl font-semibold">
+            Training
+        </h2>
+
+        <p class="text-gray-400 text-sm mt-1">
+            Add relevant courses, training programs and workshops.
+        </p>
+
+    </div>
+
+
+    <!-- ================= EXISTING TRAINING ================= -->
+
+    {% for training in resume.trainings.all %}
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-6 mb-5">
+
+            <div class="flex items-start justify-between gap-5">
+
+                <!-- Training Information -->
+
+                <div class="flex-1">
+
+                    <h3 class="text-lg font-semibold">
+                        {{ training.name }}
+                    </h3>
+
+                    {% if training.organization %}
+
+                        <p class="text-purple-400 mt-1">
+                            {{ training.organization }}
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if training.start_date or training.end_date %}
+
+                        <p class="text-sm text-gray-500 mt-3">
+
+                            {% if training.start_date %}
+                                {{ training.start_date|date:"M Y" }}
+                            {% endif %}
+
+                            {% if training.start_date or training.end_date %}
+                                -
+                            {% endif %}
+
+                            {% if training.end_date %}
+                                {{ training.end_date|date:"M Y" }}
+                            {% endif %}
+
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if training.description %}
+
+                        <p class="text-gray-400 text-sm mt-3 leading-6">
+                            {{ training.description }}
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if training.certificate_url %}
+
+                        <a
+                            href="{{ training.certificate_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-block text-sm text-purple-400 hover:text-purple-300 transition mt-3"
+                        >
+                            View Certificate →
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Delete -->
+
+                <form
+                    method="POST"
+                    action="{% url 'training_delete' resume.id training.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Delete this training record?');"
+                        class="px-4 py-2 rounded-lg text-red-400 border border-red-400/20 hover:bg-red-400/10 transition"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center">
+
+            <p class="text-gray-500">
+                No training added yet.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- ================= ADD TRAINING ================= -->
+
+    <div class="border-t border-white/10 mt-8 pt-8">
+
+        <h3 class="text-lg font-semibold mb-6">
+            Add Training
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{% url 'training_add' resume.id %}"
+            class="space-y-6"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                <!-- Training Name -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Training / Course Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="e.g. Full Stack Web Development"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Organization -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Organization / Provider
+                    </label>
+
+                    <input
+                        type="text"
+                        name="organization"
+                        placeholder="e.g. Coursera, Udemy, Google"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Start Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Start Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="start_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- End Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        End Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="end_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="4"
+                        placeholder="Describe what you learned or completed during this training..."
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none resize-none focus:border-purple-500/60 transition"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- Certificate URL -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Certificate URL
+                    </label>
+
+                    <input
+                        type="url"
+                        name="certificate_url"
+                        placeholder="https://example.com/certificate"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- Add Button -->
+
+            <div class="flex justify-end">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    + Add Training
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- VOLUNTEER EXPERIENCE -->
+<!-- ================================================= -->
+
+<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h2 class="text-2xl font-semibold">
+            Volunteer Experience
+        </h2>
+
+        <p class="text-gray-400 text-sm mt-1">
+            Add volunteering, community work or leadership experience.
+        </p>
+
+    </div>
+
+
+    <!-- ================= EXISTING VOLUNTEER EXPERIENCE ================= -->
+
+    {% for volunteer in resume.volunteer_experiences.all %}
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-6 mb-5">
+
+            <div class="flex items-start justify-between gap-5">
+
+                <!-- Information -->
+
+                <div class="flex-1">
+
+                    <h3 class="text-lg font-semibold">
+                        {{ volunteer.role }}
+                    </h3>
+
+                    <p class="text-purple-400 mt-1">
+                        {{ volunteer.organization }}
+                    </p>
+
+
+                    {% if volunteer.start_date or volunteer.end_date %}
+
+                        <p class="text-sm text-gray-500 mt-3">
+
+                            {% if volunteer.start_date %}
+                                {{ volunteer.start_date|date:"M Y" }}
+                            {% endif %}
+
+                            {% if volunteer.start_date or volunteer.end_date %}
+                                -
+                            {% endif %}
+
+                            {% if volunteer.end_date %}
+                                {{ volunteer.end_date|date:"M Y" }}
+                            {% else %}
+                                Present
+                            {% endif %}
+
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if volunteer.description %}
+
+                        <p class="text-gray-400 text-sm mt-3 leading-6">
+                            {{ volunteer.description }}
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Delete -->
+
+                <form
+                    method="POST"
+                    action="{% url 'volunteer_experience_delete' resume.id volunteer.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Delete this volunteer experience?');"
+                        class="px-4 py-2 rounded-lg text-red-400 border border-red-400/20 hover:bg-red-400/10 transition"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center">
+
+            <p class="text-gray-500">
+                No volunteer experience added yet.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- ================= ADD VOLUNTEER EXPERIENCE ================= -->
+
+    <div class="border-t border-white/10 mt-8 pt-8">
+
+        <h3 class="text-lg font-semibold mb-6">
+            Add Volunteer Experience
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{% url 'volunteer_experience_add' resume.id %}"
+            class="space-y-6"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                <!-- Organization -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Organization
+                    </label>
+
+                    <input
+                        type="text"
+                        name="organization"
+                        placeholder="e.g. NSS, NGO, Community Organization"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Role -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Role
+                    </label>
+
+                    <input
+                        type="text"
+                        name="role"
+                        placeholder="e.g. Volunteer Coordinator"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Start Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Start Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="start_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- End Date -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        End Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="end_date"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="4"
+                        placeholder="Describe your responsibilities, contributions and impact..."
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none resize-none focus:border-purple-500/60 transition"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- Add Button -->
+
+            <div class="flex justify-end">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    + Add Volunteer Experience
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- LANGUAGES -->
+<!-- ================================================= -->
+
+<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8 mb-8">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h2 class="text-2xl font-semibold">
+            Languages
+        </h2>
+
+        <p class="text-gray-400 text-sm mt-1">
+            Add languages and your proficiency level.
+        </p>
+
+    </div>
+
+
+    <!-- ================= EXISTING LANGUAGES ================= -->
+
+    {% for language in resume.languages.all %}
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-6 mb-5">
+
+            <div class="flex items-center justify-between gap-5">
+
+                <!-- Language Information -->
+
+                <div>
+
+                    <h3 class="text-lg font-semibold">
+                        {{ language.name }}
+                    </h3>
+
+                    {% if language.proficiency %}
+
+                        <p class="text-purple-400 text-sm mt-1">
+                            {{ language.proficiency }}
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Delete -->
+
+                <form
+                    method="POST"
+                    action="{% url 'language_delete' resume.id language.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Delete this language?');"
+                        class="px-4 py-2 rounded-lg text-red-400 border border-red-400/20 hover:bg-red-400/10 transition"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="rounded-2xl border border-dashed border-white/10 p-8 text-center">
+
+            <p class="text-gray-500">
+                No languages added yet.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- ================= ADD LANGUAGE ================= -->
+
+    <div class="border-t border-white/10 mt-8 pt-8">
+
+        <h3 class="text-lg font-semibold mb-6">
+            Add Language
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{% url 'language_add' resume.id %}"
+            class="space-y-6"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                <!-- Language -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Language
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="e.g. English"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 outline-none focus:border-purple-500/60 transition"
+                    >
+
+                </div>
+
+
+                <!-- Proficiency -->
+
+                <div>
+
+                    <label class="block text-sm text-gray-300 mb-2">
+                        Proficiency
+                    </label>
+
+                    <select
+                        name="proficiency"
+                        class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-white outline-none focus:border-purple-500/60 transition"
+                    >
+
+                        <option value="">
+                            Select proficiency
+                        </option>
+
+                        <option value="Basic">
+                            Basic
+                        </option>
+
+                        <option value="Conversational">
+                            Conversational
+                        </option>
+
+                        <option value="Intermediate">
+                            Intermediate
+                        </option>
+
+                        <option value="Fluent">
+                            Fluent
+                        </option>
+
+                        <option value="Native">
+                            Native
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- Add Button -->
+
+            <div class="flex justify-end">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                >
+                    + Add Language
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- RIGHT SIDE / RESUME PREVIEW -->
+            <!-- ================================================= -->
+
+            <div class="col-span-12 lg:col-span-5">
+
+                <div class="sticky top-6 rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+
+                    <div class="flex items-center justify-between mb-6">
+
+                        <h2 class="text-xl font-semibold">
+                            Resume Preview
+                        </h2>
+
+                        <span class="text-sm text-gray-400">
+                            {{ resume.template|title }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- RESUME PAPER -->
+                    <!-- ================================================= -->
+
+                    <div class="bg-white text-gray-900 rounded-xl min-h-[700px] p-8 shadow-2xl">
+
+                        {% if personal_information %}
+
+
+                            <!-- HEADER -->
+
+                            <div>
+
+                                {% if personal_information.full_name %}
+
+                                    <h1 class="text-2xl font-bold">
+                                        {{ personal_information.full_name }}
+                                    </h1>
+
+                                {% endif %}
+
+
+                                {% if personal_information.professional_title %}
+
+                                    <p class="text-purple-700 font-medium mt-1">
+                                        {{ personal_information.professional_title }}
+                                    </p>
+
+                                {% endif %}
+
+
+                                <!-- CONTACT -->
+
+                                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500 mt-4">
+
+                                    {% if personal_information.email %}
+
+                                        <span>
+                                            {{ personal_information.email }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if personal_information.phone %}
+
+                                        <span>
+                                            {{ personal_information.phone }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if personal_information.location %}
+
+                                        <span>
+                                            {{ personal_information.location }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <!-- SOCIAL LINKS -->
+
+                                {% if personal_information.linkedin or personal_information.github or personal_information.portfolio %}
+
+                                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-purple-700 mt-2">
+
+                                        {% if personal_information.linkedin %}
+
+                                            <a
+                                                href="{{ personal_information.linkedin }}"
+                                                target="_blank"
+                                                class="hover:underline"
+                                            >
+                                                LinkedIn
+                                            </a>
+
+                                        {% endif %}
+
+
+                                        {% if personal_information.github %}
+
+                                            <a
+                                                href="{{ personal_information.github }}"
+                                                target="_blank"
+                                                class="hover:underline"
+                                            >
+                                                GitHub
+                                            </a>
+
+                                        {% endif %}
+
+
+                                        {% if personal_information.portfolio %}
+
+                                            <a
+                                                href="{{ personal_information.portfolio }}"
+                                                target="_blank"
+                                                class="hover:underline"
+                                            >
+                                                Portfolio
+                                            </a>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="h-px bg-gray-200 mt-5"></div>
+
+
+                            <!-- SUMMARY -->
+
+                            {% if personal_information.summary %}
+
+                                <div class="mt-6">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Professional Summary
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+                                    <p class="text-sm text-gray-600 leading-6">
+                                        {{ personal_information.summary }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- EDUCATION -->
+
+                            {% if resume.education.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Education
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+
+                                    {% for education in resume.education.all %}
+
+                                        <div class="mb-4">
+
+                                            <div class="flex justify-between gap-3">
+
+                                                <div>
+
+                                                    <p class="font-semibold text-sm">
+                                                        {{ education.degree }}
+                                                    </p>
+
+                                                    <p class="text-sm text-gray-700">
+                                                        {{ education.institution }}
+                                                    </p>
+
+                                                    {% if education.field_of_study %}
+
+                                                        <p class="text-xs text-gray-500 mt-1">
+                                                            {{ education.field_of_study }}
+                                                        </p>
+
+                                                    {% endif %}
+
+                                                </div>
+
+
+                                                <div class="text-xs text-gray-500 whitespace-nowrap">
+
+                                                    {% if education.start_date %}
+                                                        {{ education.start_date|date:"Y" }}
+                                                    {% endif %}
+
+                                                    {% if education.start_date or education.end_date or education.currently_studying %}
+                                                        -
+                                                    {% endif %}
+
+                                                    {% if education.currently_studying %}
+                                                        Present
+                                                    {% elif education.end_date %}
+                                                        {{ education.end_date|date:"Y" }}
+                                                    {% endif %}
+
+                                                </div>
+
+                                            </div>
+
+
+                                            {% if education.grade %}
+
+                                                <p class="text-xs text-gray-500 mt-1">
+                                                    Grade: {{ education.grade }}
+                                                </p>
+
+                                            {% endif %}
+
+
+                                            {% if education.description %}
+
+                                                <p class="text-xs text-gray-600 mt-2 leading-5">
+                                                    {{ education.description }}
+                                                </p>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- EXPERIENCE -->
+
+                            {% if resume.experiences.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Experience
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+
+                                    {% for experience in resume.experiences.all %}
+
+                                        <div class="mb-5">
+
+                                            <div class="flex justify-between gap-3">
+
+                                                <div>
+
+                                                    <p class="font-semibold text-sm">
+                                                        {{ experience.job_title }}
+                                                    </p>
+
+                                                    <p class="text-sm text-gray-700">
+                                                        {{ experience.company }}
+                                                    </p>
+
+                                                    {% if experience.location %}
+
+                                                        <p class="text-xs text-gray-500 mt-1">
+                                                            {{ experience.location }}
+                                                        </p>
+
+                                                    {% endif %}
+
+                                                </div>
+
+
+                                                <div class="text-xs text-gray-500 whitespace-nowrap">
+
+                                                    {% if experience.start_date %}
+                                                        {{ experience.start_date|date:"Y" }}
+                                                    {% endif %}
+
+                                                    {% if experience.start_date or experience.end_date or experience.currently_working %}
+                                                        -
+                                                    {% endif %}
+
+                                                    {% if experience.currently_working %}
+                                                        Present
+                                                    {% elif experience.end_date %}
+                                                        {{ experience.end_date|date:"Y" }}
+                                                    {% endif %}
+
+                                                </div>
+
+                                            </div>
+
+
+                                            {% if experience.description %}
+
+                                                <p class="text-xs text-gray-600 mt-2 leading-5">
+                                                    {{ experience.description }}
+                                                </p>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- PROJECTS -->
+
+                            {% if resume.resume_projects.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Projects
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+
+                                    {% for project in resume.resume_projects.all %}
+
+                                        <div class="mb-5">
+
+                                            <div class="flex items-start justify-between gap-3">
+
+                                                <div>
+
+                                                    <p class="font-semibold text-sm">
+                                                        {{ project.name }}
+                                                    </p>
+
+                                                    {% if project.role %}
+
+                                                        <p class="text-xs text-gray-500">
+                                                            {{ project.role }}
+                                                        </p>
+
+                                                    {% endif %}
+
+                                                </div>
+
+
+                                                <div class="flex gap-2 text-xs">
+
+                                                    {% if project.github_url %}
+
+                                                        <a
+                                                            href="{{ project.github_url }}"
+                                                            target="_blank"
+                                                            class="text-purple-700 hover:underline"
+                                                        >
+                                                            GitHub
+                                                        </a>
+
+                                                    {% endif %}
+
+
+                                                    {% if project.project_url %}
+
+                                                        <a
+                                                            href="{{ project.project_url }}"
+                                                            target="_blank"
+                                                            class="text-purple-700 hover:underline"
+                                                        >
+                                                            Demo
+                                                        </a>
+
+                                                    {% endif %}
+
+                                                </div>
+
+                                            </div>
+
+
+                                            {% if project.technologies %}
+
+                                                <p class="text-xs text-gray-500 mt-1">
+                                                    {{ project.technologies }}
+                                                </p>
+
+                                            {% endif %}
+
+
+                                            {% if project.description %}
+
+                                                <p class="text-xs text-gray-600 mt-2 leading-5">
+                                                    {{ project.description }}
+                                                </p>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- SKILLS -->
+
+                            {% if resume.skills.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Skills
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+                                    <div class="flex flex-wrap gap-2">
+
+                                        {% for skill in resume.skills.all %}
+
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">
+                                                {{ skill.name }}
+                                            </span>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- CERTIFICATIONS -->
+
+                            {% if resume.certifications.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Certifications
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+
+                                    {% for certification in resume.certifications.all %}
+
+                                        <div class="mb-3">
+
+                                            <p class="font-semibold text-sm">
+                                                {{ certification.name }}
+                                            </p>
+
+                                            {% if certification.issuing_organization %}
+
+                                                <p class="text-xs text-gray-600">
+                                                    {{ certification.issuing_organization }}
+                                                </p>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- ACHIEVEMENTS -->
+
+                            {% if resume.achievements.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Achievements
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+
+                                    {% for achievement in resume.achievements.all %}
+
+                                        <div class="mb-3">
+
+                                            <p class="font-semibold text-sm">
+                                                {{ achievement.title }}
+                                            </p>
+
+                                            {% if achievement.description %}
+
+                                                <p class="text-xs text-gray-600 mt-1">
+                                                    {{ achievement.description }}
+                                                </p>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- TRAINING -->
+
+                            {% if resume.trainings.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Training
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+
+                                    {% for training in resume.trainings.all %}
+
+                                        <div class="mb-3">
+
+                                            <p class="font-semibold text-sm">
+                                                {{ training.name }}
+                                            </p>
+
+                                            {% if training.organization %}
+
+                                                <p class="text-xs text-gray-600">
+                                                    {{ training.organization }}
+                                                </p>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- VOLUNTEER EXPERIENCE -->
+
+                            {% if resume.volunteer_experiences.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Volunteer Experience
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+
+                                    {% for volunteer in resume.volunteer_experiences.all %}
+
+                                        <div class="mb-3">
+
+                                            <p class="font-semibold text-sm">
+                                                {{ volunteer.role }}
+                                            </p>
+
+                                            <p class="text-xs text-gray-600">
+                                                {{ volunteer.organization }}
+                                            </p>
+
+                                            {% if volunteer.description %}
+
+                                                <p class="text-xs text-gray-600 mt-1">
+                                                    {{ volunteer.description }}
+                                                </p>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- LANGUAGES -->
+
+                            {% if resume.languages.all %}
+
+                                <div class="mt-7">
+
+                                    <h3 class="text-sm font-bold uppercase tracking-wide">
+                                        Languages
+                                    </h3>
+
+                                    <div class="h-px bg-gray-200 my-2"></div>
+
+
+                                    <div class="space-y-1">
+
+                                        {% for language in resume.languages.all %}
+
+                                            <div class="text-xs text-gray-700">
+
+                                                <span class="font-medium">
+                                                    {{ language.name }}
+                                                </span>
+
+                                                {% if language.proficiency %}
+
+                                                    <span class="text-gray-500">
+                                                        — {{ language.proficiency }}
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </div>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+
+                            <div class="flex items-center justify-center min-h-[500px]">
+
+                                <div class="text-center">
+
+                                    <div class="text-4xl mb-4">
+                                        📄
+                                    </div>
+
+                                    <h3 class="font-semibold text-gray-800">
+                                        Resume Preview
+                                    </h3>
+
+                                    <p class="text-sm text-gray-500 mt-2">
+                                        Add your personal information to preview your resume.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

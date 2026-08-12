@@ -1,0 +1,257 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen bg-[#140F1F] text-white">
+
+    <div class="max-w-3xl mx-auto px-6 py-14">
+
+        <!-- Header -->
+        <div class="mb-10">
+
+            <a
+                href="{% url 'resume_list' %}"
+                class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition mb-6"
+            >
+                ← Back to My Resumes
+            </a>
+
+            <h1 class="text-4xl font-bold">
+                Create New Resume
+            </h1>
+
+            <p class="text-gray-400 mt-3">
+                Give your resume a name and choose a template.
+            </p>
+
+        </div>
+
+
+        <!-- Form -->
+        <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
+
+            <form method="POST" class="space-y-8">
+
+                {% csrf_token %}
+
+
+                <!-- Resume Name -->
+                <div>
+
+                    <label
+                        for="title"
+                        class="block text-sm font-medium text-gray-300 mb-3"
+                    >
+                        Resume Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        maxlength="150"
+                        required
+                        placeholder="e.g. Software Engineer Resume"
+                        class="w-full px-5 py-4 rounded-xl bg-black/20 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-purple-500/60 focus:ring-1 focus:ring-purple-500/20 transition"
+                    >
+
+                    <p class="text-xs text-gray-500 mt-2">
+                        This name is only used to identify your resume.
+                    </p>
+
+                </div>
+
+
+                <!-- Template -->
+                <div>
+
+                    <label class="block text-sm font-medium text-gray-300 mb-4">
+                        Choose Template
+                    </label>
+
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+
+                        <!-- Professional -->
+                        <label class="cursor-pointer block">
+
+                            <input
+                                type="radio"
+                                name="template"
+                                value="professional"
+                                checked
+                                class="peer sr-only"
+                            >
+
+                            <div
+                                class="rounded-2xl border border-white/10 bg-black/20 p-5 transition
+                                hover:border-purple-500/50
+                                peer-checked:border-purple-500
+                                peer-checked:bg-purple-500/10"
+                            >
+
+                                <div class="flex items-center justify-between">
+
+                                    <span class="text-gray-200 font-medium">
+                                        Professional
+                                    </span>
+
+                                    <div
+                                        class="w-5 h-5 rounded-full border border-white/20
+                                        peer-checked:border-purple-500"
+                                    ></div>
+
+                                </div>
+
+
+                                <!-- Preview -->
+                                <div
+                                    class="mt-4 rounded-xl bg-white p-5 h-40"
+                                >
+
+                                    <div class="h-3 rounded bg-gray-800 w-3/4 mb-3"></div>
+
+                                    <div class="h-2 rounded bg-gray-300 w-1/2 mb-5"></div>
+
+                                    <div class="space-y-2">
+
+                                        <div class="h-2 rounded bg-gray-200 w-full"></div>
+
+                                        <div class="h-2 rounded bg-gray-200 w-5/6"></div>
+
+                                        <div class="h-2 rounded bg-gray-200 w-4/5"></div>
+
+                                        <div class="h-2 rounded bg-gray-200 w-2/3"></div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <p class="text-xs text-gray-500 mt-4">
+                                    Clean and professional layout.
+                                </p>
+
+                            </div>
+
+                        </label>
+
+
+                        <!-- Modern -->
+                        <label class="cursor-pointer block">
+
+                            <input
+                                type="radio"
+                                name="template"
+                                value="modern"
+                                class="peer sr-only"
+                            >
+
+                            <div
+                                class="rounded-2xl border border-white/10 bg-black/20 p-5 transition
+                                hover:border-purple-500/50
+                                peer-checked:border-purple-500
+                                peer-checked:bg-purple-500/10"
+                            >
+
+                                <div class="flex items-center justify-between">
+
+                                    <span class="text-gray-200 font-medium">
+                                        Modern
+                                    </span>
+
+                                    <div
+                                        class="w-5 h-5 rounded-full border border-white/20"
+                                    ></div>
+
+                                </div>
+
+
+                                <!-- Preview -->
+                                <div
+                                    class="mt-4 rounded-xl bg-white p-5 h-40"
+                                >
+
+                                    <div class="flex gap-3">
+
+                                        <!-- Sidebar -->
+                                        <div class="w-1/4">
+
+                                            <div class="h-3 rounded bg-gray-800 w-full mb-3"></div>
+
+                                            <div class="h-2 rounded bg-gray-300 w-full mb-2"></div>
+
+                                            <div class="h-2 rounded bg-gray-300 w-4/5 mb-2"></div>
+
+                                            <div class="h-2 rounded bg-gray-300 w-full"></div>
+
+                                        </div>
+
+
+                                        <!-- Content -->
+                                        <div class="flex-1">
+
+                                            <div class="h-2 rounded bg-gray-300 w-full mb-2"></div>
+
+                                            <div class="h-2 rounded bg-gray-200 w-5/6 mb-2"></div>
+
+                                            <div class="h-2 rounded bg-gray-200 w-4/5 mb-4"></div>
+
+                                            <div class="h-2 rounded bg-gray-200 w-full mb-2"></div>
+
+                                            <div class="h-2 rounded bg-gray-200 w-3/4"></div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <p class="text-xs text-gray-500 mt-4">
+                                    Modern layout with a contemporary structure.
+                                </p>
+
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="flex justify-end gap-4 pt-6 border-t border-white/10">
+
+                    <!-- Cancel -->
+                    <a
+                        href="{% url 'resume_list' %}"
+                        class="px-6 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+                    >
+                        Cancel
+                    </a>
+
+
+                    <!-- Create Resume -->
+                    <button
+                        type="submit"
+                        class="px-7 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 transition font-semibold"
+                    >
+                        Create Resume
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
