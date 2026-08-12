@@ -713,42 +713,33 @@
   }
 
 
-  function markAnswered(index) {
+function markAnswered(index) {
 
     const card = cards[index];
 
+    if (!card) return;
 
-    let answered = false;
+    const textarea = card.querySelector("textarea");
 
-
-    const textarea =
-      card.querySelector("textarea");
-
-
-    if (
-      textarea &&
-      textarea.value.trim() !== ""
-    ) {
-
-      answered = true;
-
-    }
-
+    const answered =
+        textarea &&
+        textarea.value.trim() !== "";
 
     if (answered) {
 
-      paletteButtons[index]
-        .classList.remove("palette-current");
+        // Find the palette button belonging to this question
+        const paletteButton = document.querySelector(
+            `.palette-btn[data-index="${index}"]`
+        );
 
-      paletteButtons[index]
-        .classList.add("palette-answered");
-
+        if (paletteButton) {
+            paletteButton.classList.remove("palette-current");
+            paletteButton.classList.add("palette-answered");
+        }
     }
 
-
     updateSummary();
-
-  }
+}
 
 
   function updateSummary() {
@@ -856,31 +847,23 @@
   /* ================= NEXT ================= */
 
 
-  document
-    .querySelectorAll(".next-btn")
-    .forEach((btn) => {
+document.querySelectorAll(".next-btn").forEach((btn) => {
 
-      btn.onclick = function () {
+    btn.addEventListener("click", function () {
 
-        markAnswered(
-          currentQuestion
-        );
+        console.log("Next clicked");
 
+        markAnswered(currentQuestion);
 
-        if (
-          currentQuestion <
-          cards.length - 1
-        ) {
+        if (currentQuestion < cards.length - 1) {
 
-          showQuestion(
-            currentQuestion + 1
-          );
+            showQuestion(currentQuestion + 1);
 
         }
 
-      };
-
     });
+
+});
 
 
   /* ================= PREVIOUS ================= */
@@ -1007,129 +990,114 @@
   /* ================= SUBMIT ================= */
 
 
-  function submitTest() {
+function submitTest() {
 
-    markAnswered(
-      currentQuestion
-    );
+    markAnswered(currentQuestion);
 
+    clearInterval(countdown);
 
-    clearInterval(
-      countdown
-    );
+    const answers = {};
+    const hrResults = [];
 
+    cards.forEach((card) => {
 
-    let hrResults = [];
-
-
-    cards.forEach(
-      (card, index) => {
+        const textarea = card.querySelector("textarea");
 
         let answer = "";
 
-
-        const textarea =
-          card.querySelector(
-            "textarea"
-          );
-
-
-        if (
-          textarea &&
-          textarea.value.trim() !== ""
-        ) {
-
-          answer =
-            textarea.value.trim();
-
+        if (textarea && textarea.value.trim() !== "") {
+            answer = textarea.value.trim();
         }
 
+        const questionId = card.dataset.id;
 
+        // For backend
+        answers[questionId] = answer;
+
+        // For sessionStorage / result tracking
         hrResults.push({
-
-          question_id:
-            card.dataset.id,
-
-          answer:
-            answer,
-
-          status:
-            answer
-              ? "Answered"
-              : "Skipped"
-
+            question_id: questionId,
+            answer: answer,
+            status: answer ? "Answered" : "Skipped"
         });
 
-      }
-    );
+    });
 
 
+    // Store results in browser
     sessionStorage.setItem(
-      "hrResults",
-      JSON.stringify(
-        hrResults
-      )
+        "hrResults",
+        JSON.stringify(hrResults)
     );
 
 
-    console.log(hrResults);
+    console.log("HR Results:", hrResults);
+    console.log("HR Answers:", answers);
 
 
     fetch(
-      "{% url 'submit_hr_test' %}",
-      {
+        "{% url 'submit_hr_test' %}",
+        {
+            method: "POST",
 
-        method: "POST",
+            headers: {
+                "X-CSRFToken":
+                    document.querySelector(
+                        "[name=csrfmiddlewaretoken]"
+                    ).value,
 
-        headers: {
+                "Content-Type":
+                    "application/json"
+            },
 
-          "X-CSRFToken":
-            document.querySelector(
-              "[name=csrfmiddlewaretoken]"
-            ).value,
-
-          "Content-Type":
-            "application/json"
-
-        },
-
-
-        body: JSON.stringify({
-
-          results:
-            hrResults
-
-        })
-
-      }
+            body: JSON.stringify({
+                answers: answers
+            })
+        }
     )
 
-      .then(
-        (response) =>
-          response.json()
-      )
+    .then((response) => {
 
-      .then((data) => {
+        if (!response.ok) {
+            throw new Error(
+                "Server returned " + response.status
+            );
+        }
+
+        return response.json();
+
+    })
+
+    .then((data) => {
+
+        console.log("Submission response:", data);
 
         if (data.success) {
 
-          window.location.href =
-            "{% url 'hr_result' %}";
+            window.location.href =
+                "{% url 'hr_result' %}";
+
+        } else {
+
+            console.error(
+                "HR submission failed:",
+                data.message
+            );
 
         }
 
-      })
+    })
 
-      .catch((error) => {
+    .catch((error) => {
 
         console.error(
-          "HR Test Submission Error:",
-          error
+            "HR Test Submission Error:",
+            error
         );
 
-      });
+    });
 
-  }
+}
 
 </script>
 
